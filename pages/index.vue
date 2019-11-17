@@ -5,6 +5,9 @@
       Votre nouvel espace pour retrouver vos notes plus facilement et savoir si
       vous passez votre semestre !
     </p>
+
+    <TextInput></TextInput>
+
     <small>
       Ce service est proposé par Erosya pour tous les étudiants de l'IUT de
       Haguenau.
@@ -13,7 +16,13 @@
 </template>
 
 <script>
-export default {}
+import TextInput from '@/components/TextInput'
+
+export default {
+  components: {
+    TextInput
+  }
+}
 </script>
 
 <style>
