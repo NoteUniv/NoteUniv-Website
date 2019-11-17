@@ -4,4 +4,9 @@
   </div>
 </template>
 
-<style></style>
+<style>
+body {
+  background-color: #110132;
+  color: white;
+}
+</style>
