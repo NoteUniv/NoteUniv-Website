@@ -10,14 +10,32 @@
       @click="login"
       class="px-3 rounded-r-full flex justify-center items-center bg-white cursor-pointer"
     >
-      <ArrowRightIcon v-if="state === 'idle'" size="1.5x" class="text-black" />
-      <LoaderIcon v-if="state === 'loading'" size="1.5x" class="text-black" />
-      <XIcon v-if="state === 'error'" size="1.5x" class="text-black" />
-      <CheckCircleIcon
-        v-if="state === 'success'"
-        size="1.5x"
-        class="text-black"
-      />
+      <transition name="fade" mode="out-in">
+        <ArrowRightIcon
+          key="idle"
+          v-if="state === 'idle'"
+          size="1.5x"
+          class="text-black"
+        />
+        <LoaderIcon
+          key="loading"
+          v-if="state === 'loading'"
+          size="1.5x"
+          class="text-black"
+        />
+        <XIcon
+          key="error"
+          v-if="state === 'error'"
+          size="1.5x"
+          class="text-black"
+        />
+        <CheckCircleIcon
+          key="success"
+          v-if="state === 'success'"
+          size="1.5x"
+          class="text-black"
+        />
+      </transition>
     </div>
   </div>
 </template>
@@ -44,15 +62,18 @@ export default {
     }
   },
   methods: {
-    login() {
+    async login() {
+      if (this.state === 'loading') return
       this.state = 'loading'
-      fetch('/')
-        .then(() => {
-          this.state = 'success'
-        })
-        .catch(() => {
-          this.state = 'error'
-        })
+
+      try {
+        const response = await fetch('/')
+
+        console.log(response)
+        this.state = 'success'
+      } catch (error) {
+        this.state = 'error'
+      }
     }
   }
 }
