@@ -10,28 +10,49 @@
       @click="login"
       class="px-3 rounded-r-full flex justify-center items-center bg-white cursor-pointer"
     >
-      <ArrowRightIcon size="1.5x" class="text-black" />
+      <ArrowRightIcon v-if="state === 'idle'" size="1.5x" class="text-black" />
+      <LoaderIcon v-if="state === 'loading'" size="1.5x" class="text-black" />
+      <XIcon v-if="state === 'error'" size="1.5x" class="text-black" />
+      <CheckCircleIcon
+        v-if="state === 'success'"
+        size="1.5x"
+        class="text-black"
+      />
     </div>
   </div>
 </template>
 
 <script>
-import { ArrowRightIcon } from 'vue-feather-icons'
+import {
+  ArrowRightIcon,
+  LoaderIcon,
+  XIcon,
+  CheckCircleIcon
+} from 'vue-feather-icons'
 
 export default {
   components: {
-    ArrowRightIcon
+    ArrowRightIcon,
+    LoaderIcon,
+    XIcon,
+    CheckCircleIcon
   },
   data() {
     return {
-      studentId: ''
+      studentId: '',
+      state: 'idle'
     }
   },
   methods: {
     login() {
+      this.state = 'loading'
       fetch('/')
-        .then(() => console.log('yes'))
-        .catch(() => console.log('no'))
+        .then(() => {
+          this.state = 'success'
+        })
+        .catch(() => {
+          this.state = 'error'
+        })
     }
   }
 }
