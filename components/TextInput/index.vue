@@ -92,10 +92,14 @@ export default {
       this.state = 'loading'
 
       try {
-        const response = await fetch('/')
-
-        console.log(response)
+        const response = await fetch(
+          'https://jsonplaceholder.typicode.com/users/1'
+        )
+        const data = await response.json()
+        this.$store.commit('setUsername', data.id)
         this.state = 'success'
+
+        this.$router.push('/marks')
       } catch (error) {
         this.state = 'error'
       }
