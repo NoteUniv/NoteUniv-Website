@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>NoteUniv - Accueil</title>
+    <link rel="icon" type="image/png" href="images/logo_noteuniv_icon.jpg">
+    <link rel=" stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="left-side">
+        <img class="logo-img" src="images/logo_noteuniv_icon.svg" alt="Logo NoteUniv">
+        <img class="logo-txt" src="images/logo_noteuniv_text.svg" alt="Logo Texte">
+        <p class="desc">Votre nouvel espace pour retrouver vos notes plus<br>facilement et savoir si vous passez votre semestre !</p>
+        <form action="panel.php" id="sendID" method="POST">
+            <div class="input">
+                <input type="number" name="numEtu" id="numEtu" required placeholder="Entrez votre numéro étudiant">
+                <span id="submit" onclick="submitForm()"><i class="fas fa-arrow-right"></i></span>
+            </div>
+        </form>
+        <p class="sponso">Ce service est proposé par Erosya pour tous les étudiants de l'IUT de Haguenau.</p>
+    </div>
+    <div class="right-side">
+        <img class="logo-etu" src="images/background_image.webp" alt="Logo étudiants">
+    </div>
+    <script>
+        var NumEtu = localStorage.getItem("NumEtu");
+        if (NumEtu !== null) {
+            document.getElementById("numEtu").value = NumEtu;
+        }
+
+        function submitForm() {
+            var num = document.getElementById("numEtu").value;
+            localStorage.setItem("NumEtu", num);
+            var re = /^\d{8}$/;
+            if (re.test(num)) {
+                document.getElementById("sendID").submit();
+                return false;
+            } else {
+                alert("Votre numéro étudiant ne correspond pas à ceux qui existent.");
+                return false;
+            }
+        }
+
+        document.onkeydown = function (e) {
+            if (e.key === "Enter") {
+                e.preventDefault();
+                submitForm();
+            }
+        }
+    </script>
+</body>
+
+</html>
