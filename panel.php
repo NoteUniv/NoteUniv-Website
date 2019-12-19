@@ -10,10 +10,7 @@
 
 <body>
     <?php
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "note_univ";
+    include("pwd.php");
 
     $id_etu = $_POST["numEtu"];
 
