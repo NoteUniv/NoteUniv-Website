@@ -1,0 +1,105 @@
+/* GLOBAL */
+@font-face {
+    font-family: "Montserrat";
+    src: url("../fonts/Montserrat-SemiBold.ttf");
+    font-weight: normal;
+    font-style: normal;
+}
+* {
+    padding: 0;
+    border: 0;
+    box-sizing: border-box;
+    font-family: "Montserrat";
+}
+
+.img-fluid {
+    max-width: 100%;
+    height: auto;
+}
+/* CARD-aside  */
+.card {
+    margin-top: 10px;
+    margin-left: 10px;
+    padding-top: 50px;
+    background: #110133;
+    border-radius: 25px;
+    color: white;
+}
+.card .img-ico {
+    max-width: 10%;
+    padding-right: 10px;
+}
+.card img {
+    max-width: 60%;
+}
+.circle {
+    height: 50px;
+    width: 50px;
+    background-color: #bbb;
+    border-radius: 50%;
+}
+.card button {
+    width: 179px;
+    height: 25px;
+    border-radius: 25px;
+    color: white;
+}
+.card .btn-etu {
+    background-color:#433B52;
+    margin-top: 10px;
+}
+.card .btn-etu+p {
+    margin-top: 50px;
+}
+.card .btn-moy {
+    background-color: #2BE8C6;
+    color: #110133;
+}
+.card .btn-moy+p {
+    color: #2BE8C6;
+    margin-top: 10px;
+    margin-bottom: 50px;
+}
+.card .btn-logout {
+    border: 2px solid #FFFFFF;
+    background-color: #110133;
+    margin-bottom: 50px;
+}
+.as-etu{
+    font-size: 25px;
+    margin-top: 50px;
+    font-weight: bold;
+}
+.as-etu+p {
+    font-size: 20px;
+    margin-bottom: 50px;
+}
+.as-small {
+    font-size: 15px;
+}
+
+/* ANCHOR NOTES */
+.note {
+    margin-top: 50px;
+    margin-left: 50px;
+    margin-right: 50px;
+}
+.note h1 {
+    font-size: 40px;
+}
+.ue {
+    background-color: #110133;
+    height: 60px;
+    box-shadow: 0px 20px 30px #0000000D;
+    border-radius: 40px;
+    color: white;
+}
+.note-overlay {
+    background: #433B52 0% 0% no-repeat padding-box;
+    border-radius: 40px;
+    height: 40px;
+    margin: auto;
+}
+.ue span {
+    padding: 0 45px;
+}
