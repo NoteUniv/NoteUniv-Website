@@ -5,101 +5,230 @@
     font-weight: normal;
     font-style: normal;
 }
+
+a {
+    text-decoration: none;
+}
+
 * {
     padding: 0;
     border: 0;
     box-sizing: border-box;
     font-family: "Montserrat";
 }
+h2 {
+    text-decoration: underline;
+}
 
 .img-fluid {
     max-width: 100%;
     height: auto;
 }
+
+.btn-moy {
+    background-color: #2BE8C6;
+    color: #110133;
+}
+
+.btn-etu {
+    background-color: #433B52;
+}
+
 /* CARD-aside  */
 .card {
     margin-top: 10px;
     margin-left: 10px;
     padding-top: 50px;
+    margin-right: 10px;
     background: #110133;
     border-radius: 25px;
     color: white;
 }
-.card .img-ico {
-    max-width: 10%;
-    padding-right: 10px;
+
+@media screen and (min-width: 993px) {
+    .card {
+        max-width: 360px;
+        position: -webkit-sticky;
+        position: sticky;
+        top: 10px;
+    }
 }
+
 .card img {
     max-width: 60%;
 }
-.circle {
-    height: 50px;
-    width: 50px;
-    background-color: #bbb;
-    border-radius: 50%;
-}
+
 .card button {
     width: 179px;
     height: 25px;
     border-radius: 25px;
     color: white;
 }
+
+.card .img-ico {
+    max-width: 10%;
+    padding-right: 10px;
+}
+
+.card a {
+    color: white;
+}
+
 .card .btn-etu {
-    background-color:#433B52;
+    background-color: #433B52;
     margin-top: 10px;
 }
+
 .card .btn-etu+p {
     margin-top: 50px;
 }
-.card .btn-moy {
-    background-color: #2BE8C6;
-    color: #110133;
-}
+
 .card .btn-moy+p {
     color: #2BE8C6;
     margin-top: 10px;
     margin-bottom: 50px;
 }
-.card .btn-logout {
+
+.btn-logout {
+    display: inline-block;
     border: 2px solid #FFFFFF;
     background-color: #110133;
+    padding: 5px 0;
+    width: 179px;
+    border-radius: 25px;
+    color: white;
     margin-bottom: 50px;
+    transition-duration: 1s;
 }
-.as-etu{
+
+.btn-logout:hover {
+    background-color: #fff;
+    border: 2px solid #110133;
+    transition-duration: 1s;
+}
+
+.btn-logout:hover a {
+    color: #110133;
+}
+
+.as-etu {
     font-size: 25px;
     margin-top: 50px;
     font-weight: bold;
 }
+
 .as-etu+p {
     font-size: 20px;
     margin-bottom: 50px;
 }
+
 .as-small {
     font-size: 15px;
+}
+
+/* ANCHOR Mobile NAV  */
+.nav div p {
+    background: #110133 0% 0% no-repeat padding-box;
+    box-shadow: 0px 20px 30px #0000000D;
+    border-radius: 25px;
+    color: #FFFFFF;
+    padding: 5px;
 }
 
 /* ANCHOR NOTES */
 .note {
     margin-top: 50px;
-    margin-left: 50px;
-    margin-right: 50px;
+    margin-left: 20px;
+    margin-right: 20px;
 }
+
 .note h1 {
     font-size: 40px;
 }
-.ue {
-    background-color: #110133;
-    height: 60px;
+
+.note a {
+    color: black;
+}
+
+.nav a {
+    color: #fff;
+}
+
+.ue-tab {
+    background: #110133 0% 0% no-repeat padding-box;
     box-shadow: 0px 20px 30px #0000000D;
     border-radius: 40px;
-    color: white;
+    color: #FFF;
+    padding: 10px 0;
+    margin-top: 50px;
 }
+
+.ue-nbr p,
+.matiere p {
+    padding-left: 20px;
+}
+
 .note-overlay {
     background: #433B52 0% 0% no-repeat padding-box;
     border-radius: 40px;
-    height: 40px;
-    margin: auto;
+    max-width: 600px;
 }
-.ue span {
-    padding: 0 45px;
+
+.all-note {
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    box-shadow: 0px 20px 30px #0000000D;
+    margin-top: 15px;
+    padding: 10px;
+}
+
+.note-par-matiere {
+    max-width: 600px;
+}
+
+.note-par-matiere div:hover {
+    background: #F5F5F5 0% 0% no-repeat padding-box;
+    border-radius: 20px;
+}
+
+/* ANCHOR Note Mobile */
+.note span {
+    font-weight: bold;
+}
+
+@media screen and (max-width: 574px) {
+    .note-par-matiere div p {
+        background: #F5F5F5 0% 0% no-repeat padding-box;
+        border-radius: 20px;
+        padding: 15px;
+    }
+}
+
+/* ANCHOR RESUME  */
+.resume-tab {
+    background: #110133 0% 0% no-repeat padding-box;
+    box-shadow: 0px 20px 30px #0000000D;
+    border-radius: 40px;
+    color: #FFF;
+    padding: 10px 0;
+    margin-top: 50px;
+}
+
+.note .btn-etu,
+.btn-moy {
+    border-radius: 25px;
+}
+
+.note .btn-moy {
+    color: white;
+}
+
+.mr-14 {
+    margin-right: -14px;
+}
+
+/* ANCHOR RESUME mobile  */
+@media screen and (max-width: 574px) {
+    .btn-moy {
+        margin-bottom: 10px;
+    }
 }

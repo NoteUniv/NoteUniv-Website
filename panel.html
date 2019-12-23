@@ -5,48 +5,262 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>NoteUniv | Panel</title>
     <!-- CSS -->
-    <link rel="stylesheet" href="assets/css/flexboxgrid.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/flexboxgrid2.css" type="text/css">
     <link rel="stylesheet" href="assets/css/stylePanel.css" type="text/css">
 </head>
 
 <body>
-    <div class="row">
-        <!-- ANCHOR CARD/ASIDE -->
-        <aside class="col-md-2">
-            <div class="row center-md card">
-                <div class="col-md-12">
+    <div class="row center-xs start-lg">
+        <!-- ANCHOR CARD/ASIDE RIGHT-->
+        <aside class="col-sm col-lg-3">
+            <div class="row center-sm card">
+                <div class="col-sm-12">
                     <img src="assets/images/logo_noteuniv_icon.svg" alt="" class="img-fluid img-ico">
                     <img src="assets/images/logo_noteuniv_text.svg" alt="" class="img-fluid">
                     <p class="as-etu">Etudiant</p>
                     <p>N°86300073</p>
-                    <p class="as-small">Je suis actuellement en :</p class="as-small">
-                    <button class="btn-etu">MMI</button>
+                    <p class="as-small">Je suis actuellement en :</p>
+                    <button class="btn-etu">MMI</button> <br>
                     <button class="btn-etu">SEMESTRE 1</button>
                     <p class="as-small">Ma moyenne générale est :</p>
                     <button class="btn-moy">12,57 / 20</button>
                     <p>Je passe au semestre suivant, YEAH !</p>
-                    <button class="btn-logout">Se déconnecter</button>
+                    <p class="btn-logout"><a href="#">Se déconnecter</a></p>
                 </div>
             </div>
         </aside>
-        <!-- ANCHOR NOTES  -->
-        <section class="col-md-10 ">
-            <div class="note">
-                <h1>Retrouvez vos notes avec NoteUniv !</h1>
-                <div class="row ue">
-                    <div class="col-md-2">
-                        <p>UE1</p></div>
-                    <div class="col-md-5 note-overlay">
-                        <p><span>Note 1</span> <span>Note 2</span> <span>Note 3</span> <span>Note 4</span></p>
+        <!-- ANCHOR LEFT SIDE -->
+        <section class="col-lg-9 col-sm-12">
+            <!-- ANCHOR NOTES -->
+            <article class="note">
+                <!-- Phrase différentes selon le viewport, afin de gagner de la place  -->
+                <h1 class="hidden-xs hidden-sm">Retrouvez vos notes avec NoteUniv !</h1>
+                <h1 class="hidden-md hidden-lg hidden-xl">Mes notes</h1>
+                
+                <!-- Menu de navigation pour mobile  -->
+                <div class="row center-xs hidden-sm hidden-md hidden-lg hidden-xl nav">
+                    <div class="col-xs-3">
+                        <p><a href="#ue1">UE1</a></p>
                     </div>
-                    <div class="col-md-5"><p>coef</p></div>
+                    <div class="col-xs-3">
+                        <p><a href="#ue2">UE2</a></p>
+                    </div>
+                    <div class="col-xs-3">
+                        <p><a href="#resultat">Recap</a></p>
+                    </div>
                 </div>
-            </div>
+
+                <!-- Affichage de UE1 uniquement pour mobile, car ils n'ont pas de bandeau  -->
+                <h2 class="hidden-sm hidden-md hidden-lg hidden-xl" id="ue1">UE 1</h2>
+
+                <!-- ANCHOR Bandeau de l'UE 1 uniquement PC/Tablette -->
+                <div class="row ue-tab hidden-xs">
+                    <div class="col-sm-2 ue-nbr">
+                        <p>UE1</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="row note-overlay center-sm">
+                            <div class="col-sm">
+                                <p>Note 1</p>
+                            </div>
+                            <div class="col-sm">
+                                <p>Note 2</p>
+                            </div>
+                            <div class="col-sm">
+                                <p>Note 3</p>
+                            </div>
+                            <div class="col-sm">
+                                <p>Note 4</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="row center-sm">
+                            <div class="col-sm">
+                                <p>Coef</p>
+                            </div>
+                            <div class="col-sm">
+                                <p>Points</p>
+                            </div>
+                            <div class="col-sm">
+                                <p>Notes</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ANCHOR Notes par matière 1 -->
+                <div class="row all-note">
+                    <div class="col-sm-2 matiere first-xs">
+                        <p><span>Anglais</span></p>
+                    </div>
+                    <!-- Si mobile, on affiche les notes à la fin, et les coef en 2ème  -->
+                    <div class="col-sm-6 last-xs initial-order-sm"> 
+                        <div class="row center-sm note-par-matiere">
+                            <div class="col-sm col-xs-6">
+                                <p><a href="#"> <span class="hidden-sm hidden-md hidden-lg hidden-xl">Note 1<br></span>
+                                        12 </a></p>
+                            </div>
+                            <div class="col-sm col-xs-6">
+                                <p><a href="#"><span class="hidden-sm hidden-md hidden-lg hidden-xl">Note 2<br></span>
+                                        14</a></p>
+                            </div>
+                            <div class="col-sm col-xs-6">
+                                <p><a href="#"><span class="hidden-sm hidden-md hidden-lg hidden-xl">Note 3<br></span>
+                                        /</a></p>
+                            </div>
+                            <div class="col-sm col-xs-6">
+                                <p><a href="#"><span class="hidden-sm hidden-md hidden-lg hidden-xl">Note 4<br></span>
+                                        /</a></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="row center-xs">
+                            <div class="col-xs-4">
+                                <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Coef:</span> 2</p>
+                            </div>
+                            <div class="col-xs-4">
+                                <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Points:</span> 52</p>
+                            </div>
+                            <div class="col-xs-4">
+                                <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Notes:</span> 2</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- ANCHOR Bandeau de l'UE 2 uniquement pc/tablette-->
+                <div class="row ue-tab hidden-xs">
+                    <div class="col-sm-2 ue-nbr">
+                        <p>UE2</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="row note-overlay center-sm">
+                            <div class="col-sm">
+                                <p>Note 1</p>
+                            </div>
+                            <div class="col-sm">
+                                <p>Note 2</p>
+                            </div>
+                            <div class="col-sm">
+                                <p>Note 3</p>
+                            </div>
+                            <div class="col-sm">
+                                <p>Note 4</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="row center-sm">
+                            <div class="col-sm">
+                                <p>Coef</p>
+                            </div>
+                            <div class="col-sm">
+                                <p>Points</p>
+                            </div>
+                            <div class="col-sm">
+                                <p>Notes</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Affichage de l'ue2 uniquement sur mobile car pas de bandeau  -->
+                <h2 class="hidden-sm hidden-md hidden-lg hidden-xl" id="ue2">UE 2</h2>
+
+                <!-- ANCHOR Notes par matière 2 -->
+                <div class="row all-note">
+                    <div class="col-sm-2 matiere first-xs">
+                        <p><span>Audiovisuel</span></p>
+                    </div>
+                    <!-- Si mobile, on affiche les notes à la fin, et les coef en 2ème  -->
+                    <div class="col-sm-6 last-xs initial-order-sm">
+                        <div class="row center-sm note-par-matiere">
+                            <div class="col-sm col-xs-6">
+                                <p><a href="#"><span class="hidden-sm hidden-md hidden-lg hidden-xl">Note 1<br></span>
+                                        12</a></p>
+                            </div>
+                            <div class="col-sm col-xs-6">
+                                <p><a href="#"><span class="hidden-sm hidden-md hidden-lg hidden-xl">Note
+                                            2<br></span>14</a></p>
+                            </div>
+                            <div class="col-sm col-xs-6">
+                                <p><a href="#"><span class="hidden-sm hidden-md hidden-lg hidden-xl">Note
+                                            3<br></span>/</a></p>
+                            </div>
+                            <div class="col-sm col-xs-6">
+                                <p><a href="#"><span class="hidden-sm hidden-md hidden-lg hidden-xl">Note
+                                            4<br></span>/</a></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="row center-xs">
+                            <div class="col-xs-4">
+                                <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Coef:</span> 2</p>
+                            </div>
+                            <div class="col-xs-4">
+                                <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">points:</span> 52</p>
+                            </div>
+                            <div class="col-xs-4">
+                                <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Notes:</span> 2</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- ANCHOR RESUMER  -->
+            <article class="note">
+
+                <!-- ANCHOR Bandeau resume, uniquement PC/Tablette -->
+                <div class="row resume-tab around-sm hidden-xs">
+                    <div class="col-sm-1 center-sm">
+                    </div>
+                    <div class="col-sm-2 center-sm">
+                        <p>Points à avoir</p>
+                    </div>
+                    <div class="col-sm-2 center-sm">
+                        <p>Points possédés</p>
+                    </div>
+                    <div class="col-sm-2 center-sm btn-etu">
+                        <p>Moyenne sur 20</p>
+                    </div>
+                    <div class="col-sm-2 center-sm btn-etu">
+                        <p>Résultats</p>
+                    </div>
+                </div>
+                <!-- Affichage  uniquement sur mobile car pas de bandeau  -->
+                <h1 class="hidden-sm hidden-md hidden-lg hidden-xl" id="resultat">Résultats</h1>
+
+                <!-- ANCHOR Notes par matière 2 -->
+                <!-- Sur pc/tablette on affiche pas les span, car les informations sont contenu dans le bandeau, contrairement au téléphone -->
+                <div class="row all-note around-sm">
+                    <div class="col-sm-1">
+                        <h2 class="hidden-sm hidden-md hidden-lg hidden-xl">UE1</h2>
+                        <p><span class="hidden-xs">UE1</span></p>
+                    </div>
+                    <div class="col-sm-2 center-sm">
+                        <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Total de points à avoir :</span> 260
+                        </p>
+                    </div>
+                    <div class="col-sm-2 center-sm">
+                        <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Points possédés :</span> 170</p>
+                    </div>
+                    <div class="col-sm-2 center-sm btn-moy">
+                        <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Moyenne sur 20 <br></span>13,08</p>
+                    </div>
+                    <div class="col-sm-2 center-sm btn-moy mr-14">
+                        <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Résultats <br></span>UE Validé</p>
+                    </div>
+                </div>
+            </article>
         </section>
     </div>
 
+</div>
 </body>
 
 </html>
