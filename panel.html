@@ -18,7 +18,7 @@
             <div class="row center-sm card">
                 <div class="col-sm-12">
                     <img src="assets/images/logo_noteuniv_icon.svg" alt="" class="img-fluid img-ico">
-                    <img src="assets/images/logo_noteuniv_text.svg" alt="" class="img-fluid">
+                    <img src="assets/images/logo_noteuniv_text.svg" alt="" class="img-fluid img-txt">
                     <p class="as-etu">Etudiant</p>
                     <p>N°86300073</p>
                     <p class="as-small">Je suis actuellement en :</p>
@@ -38,7 +38,7 @@
                 <!-- Phrase différentes selon le viewport, afin de gagner de la place  -->
                 <h1 class="hidden-xs hidden-sm">Retrouvez vos notes avec NoteUniv !</h1>
                 <h1 class="hidden-md hidden-lg hidden-xl">Mes notes</h1>
-                
+
                 <!-- Menu de navigation pour mobile  -->
                 <div class="row center-xs hidden-sm hidden-md hidden-lg hidden-xl nav">
                     <div class="col-xs-3">
@@ -97,26 +97,105 @@
                         <p><span>Anglais</span></p>
                     </div>
                     <!-- Si mobile, on affiche les notes à la fin, et les coef en 2ème  -->
-                    <div class="col-sm-6 last-xs initial-order-sm"> 
+                    <div class="col-sm-6 last-xs initial-order-sm">
                         <div class="row center-sm note-par-matiere">
                             <div class="col-sm col-xs-6">
-                                <p><a href="#"> <span class="hidden-sm hidden-md hidden-lg hidden-xl">Note 1<br></span>
-                                        12 </a></p>
+                                <a href="javascript:void(0);" data-template="ang1" class="tippy-note"><p> <span
+                                            class="hidden-sm hidden-md hidden-lg hidden-xl">Note 1<br></span>
+                                        12 </p></a>
                             </div>
                             <div class="col-sm col-xs-6">
-                                <p><a href="#"><span class="hidden-sm hidden-md hidden-lg hidden-xl">Note 2<br></span>
-                                        14</a></p>
+                                <a href="javascript:void(0);" data-template="ang2" class="tippy-note"><p><span
+                                            class="hidden-sm hidden-md hidden-lg hidden-xl">Note 2<br></span>
+                                        14</p></a>
                             </div>
                             <div class="col-sm col-xs-6">
-                                <p><a href="#"><span class="hidden-sm hidden-md hidden-lg hidden-xl">Note 3<br></span>
-                                        /</a></p>
+                                <a href="javascript:void(0);" data-template="ang3" class="tippy-note"><p><span
+                                            class="hidden-sm hidden-md hidden-lg hidden-xl">Note 3<br></span>
+                                        /</p></a>
                             </div>
                             <div class="col-sm col-xs-6">
-                                <p><a href="#"><span class="hidden-sm hidden-md hidden-lg hidden-xl">Note 4<br></span>
-                                        /</a></p>
+                                <a href="javascript:void(0);" data-template="ang4" class="tippy-note"><p><span
+                                            class="hidden-sm hidden-md hidden-lg hidden-xl">Note 4<br></span>
+                                        /</p></a>
                             </div>
                         </div>
                     </div>
+
+                    <!-- ANCHOR INTEGRATION DES NOTES DANS MODALES UE1-->
+                    <div class="popup">
+                        <!-- Les Id des div sont lié au data-template du <a> des notes. Au clic, le contenu de la div est mis en popup  -->
+                        <div id="ang1">
+                            <div class="user-note">
+                                <h2 class="note-header">Détails de la note</h2>
+                            <p class="b">Nom du devoir / Module :</p>
+                            <p>Tp évalué "Mise en réseau et partage de documents"</p>
+                            <p class="b">Enseignant :</p>
+                            <p>Loux dominique / Dieb Eric</p>
+                            <p class="b">Date de l'épreuve :</p>
+                            <p>Non renseignée</p>
+                            <p class="b">Type de note :</p>
+                            <p>note unique</p>
+                            <p class="b">Type d'épreuve : </p>
+                            <p>Autre</p>
+                            <h2 class="note-header">Et ma promo alors ?</h2>
+                            </div>
+                            
+                            <div class="promo-note">
+                                <div class="row center-xs">
+                                    <div class="col-sm-3 col-xs-6">
+                                        <div class="btn-etu">
+                                            <p> <span class="b">Note Max</span> <br>5</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3 col-xs-6">
+                                        <div class="btn-etu">
+                                            <p> <span class="b">Note Max</span> <br>5</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3 col-xs-6">
+                                        <div class="btn-etu">
+                                            <p> <span class="b">Note Max</span> <br>5</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3 col-xs-6">
+                                        <div class="btn-etu">
+                                            <p> <span class="b">Note Max</span> <br>5</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row center-xs separation-note">
+                                    <div class="col-sm-6 col-xs-12">
+                                        <div class="btn-etu">
+                                            <p> <span class="b">Note Max</span> <br>5</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3 col-xs-6">
+                                        <div class="btn-etu">
+                                            <p> <span class="b">Note Max</span> <br>5</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3 col-xs-6">
+                                        <div class="btn-etu">
+                                            <p> <span class="b">Note Max</span> <br>5</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div id="ang2">
+                            <p>test</p>
+                        </div>
+                        <div id="ang3">
+                            <p>test</p>
+                        </div>
+                        <div id="ang4">
+                            <p>test</p>
+                        </div>
+                    </div>
+                    <!-- Fin intégration note modales  -->
+
                     <div class="col-sm-4">
                         <div class="row center-xs">
                             <div class="col-xs-4">
@@ -179,23 +258,103 @@
                     <div class="col-sm-6 last-xs initial-order-sm">
                         <div class="row center-sm note-par-matiere">
                             <div class="col-sm col-xs-6">
-                                <p><a href="#"><span class="hidden-sm hidden-md hidden-lg hidden-xl">Note 1<br></span>
-                                        12</a></p>
+                                <a href="javascript:void(0);" data-template="av1" class="tippy-note"><p> <span
+                                            class="hidden-sm hidden-md hidden-lg hidden-xl">Note 1<br></span>
+                                        12 </p></a>
                             </div>
                             <div class="col-sm col-xs-6">
-                                <p><a href="#"><span class="hidden-sm hidden-md hidden-lg hidden-xl">Note
-                                            2<br></span>14</a></p>
+                                <a href="javascript:void(0);" data-template="av2" class="tippy-note"><p><span
+                                            class="hidden-sm hidden-md hidden-lg hidden-xl">Note 2<br></span>
+                                        14</p></a>
                             </div>
                             <div class="col-sm col-xs-6">
-                                <p><a href="#"><span class="hidden-sm hidden-md hidden-lg hidden-xl">Note
-                                            3<br></span>/</a></p>
+                                <a href="javascript:void(0);" data-template="av3" class="tippy-note"><p><span
+                                            class="hidden-sm hidden-md hidden-lg hidden-xl">Note 3<br></span>
+                                        /</p></a>
                             </div>
                             <div class="col-sm col-xs-6">
-                                <p><a href="#"><span class="hidden-sm hidden-md hidden-lg hidden-xl">Note
-                                            4<br></span>/</a></p>
+                                <a href="javascript:void(0);" data-template="av4" class="tippy-note"><p><span
+                                            class="hidden-sm hidden-md hidden-lg hidden-xl">Note 4<br></span>
+                                        /</p></a>
                             </div>
                         </div>
                     </div>
+
+                    <!-- ANCHOR INTEGRATION DES NOTES DANS MODALES UE2-->
+                    <div class="popup">
+                        <!-- Les Id des div sont lié au data-template du <a> des notes. Au clic, le contenu de la div est mis en popup  -->
+                        <div id="av1">
+                            <div class="user-note">
+                                <h2 class="note-header">Détails de la note</h2>
+                            <p class="b">Nom du devoir / Module :</p>
+                            <p>Tp évalué "Mise en réseau et partage de documents"</p>
+                            <p class="b">Enseignant :</p>
+                            <p>Loux dominique / Dieb Eric</p>
+                            <p class="b">Date de l'épreuve :</p>
+                            <p>Non renseignée</p>
+                            <p class="b">Type de note :</p>
+                            <p>note unique</p>
+                            <p class="b">Type d'épreuve : </p>
+                            <p>Autre</p>
+                            <h2 class="note-header">Et ma promo alors ?</h2>
+                            </div>
+                            
+                            <div class="promo-note">
+                                <div class="row center-xs">
+                                    <div class="col-sm-3 col-xs-6">
+                                        <div class="btn-etu">
+                                            <p> <span class="b">Note Max</span> <br>5</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3 col-xs-6">
+                                        <div class="btn-etu">
+                                            <p> <span class="b">Note Max</span> <br>5</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3 col-xs-6">
+                                        <div class="btn-etu">
+                                            <p> <span class="b">Note Max</span> <br>5</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3 col-xs-6">
+                                        <div class="btn-etu">
+                                            <p> <span class="b">Note Max</span> <br>5</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row center-xs separation-note">
+                                    <div class="col-sm-6 col-xs-12">
+                                        <div class="btn-etu">
+                                            <p> <span class="b">Note Max</span> <br>5</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3 col-xs-6">
+                                        <div class="btn-etu">
+                                            <p> <span class="b">Note Max</span> <br>5</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3 col-xs-6">
+                                        <div class="btn-etu">
+                                            <p> <span class="b">Note Max</span> <br>5</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div id="av2">
+                            <p>test</p>
+                        </div>
+                        <div id="av3">
+                            <p>test</p>
+                        </div>
+                        <div id="av4">
+                            <p>test</p>
+                        </div>
+                    </div>
+                    <!-- Fin intégration note modales  -->
+
+
                     <div class="col-sm-4">
                         <div class="row center-xs">
                             <div class="col-xs-4">
@@ -260,7 +419,11 @@
         </section>
     </div>
 
-</div>
+    </div>
+
+    <script src="https://unpkg.com/popper.js@1"></script>
+    <script src="https://unpkg.com/tippy.js@5"></script>
+    <script src="assets/js/app.js"></script>
 </body>
 
 </html>

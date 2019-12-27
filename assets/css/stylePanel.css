@@ -16,6 +16,7 @@ a {
     box-sizing: border-box;
     font-family: "Montserrat";
 }
+
 h2 {
     text-decoration: underline;
 }
@@ -27,7 +28,7 @@ h2 {
 
 .btn-moy {
     background-color: #2BE8C6;
-    color: #110133;
+
 }
 
 .btn-etu {
@@ -55,27 +56,70 @@ h2 {
 }
 
 .card img {
-    max-width: 60%;
+    max-width: 40%;
 }
 
 .card button {
     width: 179px;
-    height: 25px;
+    height: 35px;
     border-radius: 25px;
     color: white;
+    font-size: 15px;
+}
+
+.card .img-txt {
+    padding-left: 20px;
+    padding-bottom: 13px;
+}
+
+@media screen and (max-width: 1266px) {
+    .card .img-txt {
+        padding-bottom: 10px;
+    }
+}
+
+@media screen and (max-width: 1078px) {
+    .card .img-txt {
+        padding-bottom: 8px;
+    }
+}
+
+@media screen and (max-width: 990px) {
+    .card .img-txt {
+        padding-bottom: 50px;
+    }
+}
+
+@media screen and (max-width: 784px) {
+    .card .img-txt {
+        padding-bottom: 30px;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .card .img-txt {
+        padding-bottom: 15px;
+    }
+}
+
+@media screen and (max-width: 379px) {
+    .card .img-txt {
+        padding-bottom: 10px;
+    }
 }
 
 .card .img-ico {
-    max-width: 10%;
+    max-width: 13%;
     padding-right: 10px;
 }
 
 .card a {
     color: white;
 }
-
+.card .as-small+.btn-etu {
+    margin-top: 0;
+}
 .card .btn-etu {
-    background-color: #433B52;
     margin-top: 10px;
 }
 
@@ -83,10 +127,16 @@ h2 {
     margin-top: 50px;
 }
 
+.card .btn-moy {
+    color: #110133;
+    font-size: 20px;
+}
+
 .card .btn-moy+p {
     color: #2BE8C6;
     margin-top: 10px;
     margin-bottom: 50px;
+    font-size: 15px;
 }
 
 .btn-logout {
@@ -95,10 +145,12 @@ h2 {
     background-color: #110133;
     padding: 5px 0;
     width: 179px;
+    height: 35px;
     border-radius: 25px;
     color: white;
     margin-bottom: 50px;
     transition-duration: 1s;
+    font-size: 15px;
 }
 
 .btn-logout:hover {
@@ -115,15 +167,18 @@ h2 {
     font-size: 25px;
     margin-top: 50px;
     font-weight: bold;
+    margin-bottom: 5px;
 }
 
 .as-etu+p {
     font-size: 20px;
     margin-bottom: 50px;
+    margin-top: 0;
 }
 
 .as-small {
     font-size: 15px;
+    margin-bottom: 20px;
 }
 
 /* ANCHOR Mobile NAV  */
@@ -144,10 +199,11 @@ h2 {
 
 .note h1 {
     font-size: 40px;
+    color: #110133;
 }
 
 .note a {
-    color: black;
+    color: #110133;
 }
 
 .nav a {
@@ -187,7 +243,49 @@ h2 {
 
 .note-par-matiere div:hover {
     background: #F5F5F5 0% 0% no-repeat padding-box;
-    border-radius: 20px;
+    border-radius: 35px;
+}
+
+.note-header {
+    color: #FAE367;
+    text-decoration: none;
+}
+
+.b {
+    font-weight: bold;
+}
+
+/* TIPPY THEME FOR POPUP */
+.tippy-tooltip.note-theme {
+    background-color: #110133;
+    color: #fff;
+    border-radius: 30px;
+    padding: 10px;
+}
+
+.tippy-tooltip.note-theme .btn-etu {
+    border-radius: 15px;
+}
+.tippy-tooltip.note-theme .separation-note {
+    margin-top: -10px;
+}
+@media screen and (max-width: 400px) {
+    .tippy-tooltip.note-theme .separation-note {
+        margin-top: 0px;
+    }
+}
+.tippy-tooltip.note-theme .promo-note p {
+    line-height: 200%;
+}
+.tippy-tooltip.note-theme .btn-etu p {
+    padding: 10px 10px;
+}
+.tippy-tooltip.note-theme .user-note .b+p {
+    margin-top: -10px;
+    margin-bottom: 25px;
+}
+.popup {
+    display: none;
 }
 
 /* ANCHOR Note Mobile */
@@ -219,7 +317,7 @@ h2 {
 }
 
 .note .btn-moy {
-    color: white;
+    color: #110133;
 }
 
 .mr-14 {
