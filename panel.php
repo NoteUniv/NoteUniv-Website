@@ -1,22 +1,24 @@
 <?php
+session_start();
 require "vendor/autoload.php";
 // recupération des variables d'environnement
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 $servername = getenv('SERVERNAME');
 $dbname = getenv('DBNAME');
-$username = getenv('USERNAME');
+$username = getenv('USER');
 $password = getenv('PASSWORD');
-//Connection bdd
+// Connection bdd
     try {
         $bdd = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
         $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     } catch (PDOException $e) {
         echo "Connection failed: " . $e->getMessage();
     }
+    
 //Récupération Numéro Etudiant du formulaire
-if (!empty($_POST["numEtu"]) && is_numeric($_POST["numEtu"])) {
-    $id_etu = htmlspecialchars($_POST["numEtu"]);
+if (!empty($_SESSION["id_etu"]) && is_numeric($_SESSION["id_etu"])) {
+    $id_etu = htmlspecialchars($_SESSION['id_etu']);
 } else {
     header('Location: https://noteuniv.fr');
 }
@@ -30,6 +32,7 @@ while ($note = $list_notes->fetch()) { // note = matière + date (nom du PDF)
     array_push($totalNote, $noteEtudiant[0]); // push de ces notes dans le tableau pour moyenne
 }
 $moyenne = array_sum($totalNote) / count($totalNote); // on fait la moyenne : Ensemble des notes du tableau / nbr de note
+$moyenne = round($moyenne, 2)
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -67,7 +70,8 @@ $moyenne = array_sum($totalNote) / count($totalNote); // on fait la moyenne : En
                         echo '<p class="red">Merde, j\'ai foirée, je passe pas :(</p>';
                     }
                     ?>
-                    <p class="btn-logout"><a href="#">Se déconnecter</a></p>
+                    <p class="btn-logout"><a href="last.php">Dernières notes</a></p>
+                    <p class="btn-logout"><a href="https://noteuniv.fr">Se déconnecter</a></p>
                 </div>
             </div>
         </aside>
@@ -76,8 +80,9 @@ $moyenne = array_sum($totalNote) / count($totalNote); // on fait la moyenne : En
             <!-- ANCHOR NOTES -->
             <article class="note">
                 <!-- Phrase différentes selon le viewport, afin de gagner de la place  -->
-                <h1 class="hidden-xs hidden-sm">Retrouvez vos notes avec NoteUniv !</h1>
-                <h1 class="hidden-md hidden-lg hidden-xl">Mes notes</h1>
+                <!-- <h1 class="hidden-xs hidden-sm">Retrouvez vos notes avec NoteUniv !</h1> -->
+                <!-- <h1 class="hidden-md hidden-lg hidden-xl">Mes notes</h1> -->
+                <h1>PAS A JOUR NSM LAISSEZ MOI DORMIR</h1>
 
                 <!-- Menu de navigation pour mobile  -->
                 <div class="row center-xs hidden-sm hidden-md hidden-lg hidden-xl nav">

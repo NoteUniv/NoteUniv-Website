@@ -37,6 +37,9 @@ h2 {
 .green {
     color: #2BE8C6;
 }
+.orange {
+    color: orange;
+}
 .red {
     color: rgb(207, 56, 56);
 }
@@ -152,11 +155,14 @@ h2 {
     height: 35px;
     border-radius: 25px;
     color: white;
-    margin-bottom: 50px;
+    margin-bottom: 5px;
     transition-duration: 1s;
     font-size: 15px;
 }
-
+.btn-logout+.btn-logout {
+    margin-top: 5px;
+    margin-bottom: 50px;
+}
 .btn-logout:hover {
     background-color: #fff;
     border: 2px solid #110133;
@@ -240,7 +246,9 @@ h2 {
     margin-top: 15px;
     padding: 10px;
 }
-
+.all-note:last-child {
+    margin-bottom: 100px;
+}
 .note-par-matiere {
     max-width: 600px;
 }
