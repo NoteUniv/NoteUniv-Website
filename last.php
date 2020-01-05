@@ -62,7 +62,7 @@ $moyenne = round($moyenne, 2)
                     <p class="as-etu">Etudiant</p>
                     <p>N°<?php echo $id_etu; ?></p>
                     <p class="as-small">Je suis actuellement en :</p>
-                    <button class="btn-etu">MMI</button> <br>
+                    <button class="btn-etu"><span class="tippy-note" data-tippy-content="T'as bien fait, c'est les meilleurs ;)">MMI</span></button> <br>
                     <button class="btn-etu">SEMESTRE 1</button>
                     <p class="as-small">Ma moyenne générale est :</p>
                     <button class="btn-moy"><?php echo $moyenne; ?> / 20</button>
@@ -75,7 +75,7 @@ $moyenne = round($moyenne, 2)
                         echo '<p class="red">Merde, j\'ai foirée, c\'est chaud wlh :(</p>';
                     }
                     ?>
-                    <p class="btn-logout"><a href="panel.php">Panel Récapitulatif</a></p>
+                    <p class="btn-logout"><a href="panel.php">Récapitulatif</a></p>
                     <p class="btn-logout"><a href="https://noteuniv.fr">Se déconnecter</a></p>
                 </div>
             </div>
@@ -85,7 +85,7 @@ $moyenne = round($moyenne, 2)
             <!-- ANCHOR NOTES -->
             <section class="note">
                 <!-- Phrase différentes selon le viewport, afin de gagner de la place  -->
-                <h1 class="hidden-xs hidden-sm">Mes dernières Notes :</h1>
+                <h1 class="hidden-xs hidden-sm">Mes dernières Notes </h1>
                 <h1 class="hidden-md hidden-lg hidden-xl">Mes dernière notes</h1>
 
                 <!-- ANCHOR Bandeau de l'UE 1 uniquement PC/Tablette -->
@@ -157,46 +157,48 @@ while ($note = $list_notes->fetch()) { // note = matière + date (nom du PDF)
 
                 <article class="row all-note">
                     <div class="col-sm-2 matiere first-xs">
-                        <p><span><?php echo $matiere; ?></span></p>
+                        <p class='titre-mobile'><?php echo $matiere; ?></p>
                     </div>
                     <!-- Si mobile, on affiche les notes à la fin, et les coef en 2ème  -->
                     <div class="col-sm-6 last-xs initial-order-sm">
                         <div class="row center-sm note-par-matiere">
                             <div class="col-sm col-xs-6">
-                                <p> <span class="hidden-sm hidden-md hidden-lg hidden-xl">Note<br></span>
+                                <p> <span class="hidden-sm hidden-md hidden-lg hidden-xl">Note<br><br></span>
                                     <?php 
                                     if ($noteEtu[0] < 10) {
                                         echo '<span class="red">'.$noteEtu[0].'</span>';
                                     } elseif ($noteEtu[0] < $noteMoyenne) {
                                         echo '<span class="orange">'.$noteEtu[0].'</span>';
+                                    }elseif ($noteEtu[0] == 20) {
+                                        echo '<span class="green tippy-note" data-tippy-content="MAIS TU ES UN DIEU BILLY !">'.$noteEtu[0].'</span>';
                                     }else {
                                         echo '<span class="green">'.$noteEtu[0].'</span>';
                                     }
                                     ?> </p>
                             </div>
                             <div class="col-sm col-xs-6">
-                                <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Moyenne<br></span>
+                                <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Moyenne<br><br></span>
                                 <?php echo $noteMoyenne; ?></p>
                             </div>
                             <div class="col-sm col-xs-6">
-                                <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Note Min<br></span>
+                                <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Note Min<br><br></span>
                                 <?php echo $mini; ?></p>
                             </div>
                             <div class="col-sm col-xs-6">
-                                <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Note Max<br></span>
+                                <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Note Max<br><br></span>
                                 <?php echo $maxi; ?></p>
                                 </a>
                             </div>
                         </div>
                     </div>
                     <div class="col-sm-4">
-                        <div class="row center-xs">
-                            <div class="col-xs-4 col-sm-5">
-                                <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Date: <br></span> <?php echo $date; ?>
+                        <div class="row start-xs center-sm">
+                            <div class="col-xs-12 col-sm-5">
+                                <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Date: </span> <?php echo $date; ?>
                                 </p>
                             </div>
-                            <div class="col-xs-8 col-sm-7">
-                                <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Nom du devoir: <br></span> <?php echo $name; ?></p>
+                            <div class="col-xs-12 col-sm-7">
+                                <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Nom du devoir: </span> <?php echo $name; ?></p>
                             </div>
                         </div>
                     </div>
@@ -209,19 +211,19 @@ while ($note = $list_notes->fetch()) { // note = matière + date (nom du PDF)
     </div>
 
     </div>
-    <footer>
+    <!-- <footer>
         <div class="row center-xs">
             <div class="col-xs-12" style='border-top: 1px solid black;'>
                 <p class="as-small">Made with :heart: By Erosya</p>
             </div>
             
         </div>
-    </footer>
+    </footer> -->
     <!-- SCRIPT EXT -->
     <script src="https://unpkg.com/popper.js@1"></script>
     <script src="https://unpkg.com/tippy.js@5"></script>
     <!-- SCRIPT PERSO -->
-
+    <script src="assets/js/appLast.js"></script>
     <!-- BLOC NOTE   -->
     <?php
 

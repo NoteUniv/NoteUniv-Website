@@ -156,7 +156,7 @@ h2 {
     border-radius: 25px;
     color: white;
     margin-bottom: 5px;
-    transition-duration: 1s;
+    transition-duration: 0.2s;
     font-size: 15px;
 }
 .btn-logout+.btn-logout {
@@ -301,8 +301,20 @@ h2 {
 }
 
 /* ANCHOR Note Mobile */
-.note span {
-    font-weight: bold;
+@media screen and (max-width: 574px) {
+    .titre-mobile{
+        font-size: 20px;
+        text-align: center;
+    }
+    
+}
+@media screen and (max-width: 574px) {
+    .note p{
+        font-weight: bold;
+    }
+    .note span{
+        font-weight: normal;
+    }
 }
 
 @media screen and (max-width: 574px) {

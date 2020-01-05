@@ -135,7 +135,41 @@ $moyenne = round($moyenne, 2)
                         </div>
                     </div>
                 </div>
+                <?php
 
+$sql_all_notes = "SELECT id, name_devoir, name_pdf, note_date, moy, mini, maxi FROM global ORDER BY id DESC";
+$list_notes = $bdd->query($sql_all_notes);
+while ($note = $list_notes->fetch()) { // note = matière + date (nom du PDF)
+    $name = utf8_encode($note['name_devoir']);
+    $pdf = $note['name_pdf'];
+    $date = $note['note_date'];
+    $noteMoyenne = round($note['moy'], 2);
+    $mini = $note['mini'];
+    $maxi = $note['maxi'];
+    $sqlNote = "SELECT note_etu FROM $note[name_pdf] WHERE id_etu = $id_etu";
+    $myNote = $bdd->query($sqlNote);
+    $noteEtu = $myNote->fetch();
+    $tab = explode("_", $pdf);
+    $arrayToReplace = ['1', '2', '3', '4', '5', '-', '_'];
+
+    if (count($tab) > 8) {
+        if (ctype_upper(str_replace($arrayToReplace, '', $tab[5]))) {
+            $matiere = $tab[5];
+        } elseif (ctype_upper(str_replace($arrayToReplace, '', $tab[6]))) {
+            $matiere = $tab[6];
+        }
+    } else {
+        if (ctype_upper(str_replace($arrayToReplace, '', $tab[4]))) {
+            $matiere = $tab[4];
+        } elseif (ctype_upper(str_replace($arrayToReplace, '', $tab[5]))) {
+            $matiere = $tab[5];
+        } elseif (ctype_upper(str_replace($arrayToReplace, '', $tab[6]))) {
+            $matiere = $tab[6];
+        }
+    }
+
+}
+    ?>
                 <!-- ANCHOR Notes par matière 1 -->
                 <div class="row all-note">
                     <div class="col-sm-2 matiere first-xs">
