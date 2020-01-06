@@ -25,22 +25,19 @@ if ((!empty($_POST["numEtu"]) && is_numeric($_POST["numEtu"]))) {
 } else {
     header('Location: https://noteuniv.fr');
 }
-$sql_all_notes = "SELECT name_pdf FROM global";
+$sql_all_notes = "SELECT name_pdf, mini FROM global";
 $list_notes = $bdd->query($sql_all_notes);
 $totalNote = []; // tableau de toutes les notes de l'élève
 while ($note = $list_notes->fetch()) { // note = matière + date (nom du PDF)
     $sqlNote = "SELECT note_etu FROM $note[0] WHERE id_etu = $id_etu";
     $myNote = $bdd->query($sqlNote);
     $noteEtudiant = $myNote->fetch();
-    var_dump($noteEtudiant);
-    var_dump($note[1]);
     if ($noteEtudiant[0] > $note[1]) {
         array_push($totalNote, $noteEtudiant[0]); // push de ces notes dans le tableau pour moyenne
     }
 }
 $moyenne = array_sum($totalNote) / count($totalNote); // on fait la moyenne : Ensemble des notes du tableau / nbr de note
 $moyenne = round($moyenne, 2);
-var_dump($moyenne);
 ?>
 <!DOCTYPE html>
 <html lang="fr">
