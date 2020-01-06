@@ -32,10 +32,15 @@ while ($note = $list_notes->fetch()) { // note = matière + date (nom du PDF)
     $sqlNote = "SELECT note_etu FROM $note[0] WHERE id_etu = $id_etu";
     $myNote = $bdd->query($sqlNote);
     $noteEtudiant = $myNote->fetch();
-    array_push($totalNote, $noteEtudiant[0]); // push de ces notes dans le tableau pour moyenne
+    var_dump($noteEtudiant);
+    var_dump($note[1]);
+    if ($noteEtudiant[0] > $note[1]) {
+        array_push($totalNote, $noteEtudiant[0]); // push de ces notes dans le tableau pour moyenne
+    }
 }
 $moyenne = array_sum($totalNote) / count($totalNote); // on fait la moyenne : Ensemble des notes du tableau / nbr de note
-$moyenne = round($moyenne, 2)
+$moyenne = round($moyenne, 2);
+var_dump($moyenne);
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -62,17 +67,20 @@ $moyenne = round($moyenne, 2)
                     <p class="as-etu">Etudiant</p>
                     <p>N°<?php echo $id_etu; ?></p>
                     <p class="as-small">Je suis actuellement en :</p>
-                    <button class="btn-etu"><span class="tippy-note" data-tippy-content="T'as bien fait, c'est les meilleurs ;)">MMI</span></button> <br>
+                    <button class="btn-etu"><span class="tippy-note"
+                            data-tippy-content="T'as bien fait, c'est les meilleurs ;)">MMI</span></button> <br>
                     <button class="btn-etu">SEMESTRE 1</button>
                     <p class="as-small">Ma moyenne générale est :</p>
                     <button class="btn-moy"><?php echo $moyenne; ?> / 20</button>
                     <?php
-                    if ($moyenne >= 13) {
+                    if ($moyenne >= 15) {
+                        echo '<p class="green">MAIS T\'ES QUEL SORTE DE DIEU AU JUSTE ?!</p>';
+                    }else if ($moyenne >= 13) {
                         echo '<p class="green">Honêtement ? OKLM gros !</p>';
                     } elseif ($moyenne >=10) {
                         echo '<p class="orange">ALLEZZZ ! ça passe tout juste ;)</p>';
                     }else {
-                        echo '<p class="red">Merde, j\'ai foirée, c\'est chaud wlh :(</p>';
+                        echo '<p class="red">Merde, c\'est chaud wlh :(</p>';
                     }
                     ?>
                     <p class="btn-logout"><a href="panel.php">Récapitulatif</a></p>
@@ -165,28 +173,33 @@ while ($note = $list_notes->fetch()) { // note = matière + date (nom du PDF)
                             <div class="col-sm col-xs-6">
                                 <p> <span class="hidden-sm hidden-md hidden-lg hidden-xl">Note<br><br></span>
                                     <?php 
-                                    if ($noteEtu[0] < 10) {
-                                        echo '<span class="red">'.$noteEtu[0].'</span>';
-                                    } elseif ($noteEtu[0] < $noteMoyenne) {
-                                        echo '<span class="orange">'.$noteEtu[0].'</span>';
-                                    }elseif ($noteEtu[0] == 20) {
-                                        echo '<span class="green tippy-note" data-tippy-content="MAIS TU ES UN DIEU BILLY !">'.$noteEtu[0].'</span>';
-                                    }else {
-                                        echo '<span class="green">'.$noteEtu[0].'</span>';
+                                    if ($noteEtu[0] < $mini) {
+                                        echo '<span class="orange tippy-note" data-tippy-content="Hum, mais que c\'est il passé Billy ?">ABS</span>';
+                                    } else {
+                                        if ($noteEtu[0] < 10) {
+                                            echo '<span class="red">'.$noteEtu[0].'</span>';
+                                        } elseif ($noteEtu[0] < $noteMoyenne) {
+                                            echo '<span class="orange">'.$noteEtu[0].'</span>';
+                                        }elseif ($noteEtu[0] == 20) {
+                                            echo '<span class="green tippy-note" data-tippy-content="MAIS TU ES UN DIEU BILLY !">'.$noteEtu[0].'</span>';
+                                        }else {
+                                            echo '<span class="green">'.$noteEtu[0].'</span>';
+                                        }
                                     }
+                                    
                                     ?> </p>
                             </div>
                             <div class="col-sm col-xs-6">
                                 <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Moyenne<br><br></span>
-                                <?php echo $noteMoyenne; ?></p>
+                                    <?php echo $noteMoyenne; ?></p>
                             </div>
                             <div class="col-sm col-xs-6">
                                 <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Note Min<br><br></span>
-                                <?php echo $mini; ?></p>
+                                    <?php echo $mini; ?></p>
                             </div>
                             <div class="col-sm col-xs-6">
                                 <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Note Max<br><br></span>
-                                <?php echo $maxi; ?></p>
+                                    <?php echo $maxi; ?></p>
                                 </a>
                             </div>
                         </div>
@@ -194,15 +207,17 @@ while ($note = $list_notes->fetch()) { // note = matière + date (nom du PDF)
                     <div class="col-sm-4">
                         <div class="row start-xs center-sm">
                             <div class="col-xs-12 col-sm-5">
-                                <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Date: </span> <?php echo $date; ?>
+                                <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Date: </span>
+                                    <?php echo $date; ?>
                                 </p>
                             </div>
                             <div class="col-xs-12 col-sm-7">
-                                <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Nom du devoir: </span> <?php echo $name; ?></p>
+                                <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Nom du devoir: </span>
+                                    <?php echo $name; ?></p>
                             </div>
                         </div>
                     </div>
-                    </article>
+                </article>
                 <?php
             }
  ?>
