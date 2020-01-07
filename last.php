@@ -67,13 +67,13 @@ $moyenne = round($moyenne, 2);
                     <button class="btn-etu"><span class="tippy-note"
                             data-tippy-content="T'as bien fait, c'est les meilleurs ;)">MMI</span></button> <br>
                     <button class="btn-etu">SEMESTRE 1</button>
-                    <p class="as-small">Ma moyenne générale est :</p>
+                    <p class="as-small"><span class="tippy-note" data-tippy-content="<a href='ranking.php'>Besoin de voir ta grandeur ?</a>">Ma moyenne générale est :</span></p>
                     <button class="btn-moy"><?php echo $moyenne; ?> / 20</button>
                     <?php
                     if ($moyenne >= 15) {
                         echo '<p class="green">MAIS T\'ES QUEL SORTE DE DIEU AU JUSTE ?!</p>';
                     }else if ($moyenne >= 13) {
-                        echo '<p class="green">Honêtement ? OKLM gros !</p>';
+                        echo '<p class="green">Honnêtement ? OKLM gros !</p>';
                     } elseif ($moyenne >=10) {
                         echo '<p class="orange">ALLEZZZ ! ça passe tout juste ;)</p>';
                     }else {
@@ -81,7 +81,7 @@ $moyenne = round($moyenne, 2);
                     }
                     ?>
                     <p class="btn-logout"><a href="panel.php">Récapitulatif</a></p>
-                    <p class="btn-logout"><a href="https://noteuniv.fr">Se déconnecter</a></p>
+                    <p class="btn-logout"><a href="https://noteuniv.fr/test/">Se déconnecter</a></p>
                 </div>
             </div>
         </aside>

@@ -3,4 +3,6 @@ tippy('span.tippy-note', {
   arrow: true,
   maxWidth: 1000,
   theme: 'note',
+  allowHTML: true,
+  interactive: true
 });
