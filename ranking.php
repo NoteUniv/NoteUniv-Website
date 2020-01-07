@@ -15,25 +15,13 @@ if (!empty($_SESSION["id_etu"]) && is_numeric($_SESSION["id_etu"])) {
     header('Location: https://noteuniv.fr');
 }
 // Connection bdd
-    try {
-        $bdd = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-        $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    } catch (PDOException $e) {
-        echo "Connection failed: " . $e->getMessage();
-    }
-    $sql_all_notes = "SELECT name_pdf, mini FROM global";
-    $list_notes = $bdd->query($sql_all_notes);
-    $totalNote = []; // tableau de toutes les notes de l'élève
-    while ($note = $list_notes->fetch()) { // note = matière + date (nom du PDF)
-        $sqlNote = "SELECT note_etu FROM $note[0] WHERE id_etu = $id_etu";
-        $myNote = $bdd->query($sqlNote);
-        $noteEtudiant = $myNote->fetch();
-        if ($noteEtudiant[0] > $note[1]) {
-            array_push($totalNote, $noteEtudiant[0]); // push de ces notes dans le tableau pour moyenne
-        }
-    }
-    $moyenne = array_sum($totalNote) / count($totalNote); // on fait la moyenne : Ensemble des notes du tableau / nbr de note
-    $moyenne = round($moyenne, 2);
+try {
+    $bdd = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+    $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    echo "Connection failed: " . $e->getMessage();
+}
+include "assets/include/moy.php";
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -82,7 +70,7 @@ if (!empty($_SESSION["id_etu"]) && is_numeric($_SESSION["id_etu"])) {
             </div>
         </aside>
         <!-- ANCHOR LEFT SIDE -->
-        <div class="col-lg-8 col-sm-12">
+        <div class="col-lg-9 col-sm-12">
             <!-- ANCHOR NOTES -->
             <section class="note">
                 <!-- Phrase différentes selon le viewport, afin de gagner de la place  -->
@@ -91,10 +79,10 @@ if (!empty($_SESSION["id_etu"]) && is_numeric($_SESSION["id_etu"])) {
 
                 <!-- ANCHOR Bandeau de l'UE 1 uniquement PC/Tablette -->
                 <div class="row ue-tab hidden-xs">
-                    <div class="col-sm-3 ue-nbr">
+                    <div class="col-sm-2 ue-nbr">
                         <p>Rang</p>
                     </div>
-                    <div class="col-sm-9">
+                    <div class="col-sm-6">
                         <div class="row note-overlay center-sm">
                             <div class="col-sm">
                                 <p>Moyenne</p>
@@ -104,12 +92,15 @@ if (!empty($_SESSION["id_etu"]) && is_numeric($_SESSION["id_etu"])) {
                             </div>
                         </div>
                     </div>
+                    <div class="col-sm-4 center-sm">
+                    <p>Récompense</p>
+                    </div>
                 </div>
 
                 <!-- ANCHOR Notes -->
                 <?php
 
-$sqlMoy = $bdd->query("SELECT num_etu, note FROM ranking ORDER BY note DESC");
+$sqlMoy = $bdd->query("SELECT id_etu, moy_etu FROM ranking ORDER BY moy_etu DESC");
 $i = 1;
 while ($moy = $sqlMoy->fetch()) {
 //  echo "$i : $moy[0] -> $moy[1] <br>";
@@ -117,23 +108,27 @@ while ($moy = $sqlMoy->fetch()) {
 ?>
 
                 <article class="row all-note">
-                    <div class="col-sm-3 matiere first-xs">
+                    <div class="col-sm-2 matiere first-xs">
                         <p class='titre-mobile'><?php
                          if ($i<4) {
-                             echo '<span class="green">'.$i.'</span>';
+                            if ($i==1) {
+                                echo '<span class="green tippy-note" data-tippy-content="Mieux que les TOP1 Fortnite non ?">'.$i.'</span>';
+                             } else {
+                                echo '<span class="green">'.$i.'</span>';
+                             }
                          } else {
                              echo $i;
                          }
                          ?></p>
                     </div>
                     <!-- Si mobile, on affiche les notes à la fin, et les coef en 2ème  -->
-                    <div class="col-sm-9 last-xs initial-order-sm">
+                    <div class="col-sm-6 last-xs initial-order-sm">
                         <div class="row center-sm note-par-matiere">
                             <div class="col-sm col-xs">
                                 <p> <span class="hidden-sm hidden-md hidden-lg hidden-xl">Moyenne<br><br></span>
                                     <?php 
                                     if ($moy[1] == $moyenne) {
-                                        echo '<span class="green tippy-note" data-tippy-content="C\'est toi gros ! J\'espère que sa te va :)">'.$moy[1].'</span>';
+                                        echo '<span class="green tippy-note" data-tippy-content="C\'est toi gros ! J\'espère que ça te va :)">'.$moy[1].'</span>';
                                     } else {
                                         echo $moy[1];
                                     }
@@ -145,6 +140,25 @@ while ($moy = $sqlMoy->fetch()) {
                             </div>
                         </div>
                     </div>
+                    <?php
+                    switch ($i) {
+                        case '1':
+                            print('<div class="col-sm-4 center-sm last-xs"><p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Récompense : </span>1000 Erya</p></div>');
+                            break;
+                        case '2':
+                            print('<div class="col-sm-4 center-sm last-xs"><p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Récompense : </span>500 Erya</p></div>');
+                            break;
+                        case '3':
+                            print('<div class="col-sm-4 center-sm last-xs"><p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Récompense : </span>250 Erya</p></div>');
+                            break;
+                        case '4':
+                            print('<div class="col-sm-4 center-sm last-xs"><p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Récompense : </span><span class="tippy-note" data-tippy-content="CHECH">LE SEUM</span></p></div>');
+                            break;
+                        default:
+                            print('<div class="col-sm-4 center-sm last-xs"><p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Récompense : </span>Aucune</p></div>');
+                            break;
+                    }
+                    ?>
                 </article>
                 <?php
                 $i++;

@@ -9,13 +9,12 @@ $dbname = getenv('DBNAME');
 $username = getenv('USER');
 $password = getenv('PASSWORD');
 // Connection bdd
-    try {
-        $bdd = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-        $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    } catch (PDOException $e) {
-        echo "Connection failed: " . $e->getMessage();
-    }
-    
+try {
+    $bdd = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+    $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    echo "Connection failed: " . $e->getMessage();
+}
 //Récupération Numéro Etudiant du formulaire
 if ((!empty($_POST["numEtu"]) && is_numeric($_POST["numEtu"]))) {
     $id_etu = htmlspecialchars($_POST["numEtu"]);
@@ -25,19 +24,7 @@ if ((!empty($_POST["numEtu"]) && is_numeric($_POST["numEtu"]))) {
 } else {
     header('Location: https://noteuniv.fr');
 }
-$sql_all_notes = "SELECT name_pdf, mini FROM global";
-$list_notes = $bdd->query($sql_all_notes);
-$totalNote = []; // tableau de toutes les notes de l'élève
-while ($note = $list_notes->fetch()) { // note = matière + date (nom du PDF)
-    $sqlNote = "SELECT note_etu FROM $note[0] WHERE id_etu = $id_etu";
-    $myNote = $bdd->query($sqlNote);
-    $noteEtudiant = $myNote->fetch();
-    if ($noteEtudiant[0] > $note[1]) {
-        array_push($totalNote, $noteEtudiant[0]); // push de ces notes dans le tableau pour moyenne
-    }
-}
-$moyenne = array_sum($totalNote) / count($totalNote); // on fait la moyenne : Ensemble des notes du tableau / nbr de note
-$moyenne = round($moyenne, 2);
+include "assets/include/moy.php";
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -117,7 +104,7 @@ $moyenne = round($moyenne, 2);
                     <div class="col-sm-4">
                         <div class="row center-sm">
                             <div class="col-sm-5">
-                                <p>Date</p>
+                                <p>Coeff</p>
                             </div>
                             <div class="col-sm-7">
                                 <p>Nom du devoir</p>
@@ -128,41 +115,32 @@ $moyenne = round($moyenne, 2);
 
                 <!-- ANCHOR Notes -->
                 <?php
-
-$sql_all_notes = "SELECT id, name_devoir, name_pdf, note_date, moy, mini, maxi FROM global ORDER BY id DESC";
+$sql_all_notes = "SELECT name_devoir, name_pdf, note_date, moy, mini, maxi, note_code, note_coeff FROM global ORDER BY note_date DESC";
 $list_notes = $bdd->query($sql_all_notes);
 while ($note = $list_notes->fetch()) { // note = matière + date (nom du PDF)
     $name = utf8_encode($note['name_devoir']);
     $pdf = $note['name_pdf'];
-    $date = $note['note_date'];
     $noteMoyenne = round($note['moy'], 2);
     $mini = $note['mini'];
     $maxi = $note['maxi'];
+    $coeff = $note['note_coeff'];
+    $matiere = $note['note_code'];
     $sqlNote = "SELECT note_etu FROM $note[name_pdf] WHERE id_etu = $id_etu";
     $myNote = $bdd->query($sqlNote);
     $noteEtu = $myNote->fetch();
-    $tab = explode("_", $pdf);
-    $arrayToReplace = ['1', '2', '3', '4', '5', '-', '_'];
-    if (count($tab) > 8) {
-        if (ctype_upper(str_replace($arrayToReplace, '', $tab[5]))) {
-            $matiere = $tab[5];
-        } elseif (ctype_upper(str_replace($arrayToReplace, '', $tab[6]))) {
-            $matiere = $tab[6];
-        }
-    } else {
-        if (ctype_upper(str_replace($arrayToReplace, '', $tab[4]))) {
-            $matiere = $tab[4];
-        } elseif (ctype_upper(str_replace($arrayToReplace, '', $tab[5]))) {
-            $matiere = $tab[5];
-        } elseif (ctype_upper(str_replace($arrayToReplace, '', $tab[6]))) {
-            $matiere = $tab[6];
-        }
-    }
     ?>
 
                 <article class="row all-note">
                     <div class="col-sm-2 matiere first-xs">
-                        <p class='titre-mobile'><?php echo $matiere; ?></p>
+                        <p class='titre-mobile'><?php 
+                        if (preg_match("/AV?/", $matiere)) {
+                            ?> 
+                            <span class="tippy-note" data-tippy-content="<a href='https://youtu.be/CobknKR0t6k' target='_BLANK' class'green'>Tu veux voir un vrai truc en AV ? Clique !</a>"><?php echo $matiere?></span>
+                            <?php
+                        } else {
+                            echo $matiere;
+                        }
+                        ?></p>
                     </div>
                     <!-- Si mobile, on affiche les notes à la fin, et les coef en 2ème  -->
                     <div class="col-sm-6 last-xs initial-order-sm">
@@ -183,7 +161,6 @@ while ($note = $list_notes->fetch()) { // note = matière + date (nom du PDF)
                                             echo '<span class="green">'.$noteEtu[0].'</span>';
                                         }
                                     }
-                                    
                                     ?> </p>
                             </div>
                             <div class="col-sm col-xs-6">
@@ -203,12 +180,12 @@ while ($note = $list_notes->fetch()) { // note = matière + date (nom du PDF)
                     </div>
                     <div class="col-sm-4">
                         <div class="row start-xs center-sm">
-                            <div class="col-xs-12 col-sm-5">
-                                <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Date: </span>
-                                    <?php echo $date; ?>
+                            <div class="col-xs-12 col-sm-5 first-sm">
+                                <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Coeff: </span>
+                                    <?php echo $coeff; ?>
                                 </p>
                             </div>
-                            <div class="col-xs-12 col-sm-7">
+                            <div class="col-xs-12 col-sm-7 first-xs">
                                 <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Nom du devoir: </span>
                                     <?php echo $name; ?></p>
                             </div>
@@ -236,23 +213,6 @@ while ($note = $list_notes->fetch()) { // note = matière + date (nom du PDF)
     <script src="https://unpkg.com/tippy.js@5"></script>
     <!-- SCRIPT PERSO -->
     <script src="assets/js/appLast.js"></script>
-    <!-- BLOC NOTE   -->
-    <?php
-
-    // $sql_all_notes = "SELECT name_pdf FROM global";
-    // $list_notes = $bdd->query($sql_all_notes);
-    // $totalNote = []; // tableau de toutes les notes de l'élève
-    // while ($note = $list_notes->fetch()) { // note = matière + date (nom du PDF)
-    //     $sqlNote = "SELECT note_etu FROM $note[0] WHERE id_etu = $id_etu";
-    //     $myNote = $bdd->query($sqlNote);
-    //     $noteEtudiant = $myNote->fetch();
-
-    //     echo $note[0] . " -> " . $noteEtudiant[0] . "<br>";
-    //     array_push($totalNote, $noteEtudiant[0]); // push de ces notes dans le tableau pour moyenne
-    // }
-    // $moyenne = array_sum($totalNote) / count($totalNote); // on fait la moyenne : Ensemble des notes du tableau / nbr de note
-    // echo "<br> <p> Votre Moyenne est de : <strong> " . $moyenne . "</strong>";
-    ?>
 </body>
 
 </html>

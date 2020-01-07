@@ -274,6 +274,9 @@ h2 {
     border-radius: 30px;
     padding: 10px;
 }
+.tippy-tooltip.note-theme a{
+    color: #fff;
+}
 
 .tippy-tooltip.note-theme .btn-etu {
     border-radius: 15px;

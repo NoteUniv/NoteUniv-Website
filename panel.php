@@ -137,7 +137,7 @@ $moyenne = round($moyenne, 2)
                 </div>
                 <?php
 
-$sql_all_notes = "SELECT id, name_devoir, name_pdf, note_date, moy, mini, maxi FROM global ORDER BY id DESC";
+$sql_all_notes = "SELECT id, name_devoir, name_pdf, note_date, moy, mini, maxi FROM global ORDER BY note_date DESC";
 $list_notes = $bdd->query($sql_all_notes);
 while ($note = $list_notes->fetch()) { // note = matière + date (nom du PDF)
     $name = utf8_encode($note['name_devoir']);
