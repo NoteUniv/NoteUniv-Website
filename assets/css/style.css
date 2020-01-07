@@ -1,6 +1,6 @@
- @font-face {
+@font-face {
     font-family: "Montserrat";
-    src: url("fonts/Montserrat-SemiBold.ttf");
+    src: url("../fonts/Montserrat-SemiBold.ttf");
     font-weight: normal;
     font-style: normal;
 }
@@ -46,9 +46,8 @@ body {
     margin: 7vh auto;
 }
 
-input[type="number"],
 .input {
-    width: 90%;
+    width: 85%;
     height: 50px;
     display: inline-block;
     padding-left: 20px;
@@ -67,9 +66,8 @@ input[type="number"],
     outline: none;
 }
 
-.input {
+.out {
     margin: 8px 0;
-    padding: 0;
     width: 25vw;
 }
 
@@ -92,7 +90,5 @@ input::placeholder {
 }
 
 .logo-etu {
-    top: -83px;
-    left: 996px;
-    position: absolute;
+    height: auto;
 }
