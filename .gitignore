@@ -23,5 +23,14 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-+other/
-pwd.php
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
++extra/
+bdd.php
