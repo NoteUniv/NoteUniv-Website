@@ -1,5 +1,19 @@
 <?php
-include("bdd.php");
+require "vendor/autoload.php";
+// recupération des variables d'environnement
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+$servername = getenv('SERVERNAME');
+$dbname = getenv('DBNAME');
+$username = getenv('USER');
+$password = getenv('PASSWORD');
+// Connection bdd
+try {
+    $bdd = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+    $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    echo "Connection failed: " . $e->getMessage();
+}
 
 $id_etu_sent = $_GET["num_etu"];
 

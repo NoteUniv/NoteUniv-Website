@@ -23,10 +23,6 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-+other/
-pwd.php
-/vendor
-=======
 # Environments
 .env
 .venv
@@ -35,7 +31,10 @@ venv/
 ENV/
 env.bak/
 venv.bak/
-.vscode
 
+# VS Code
+.code
+
+vendor/
 +extra/
-bdd.php
+assets/include/bdd_old.php
