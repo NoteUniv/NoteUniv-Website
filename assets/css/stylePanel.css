@@ -34,15 +34,19 @@ h2 {
 .btn-etu {
     background-color: #433B52;
 }
+
 .green {
     color: #2BE8C6;
 }
+
 .orange {
     color: orange;
 }
+
 .red {
     color: rgb(207, 56, 56);
 }
+
 /* CARD-aside  */
 .card {
     margin-top: 10px;
@@ -124,9 +128,11 @@ h2 {
 .card a {
     color: white;
 }
+
 .card .as-small+.btn-etu {
     margin-top: 0;
 }
+
 .card .btn-etu {
     margin-top: 10px;
 }
@@ -159,10 +165,12 @@ h2 {
     transition-duration: 0.2s;
     font-size: 15px;
 }
+
 .btn-logout+.btn-logout {
     margin-top: 5px;
     margin-bottom: 50px;
 }
+
 .btn-logout:hover {
     background-color: #fff;
     border: 2px solid #110133;
@@ -246,9 +254,11 @@ h2 {
     margin-top: 15px;
     padding: 10px;
 }
+
 .all-note:last-child {
     margin-bottom: 100px;
 }
+
 .note-par-matiere {
     max-width: 600px;
 }
@@ -274,48 +284,57 @@ h2 {
     border-radius: 30px;
     padding: 10px;
 }
-.tippy-tooltip.note-theme a{
+
+.tippy-tooltip.note-theme a {
     color: #fff;
 }
 
 .tippy-tooltip.note-theme .btn-etu {
     border-radius: 15px;
 }
+
 .tippy-tooltip.note-theme .separation-note {
     margin-top: -10px;
 }
+
 @media screen and (max-width: 400px) {
     .tippy-tooltip.note-theme .separation-note {
         margin-top: 0px;
     }
 }
+
 .tippy-tooltip.note-theme .promo-note p {
     line-height: 200%;
 }
+
 .tippy-tooltip.note-theme .btn-etu p {
     padding: 10px 10px;
 }
+
 .tippy-tooltip.note-theme .user-note .b+p {
     margin-top: -10px;
     margin-bottom: 25px;
 }
+
 .popup {
     display: none;
 }
 
 /* ANCHOR Note Mobile */
 @media screen and (max-width: 574px) {
-    .titre-mobile{
+    .titre-mobile {
         font-size: 20px;
         text-align: center;
     }
-    
+
 }
+
 @media screen and (max-width: 574px) {
-    .note p{
+    .note p {
         font-weight: bold;
     }
-    .note span{
+
+    .note span {
         font-weight: normal;
     }
 }

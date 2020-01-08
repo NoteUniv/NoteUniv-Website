@@ -59,16 +59,17 @@ body {
     -o-border-radius: 32px;
     box-sizing: border-box;
     resize: none;
+    background-color: transparent;
     font-family: "Montserrat";
     font-size: 24px;
     user-select: none;
-    background-color: white;
     outline: none;
 }
 
 .out {
     margin: 8px 0;
     width: 25vw;
+    background-color: white;
 }
 
 input::placeholder {
@@ -77,7 +78,7 @@ input::placeholder {
     font-size: 24px;
 }
 
-#submit {
+#submitForm {
     color: #110133;
     opacity: 0.5;
     padding: 12px 6px;
@@ -87,8 +88,4 @@ input::placeholder {
     position: absolute;
     color: white;
     bottom: 60px;
-}
-
-.logo-etu {
-    height: auto;
 }

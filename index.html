@@ -19,11 +19,11 @@
             <img class="logo-img" src="assets/images/logo_noteuniv_icon.svg" alt="Logo NoteUniv">
             <img class="logo-txt" src="assets/images/logo_noteuniv_text.svg" alt="Logo Texte">
             <p class="desc">Votre nouvel espace pour retrouver vos notes plus<br>facilement et savoir si vous passez votre semestre !</p>
-            <form action="panel.php" id="sendID" method="POST">
-                <div class="input out">
-                    <input type="text" name="numEtu" class="input" id="numEtu" required placeholder="Entrez votre numéro étudiant">
-                    <span id="submit" onclick="submitForm()"><i class="fas fa-arrow-right"></i></span>
-                    <p id="message"></p>
+            <form action="last.php" id="sendID" method="POST">
+                <div id="inputAll" class="input out">
+                    <input id="numEtu" name="numEtu" type="number" class="input" required placeholder="Entrez votre numéro étudiant">
+                    <span id="submitForm" onclick="submitForm()"><i class="fas fa-arrow-right"></i></span>
+                    <p id="ShowMessage"></p>
                 </div>
             </form>
             <p class="sponso">Ce service est proposé par Erosya pour tous les étudiants de l'IUT de Haguenau.</p>
@@ -32,7 +32,6 @@
             <img class="logo-etu" src="assets/images/background_image.webp" alt="Logo étudiants">
         </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="assets/js/index.js"></script>
 </body>
 

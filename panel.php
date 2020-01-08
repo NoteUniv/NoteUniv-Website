@@ -1,21 +1,21 @@
 <?php
 session_start();
 require "vendor/autoload.php";
-// recupération des variables d'environnement
+// Recupération des variables d'environnement
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 $servername = getenv('SERVERNAME');
 $dbname = getenv('DBNAME');
 $username = getenv('USER');
 $password = getenv('PASSWORD');
-// Connection bdd
-    try {
-        $bdd = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-        $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    } catch (PDOException $e) {
-        echo "Connection failed: " . $e->getMessage();
-    }
-    
+// Connexion bdd
+try {
+    $bdd = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+    $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    echo "Connection failed: " . $e->getMessage();
+}
+
 //Récupération Numéro Etudiant du formulaire
 if (!empty($_SESSION["id_etu"]) && is_numeric($_SESSION["id_etu"])) {
     $id_etu = htmlspecialchars($_SESSION['id_etu']);
@@ -137,39 +137,38 @@ $moyenne = round($moyenne, 2)
                 </div>
                 <?php
 
-$sql_all_notes = "SELECT id, name_devoir, name_pdf, note_date, moy, mini, maxi FROM global ORDER BY note_date DESC";
-$list_notes = $bdd->query($sql_all_notes);
-while ($note = $list_notes->fetch()) { // note = matière + date (nom du PDF)
-    $name = utf8_encode($note['name_devoir']);
-    $pdf = $note['name_pdf'];
-    $date = $note['note_date'];
-    $noteMoyenne = round($note['moy'], 2);
-    $mini = $note['mini'];
-    $maxi = $note['maxi'];
-    $sqlNote = "SELECT note_etu FROM $note[name_pdf] WHERE id_etu = $id_etu";
-    $myNote = $bdd->query($sqlNote);
-    $noteEtu = $myNote->fetch();
-    $tab = explode("_", $pdf);
-    $arrayToReplace = ['1', '2', '3', '4', '5', '-', '_'];
+                $sql_all_notes = "SELECT id, name_devoir, name_pdf, note_date, moy, mini, maxi FROM global ORDER BY note_date DESC";
+                $list_notes = $bdd->query($sql_all_notes);
+                while ($note = $list_notes->fetch()) { // note = matière + date (nom du PDF)
+                    $name = utf8_encode($note['name_devoir']);
+                    $pdf = $note['name_pdf'];
+                    $date = $note['note_date'];
+                    $noteMoyenne = round($note['moy'], 2);
+                    $mini = $note['mini'];
+                    $maxi = $note['maxi'];
+                    $sqlNote = "SELECT note_etu FROM $note[name_pdf] WHERE id_etu = $id_etu";
+                    $myNote = $bdd->query($sqlNote);
+                    $noteEtu = $myNote->fetch();
+                    $tab = explode("_", $pdf);
+                    $arrayToReplace = ['1', '2', '3', '4', '5', '-', '_'];
 
-    if (count($tab) > 8) {
-        if (ctype_upper(str_replace($arrayToReplace, '', $tab[5]))) {
-            $matiere = $tab[5];
-        } elseif (ctype_upper(str_replace($arrayToReplace, '', $tab[6]))) {
-            $matiere = $tab[6];
-        }
-    } else {
-        if (ctype_upper(str_replace($arrayToReplace, '', $tab[4]))) {
-            $matiere = $tab[4];
-        } elseif (ctype_upper(str_replace($arrayToReplace, '', $tab[5]))) {
-            $matiere = $tab[5];
-        } elseif (ctype_upper(str_replace($arrayToReplace, '', $tab[6]))) {
-            $matiere = $tab[6];
-        }
-    }
-
-}
-    ?>
+                    if (count($tab) > 8) {
+                        if (ctype_upper(str_replace($arrayToReplace, '', $tab[5]))) {
+                            $matiere = $tab[5];
+                        } elseif (ctype_upper(str_replace($arrayToReplace, '', $tab[6]))) {
+                            $matiere = $tab[6];
+                        }
+                    } else {
+                        if (ctype_upper(str_replace($arrayToReplace, '', $tab[4]))) {
+                            $matiere = $tab[4];
+                        } elseif (ctype_upper(str_replace($arrayToReplace, '', $tab[5]))) {
+                            $matiere = $tab[5];
+                        } elseif (ctype_upper(str_replace($arrayToReplace, '', $tab[6]))) {
+                            $matiere = $tab[6];
+                        }
+                    }
+                }
+                ?>
                 <!-- ANCHOR Notes par matière 1 -->
                 <div class="row all-note">
                     <div class="col-sm-2 matiere first-xs">
@@ -179,24 +178,28 @@ while ($note = $list_notes->fetch()) { // note = matière + date (nom du PDF)
                     <div class="col-sm-6 last-xs initial-order-sm">
                         <div class="row center-sm note-par-matiere">
                             <div class="col-sm col-xs-6">
-                                <a href="javascript:void(0);" data-template="ang1" class="tippy-note"><p> <span
-                                            class="hidden-sm hidden-md hidden-lg hidden-xl">Note 1<br></span>
-                                        12 </p></a>
+                                <a href="javascript:void(0);" data-template="ang1" class="tippy-note">
+                                    <p> <span class="hidden-sm hidden-md hidden-lg hidden-xl">Note 1<br></span>
+                                        12 </p>
+                                </a>
                             </div>
                             <div class="col-sm col-xs-6">
-                                <a href="javascript:void(0);" data-template="ang2" class="tippy-note"><p><span
-                                            class="hidden-sm hidden-md hidden-lg hidden-xl">Note 2<br></span>
-                                        14</p></a>
+                                <a href="javascript:void(0);" data-template="ang2" class="tippy-note">
+                                    <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Note 2<br></span>
+                                        14</p>
+                                </a>
                             </div>
                             <div class="col-sm col-xs-6">
-                                <a href="javascript:void(0);" data-template="ang3" class="tippy-note"><p><span
-                                            class="hidden-sm hidden-md hidden-lg hidden-xl">Note 3<br></span>
-                                        /</p></a>
+                                <a href="javascript:void(0);" data-template="ang3" class="tippy-note">
+                                    <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Note 3<br></span>
+                                        /</p>
+                                </a>
                             </div>
                             <div class="col-sm col-xs-6">
-                                <a href="javascript:void(0);" data-template="ang4" class="tippy-note"><p><span
-                                            class="hidden-sm hidden-md hidden-lg hidden-xl">Note 4<br></span>
-                                        /</p></a>
+                                <a href="javascript:void(0);" data-template="ang4" class="tippy-note">
+                                    <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Note 4<br></span>
+                                        /</p>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -207,19 +210,19 @@ while ($note = $list_notes->fetch()) { // note = matière + date (nom du PDF)
                         <div id="ang1">
                             <div class="user-note">
                                 <h2 class="note-header">Détails de la note</h2>
-                            <p class="b">Nom du devoir / Module :</p>
-                            <p>Tp évalué "Mise en réseau et partage de documents"</p>
-                            <p class="b">Enseignant :</p>
-                            <p>Loux dominique / Dieb Eric</p>
-                            <p class="b">Date de l'épreuve :</p>
-                            <p>Non renseignée</p>
-                            <p class="b">Type de note :</p>
-                            <p>note unique</p>
-                            <p class="b">Type d'épreuve : </p>
-                            <p>Autre</p>
-                            <h2 class="note-header">Et ma promo alors ?</h2>
+                                <p class="b">Nom du devoir / Module :</p>
+                                <p>Tp évalué "Mise en réseau et partage de documents"</p>
+                                <p class="b">Enseignant :</p>
+                                <p>Loux dominique / Dieb Eric</p>
+                                <p class="b">Date de l'épreuve :</p>
+                                <p>Non renseignée</p>
+                                <p class="b">Type de note :</p>
+                                <p>note unique</p>
+                                <p class="b">Type d'épreuve : </p>
+                                <p>Autre</p>
+                                <h2 class="note-header">Et ma promo alors ?</h2>
                             </div>
-                            
+
                             <div class="promo-note">
                                 <div class="row center-xs">
                                     <div class="col-sm-3 col-xs-6">
@@ -337,24 +340,28 @@ while ($note = $list_notes->fetch()) { // note = matière + date (nom du PDF)
                     <div class="col-sm-6 last-xs initial-order-sm">
                         <div class="row center-sm note-par-matiere">
                             <div class="col-sm col-xs-6">
-                                <a href="javascript:void(0);" data-template="av1" class="tippy-note"><p> <span
-                                            class="hidden-sm hidden-md hidden-lg hidden-xl">Note 1<br></span>
-                                        12 </p></a>
+                                <a href="javascript:void(0);" data-template="av1" class="tippy-note">
+                                    <p> <span class="hidden-sm hidden-md hidden-lg hidden-xl">Note 1<br></span>
+                                        12 </p>
+                                </a>
                             </div>
                             <div class="col-sm col-xs-6">
-                                <a href="javascript:void(0);" data-template="av2" class="tippy-note"><p><span
-                                            class="hidden-sm hidden-md hidden-lg hidden-xl">Note 2<br></span>
-                                        14</p></a>
+                                <a href="javascript:void(0);" data-template="av2" class="tippy-note">
+                                    <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Note 2<br></span>
+                                        14</p>
+                                </a>
                             </div>
                             <div class="col-sm col-xs-6">
-                                <a href="javascript:void(0);" data-template="av3" class="tippy-note"><p><span
-                                            class="hidden-sm hidden-md hidden-lg hidden-xl">Note 3<br></span>
-                                        /</p></a>
+                                <a href="javascript:void(0);" data-template="av3" class="tippy-note">
+                                    <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Note 3<br></span>
+                                        /</p>
+                                </a>
                             </div>
                             <div class="col-sm col-xs-6">
-                                <a href="javascript:void(0);" data-template="av4" class="tippy-note"><p><span
-                                            class="hidden-sm hidden-md hidden-lg hidden-xl">Note 4<br></span>
-                                        /</p></a>
+                                <a href="javascript:void(0);" data-template="av4" class="tippy-note">
+                                    <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Note 4<br></span>
+                                        /</p>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -365,19 +372,19 @@ while ($note = $list_notes->fetch()) { // note = matière + date (nom du PDF)
                         <div id="av1">
                             <div class="user-note">
                                 <h2 class="note-header">Détails de la note</h2>
-                            <p class="b">Nom du devoir / Module :</p>
-                            <p>Tp évalué "Mise en réseau et partage de documents"</p>
-                            <p class="b">Enseignant :</p>
-                            <p>Loux dominique / Dieb Eric</p>
-                            <p class="b">Date de l'épreuve :</p>
-                            <p>Non renseignée</p>
-                            <p class="b">Type de note :</p>
-                            <p>note unique</p>
-                            <p class="b">Type d'épreuve : </p>
-                            <p>Autre</p>
-                            <h2 class="note-header">Et ma promo alors ?</h2>
+                                <p class="b">Nom du devoir / Module :</p>
+                                <p>Tp évalué "Mise en réseau et partage de documents"</p>
+                                <p class="b">Enseignant :</p>
+                                <p>Loux dominique / Dieb Eric</p>
+                                <p class="b">Date de l'épreuve :</p>
+                                <p>Non renseignée</p>
+                                <p class="b">Type de note :</p>
+                                <p>note unique</p>
+                                <p class="b">Type d'épreuve : </p>
+                                <p>Autre</p>
+                                <h2 class="note-header">Et ma promo alors ?</h2>
                             </div>
-                            
+
                             <div class="promo-note">
                                 <div class="row center-xs">
                                     <div class="col-sm-3 col-xs-6">
@@ -499,7 +506,7 @@ while ($note = $list_notes->fetch()) { // note = matière + date (nom du PDF)
     </div>
 
     </div>
-        <!-- SCRIPT EXT -->
+    <!-- SCRIPT EXT -->
     <script src="https://unpkg.com/popper.js@1"></script>
     <script src="https://unpkg.com/tippy.js@5"></script>
     <!-- SCRIPT PERSO -->

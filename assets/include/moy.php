@@ -15,4 +15,3 @@ while ($note = $list_notes->fetch()) { // note = matière + date (nom du PDF)
 }
 $moyenne = array_sum($totalNote) / array_sum($totalCoeff); // on fait la moyenne : Ensemble des notes du tableau / tot de coeff
 $moyenne = round($moyenne, 2);
-?>
