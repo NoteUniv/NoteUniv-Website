@@ -1,14 +1,15 @@
 <?php
 session_start();
 require "vendor/autoload.php";
-// Recupération des variables d'environnement
+// Récupération des variables d'environnement
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 $servername = getenv('SERVERNAME');
 $dbname = getenv('DBNAME');
 $username = getenv('USER');
 $password = getenv('PASSWORD');
-// Connexion bdd
+
+// Connection bdd
 try {
     $bdd = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
     $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -68,7 +69,7 @@ include "assets/include/moy.php";
                     }
                     ?>
                     <p class="btn-logout"><a href="panel.php">Récapitulatif</a></p>
-                    <p class="btn-logout"><a href="https://noteuniv.fr/test/">Se déconnecter</a></p>
+                    <p class="btn-logout"><a href="https://noteuniv.fr/">Se déconnecter</a></p>
                 </div>
             </div>
         </aside>
@@ -115,7 +116,7 @@ include "assets/include/moy.php";
 
                 <!-- ANCHOR Notes -->
                 <?php
-                $sql_all_notes = "SELECT name_devoir, name_pdf, note_date, moy, mini, maxi, note_code, note_coeff FROM global ORDER BY note_date DESC";
+                $sql_all_notes = "SELECT name_devoir, name_pdf, note_date, moy, mini, maxi, note_code, note_coeff, type_note FROM global ORDER BY note_date DESC";
                 $list_notes = $bdd->query($sql_all_notes);
                 while ($note = $list_notes->fetch()) { // note = matière + date (nom du PDF)
                     $name = utf8_encode($note['name_devoir']);
@@ -125,6 +126,7 @@ include "assets/include/moy.php";
                     $maxi = $note['maxi'];
                     $coeff = $note['note_coeff'];
                     $matiere = $note['note_code'];
+                    $type = $note['type_note'];
                     $sqlNote = "SELECT note_etu FROM $note[name_pdf] WHERE id_etu = $id_etu";
                     $myNote = $bdd->query($sqlNote);
                     $noteEtu = $myNote->fetch();
@@ -133,10 +135,12 @@ include "assets/include/moy.php";
                     <article class="row all-note">
                         <div class="col-sm-2 matiere first-xs">
                             <p class='titre-mobile'><?php
-                                                    if (preg_match("/AV?/", $matiere)) {
+                                                    if (preg_match("/AV1?/", $matiere)) {
                                                     ?>
                                     <span class="tippy-note" data-tippy-content="<a href='https://youtu.be/CobknKR0t6k' target='_BLANK' class'green'>Tu veux voir un vrai truc en AV ? Clique !</a>"><?php echo $matiere ?></span>
                                 <?php
+                                                    } else if ($type !== "Note unique") {
+                                                        echo '<span class="orange tippy-note" data-tippy-content="Note Intermédiaire. Pas pris en compte dans la moyenne. Uniquement pour affichage">' . $matiere . '</span>';
                                                     } else {
                                                         echo $matiere;
                                                     }

@@ -1,14 +1,15 @@
 <?php
 session_start();
 require "vendor/autoload.php";
-// Recupération des variables d'environnement
+// Récupération des variables d'environnement
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 $servername = getenv('SERVERNAME');
 $dbname = getenv('DBNAME');
 $username = getenv('USER');
 $password = getenv('PASSWORD');
-// Connexion bdd
+
+// Connection bdd
 try {
     $bdd = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
     $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -16,23 +17,14 @@ try {
     echo "Connection failed: " . $e->getMessage();
 }
 
-//Récupération Numéro Etudiant du formulaire
+// Récupération Numéro Etudiant du formulaire
 if (!empty($_SESSION["id_etu"]) && is_numeric($_SESSION["id_etu"])) {
     $id_etu = htmlspecialchars($_SESSION['id_etu']);
 } else {
     header('Location: https://noteuniv.fr');
 }
-$sql_all_notes = "SELECT name_pdf FROM global";
-$list_notes = $bdd->query($sql_all_notes);
-$totalNote = []; // tableau de toutes les notes de l'élève
-while ($note = $list_notes->fetch()) { // note = matière + date (nom du PDF)
-    $sql_note = "SELECT note_etu FROM $note[0] WHERE id_etu = $id_etu";
-    $my_note = $bdd->query($sql_note);
-    $noteEtudiant = $my_note->fetch();
-    array_push($totalNote, $noteEtudiant[0]); // push de ces notes dans le tableau pour moyenne
-}
-$moyenne = array_sum($totalNote) / count($totalNote); // on fait la moyenne : Ensemble des notes du tableau / nbr de note
-$moyenne = round($moyenne, 2)
+
+include "assets/include/moy.php";
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -71,7 +63,7 @@ $moyenne = round($moyenne, 2)
                     }
                     ?>
                     <p class="btn-logout"><a href="last.php">Dernières notes</a></p>
-                    <p class="btn-logout"><a href="https://noteuniv.fr">Se déconnecter</a></p>
+                    <p class="btn-logout"><a href="https://noteuniv.fr/">Se déconnecter</a></p>
                 </div>
             </div>
         </aside>
@@ -136,37 +128,19 @@ $moyenne = round($moyenne, 2)
                     </div>
                 </div>
                 <?php
-
-                $sql_all_notes = "SELECT id, name_devoir, name_pdf, note_date, moy, mini, maxi FROM global ORDER BY note_date DESC";
+                $sql_all_notes = "SELECT name_devoir, name_pdf, note_date, moy, mini, maxi, note_code, note_coeff FROM global ORDER BY note_date DESC";
                 $list_notes = $bdd->query($sql_all_notes);
                 while ($note = $list_notes->fetch()) { // note = matière + date (nom du PDF)
                     $name = utf8_encode($note['name_devoir']);
                     $pdf = $note['name_pdf'];
-                    $date = $note['note_date'];
                     $noteMoyenne = round($note['moy'], 2);
                     $mini = $note['mini'];
                     $maxi = $note['maxi'];
+                    $coeff = $note['note_coeff'];
+                    $matiere = $note['note_code'];
                     $sqlNote = "SELECT note_etu FROM $note[name_pdf] WHERE id_etu = $id_etu";
                     $myNote = $bdd->query($sqlNote);
                     $noteEtu = $myNote->fetch();
-                    $tab = explode("_", $pdf);
-                    $arrayToReplace = ['1', '2', '3', '4', '5', '-', '_'];
-
-                    if (count($tab) > 8) {
-                        if (ctype_upper(str_replace($arrayToReplace, '', $tab[5]))) {
-                            $matiere = $tab[5];
-                        } elseif (ctype_upper(str_replace($arrayToReplace, '', $tab[6]))) {
-                            $matiere = $tab[6];
-                        }
-                    } else {
-                        if (ctype_upper(str_replace($arrayToReplace, '', $tab[4]))) {
-                            $matiere = $tab[4];
-                        } elseif (ctype_upper(str_replace($arrayToReplace, '', $tab[5]))) {
-                            $matiere = $tab[5];
-                        } elseif (ctype_upper(str_replace($arrayToReplace, '', $tab[6]))) {
-                            $matiere = $tab[6];
-                        }
-                    }
                 }
                 ?>
                 <!-- ANCHOR Notes par matière 1 -->
@@ -511,23 +485,6 @@ $moyenne = round($moyenne, 2)
     <script src="https://unpkg.com/tippy.js@5"></script>
     <!-- SCRIPT PERSO -->
     <script src="assets/js/app.js"></script>
-    <!-- BLOC NOTE   -->
-    <?php
-
-    // $sql_all_notes = "SELECT name_pdf FROM global";
-    // $list_notes = $bdd->query($sql_all_notes);
-    // $totalNote = []; // tableau de toutes les notes de l'élève
-    // while ($note = $list_notes->fetch()) { // note = matière + date (nom du PDF)
-    //     $sql_note = "SELECT note_etu FROM $note[0] WHERE id_etu = $id_etu";
-    //     $my_note = $bdd->query($sql_note);
-    //     $noteEtudiant = $my_note->fetch();
-
-    //     echo $note[0] . " -> " . $noteEtudiant[0] . "<br>";
-    //     array_push($totalNote, $noteEtudiant[0]); // push de ces notes dans le tableau pour moyenne
-    // }
-    // $moyenne = array_sum($totalNote) / count($totalNote); // on fait la moyenne : Ensemble des notes du tableau / nbr de note
-    // echo "<br> <p> Votre Moyenne est de : <strong> " . $moyenne . "</strong>";
-    ?>
 </body>
 
 </html>

@@ -1,7 +1,7 @@
 <?php
 session_start();
 require "vendor/autoload.php";
-// Recupération des variables d'environnement
+// Récupération des variables d'environnement
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 $servername = getenv('SERVERNAME');
@@ -9,19 +9,21 @@ $dbname = getenv('DBNAME');
 $username = getenv('USER');
 $password = getenv('PASSWORD');
 
-//Récupération Numéro Etudiant du formulaire
-if (!empty($_SESSION["id_etu"]) && is_numeric($_SESSION["id_etu"])) {
-    $id_etu = htmlspecialchars($_SESSION['id_etu']);
-} else {
-    header('Location: https://noteuniv.fr');
-}
-// Connexion bdd
+// Connection bdd
 try {
     $bdd = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
     $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
     echo "Connection failed: " . $e->getMessage();
 }
+
+// Récupération Numéro Etudiant du formulaire
+if (!empty($_SESSION["id_etu"]) && is_numeric($_SESSION["id_etu"])) {
+    $id_etu = htmlspecialchars($_SESSION['id_etu']);
+} else {
+    header('Location: https://noteuniv.fr');
+}
+
 include "assets/include/moy.php";
 ?>
 <!DOCTYPE html>
@@ -65,7 +67,7 @@ include "assets/include/moy.php";
                     }
                     ?>
                     <p class="btn-logout"><a href="panel.php">Récapitulatif</a></p>
-                    <p class="btn-logout"><a href="https://noteuniv.fr/test/">Se déconnecter</a></p>
+                    <p class="btn-logout"><a href="https://noteuniv.fr/">Se déconnecter</a></p>
                 </div>
             </div>
         </aside>
@@ -174,7 +176,6 @@ include "assets/include/moy.php";
             <div class="col-xs-12" style='border-top: 1px solid black;'>
                 <p class="as-small">Made with :heart: By Erosya</p>
             </div>
-            
         </div>
     </footer> -->
     <!-- SCRIPT EXT -->
@@ -182,7 +183,6 @@ include "assets/include/moy.php";
     <script src="https://unpkg.com/tippy.js@5"></script>
     <!-- SCRIPT PERSO -->
     <script src="assets/js/appLast.js"></script>
-    <!-- BLOC NOTE   -->
 </body>
 
 </html>
