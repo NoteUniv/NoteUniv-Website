@@ -14,11 +14,13 @@ function submitForm() {
         .then(message => {
             if (message == num + " authorized") {
                 document.getElementById("inputAll").style.backgroundColor = "#2BE8C6";
-                document.getElementById("ShowMessage").innerHTML = "<i class='fas fa-check'></i> Ce numéro existe !";
+                document.getElementById("showMessage").innerHTML = "<i class='fas fa-check'></i> Ce numéro existe !";
+                document.getElementById("showMessage").style.color = "#2BE8C6";
                 document.getElementById("sendID").submit();
             } else {
                 document.getElementById("inputAll").style.backgroundColor = "#FE4C6A";
-                document.getElementById("ShowMessage").innerHTML = "<i class='fas fa-times'></i> Ce numéro n'existe pas !";
+                document.getElementById("showMessage").innerHTML = "<i class='fas fa-times'></i> Ce numéro n'existe pas !";
+                document.getElementById("showMessage").style.color = "#FE4C6A";
             }
         })
         .catch(error => console.error(error))

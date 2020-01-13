@@ -1,12 +1,22 @@
 let r = tippy('a.tippy-note', {
-    placement: 'right',
-    arrow: false,
-    trigger: 'click',
-    maxWidth: 1000,
-    theme: 'note',
-    content(reference) {
-        const id = reference.getAttribute('data-template');
-        const template = document.getElementById(id);
-        return template.innerHTML;
-    }
+  placement: 'right',
+  arrow: false,
+  trigger: 'click',
+  maxWidth: 10000,
+  theme: 'note',
+  flipOnUpdate: true,
+  content(reference) {
+    const id = reference.getAttribute('data-template');
+    const template = document.getElementById(id);
+    return template.innerHTML;
+  }
+});
+tippy('span.tippy-note', {
+  placement: 'top',
+  arrow: true,
+  maxWidth: 1000,
+  theme: 'noteSpan',
+  allowHTML: true,
+  interactive: true,
+  flipOnUpdate: true,
 });

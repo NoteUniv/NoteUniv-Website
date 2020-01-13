@@ -1,5 +1,23 @@
 <?php
 session_start();
+
+// changement semestre
+if (empty($_COOKIE['semestre']) || !is_numeric($_COOKIE['semestre'])) {
+    setcookie("semestre", "1", strtotime( '+360 days' ));
+    $semestre = "1";
+} else {
+    $semestre = htmlspecialchars($_COOKIE['semestre']);
+}
+// MMI-1 Accès uniquement au S1/S2
+if (isset($_GET['change']) && $semestre == 1) {
+    setcookie("semestre", "2", strtotime( '+360 days' ));
+    $semestre = 2;
+} elseif (isset($_GET['change']) && $semestre == 2) {
+    setcookie("semestre", "1", strtotime( '+360 days' ));
+    $semestre = 1;
+}
+
+//dependance
 require "vendor/autoload.php";
 // recupération des variables d'environnement
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
@@ -8,13 +26,16 @@ $servername = getenv('SERVERNAME');
 $dbname = getenv('DBNAME');
 $username = getenv('USER');
 $password = getenv('PASSWORD');
+
 // Connection bdd
     try {
         $bdd = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
         $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $bdd->exec('SET NAMES utf8');
     } catch (PDOException $e) {
         echo "Connection failed: " . $e->getMessage();
     }
+
 // Récupération Numéro Etudiant du formulaire
 if (!empty($_SESSION["id_etu"]) && is_numeric($_SESSION["id_etu"])) {
     $id_etu = htmlspecialchars($_SESSION['id_etu']);
@@ -22,37 +43,39 @@ if (!empty($_SESSION["id_etu"]) && is_numeric($_SESSION["id_etu"])) {
     header('Location: https://noteuniv.fr');
 }
 
-$sql_all_notes = "SELECT name_devoir, name_pdf, note_date, moy, mini, maxi, note_code, note_coeff, name_ens, type_note, note_semester, note_total, median, variance, deviation FROM global ORDER BY note_date ASC";
+// Recupération des note du semestre
+switch ($semestre) { // en fct du semestre on fait une requete
+    case '1':
+        $sql_all_notes = "SELECT name_devoir, name_pdf, note_date, moy, mini, maxi, note_code, note_coeff, name_ens, type_note, note_semester, note_total, median, variance, deviation FROM global WHERE note_semester = 'S1UE1' OR note_semester = 'S1UE2' ORDER BY note_date";
+        break;
+    case '2':
+        $sql_all_notes = "SELECT name_devoir, name_pdf, note_date, moy, mini, maxi, note_code, note_coeff, name_ens, type_note, note_semester, note_total, median, variance, deviation FROM global WHERE note_semester = 'S2UE1' OR note_semester = 'S2UE2' ORDER BY note_date";
+        break;
+    case '3':
+        $sql_all_notes = "SELECT name_devoir, name_pdf, note_date, moy, mini, maxi, note_code, note_coeff, name_ens, type_note, note_semester, note_total, median, variance, deviation FROM global  WHERE note_semester = 'S3UE1' OR note_semester = 'S3UE2' ORDER BY note_date";
+        break;
+    case '4':
+        $sql_all_notes = "SELECT name_devoir, name_pdf, note_date, moy, mini, maxi, note_code, note_coeff, name_ens, type_note, note_semester, note_total, median, variance, deviation FROM global WHERE note_semester = 'S4UE1' OR note_semester = 'S4UE2' ORDER BY note_date";
+        break;
+    default:
+        $sql_all_notes = "SELECT name_devoir, name_pdf, note_date, moy, mini, maxi, note_code, note_coeff, name_ens, type_note, note_semester, note_total, median, variance, deviation FROM global WHERE note_semester = 'S1UE1' OR    note_semester = 'S1UE2' ORDER BY note_date";
+        break;
+}
 $list_notes = $bdd->query($sql_all_notes);
-$s1Ue1 = [];
-$s1Ue2 = [];
-$s2Ue1 = [];
-$s2Ue2 = [];
+$ue1 = []; // liste des note UE1
+$ue2 = []; // liste des note UE1
 while ($note = $list_notes->fetch()) { // note = matière + date (nom du PDF)
     $matiere = $note['note_code'];
-    $semestreUe = $note['note_semester'];
-    switch ($semestreUe) {
-        case 'S1UE1':
-            array_push($s1Ue1, $matiere);
-            break;
-        case 'S1UE2':
-            array_push($s1Ue2, $matiere);
-            break;
-        case 'S2UE1':
-            array_push($s2Ue1, $matiere);
-            break;
-        case 'S2UE2':
-            array_push($s2Ue2, $matiere);
-            break;
-        default:
-            echo "Billy, y'a un pb. Appel le SAV !";
-            break;
+    if (preg_match("/UE1$/", $note['note_semester'])) {
+        array_push($ue1, $matiere);
+    } else {
+        array_push($ue2, $matiere);
     }
 }
-$s1Ue1 = array_unique($s1Ue1, SORT_STRING);
-$s1Ue2 = array_unique($s1Ue2, SORT_STRING);
-$s2Ue1 = array_unique($s2Ue1, SORT_STRING);
-$s2Ue2 = array_unique($s2Ue2, SORT_STRING);
+$ue1 = array_unique($ue1, SORT_STRING);
+$ue2 = array_unique($ue2, SORT_STRING);
+
+// Include
 include "assets/include/moy.php";
 ?>
 <!DOCTYPE html>
@@ -62,11 +85,69 @@ include "assets/include/moy.php";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="title" content="Noteuniv, IUT Haguenau">
+    <meta name="description" content="Retrouvez facilement vos note de l'iut de haguenau grâce à Noteuniv !">
+    <meta name="keywords" content="noteuniv, haguenau, note iut haguenau, emploi du temps mmi, note mmi, noteuniv mmi">
+    <meta name="robots" content="index, follow">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="language" content="French">
+    <meta name="revisit-after" content="15 days">
+    <meta name="author" content="Ynohtna, Quentium">
     <title>NoteUniv | Panel</title>
+    <!-- FAVICON  -->
+    <link rel="apple-touch-icon" sizes="57x57" href="assets/images/favicon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="assets/images/favicon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="assets/images/favicon/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="assets/images/favicon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="assets/images/favicon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="assets/images/favicon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="assets/images/favicon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="assets/images/favicon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="assets/images/favicon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="assets/images/favicon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon/favicon-16x16.png">
+    <link rel="manifest" href="assets/images/favicon/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="assets/images/favicon/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
     <!-- CSS EXT-->
     <link rel="stylesheet" href="assets/css/flexboxgrid2.css" type="text/css">
     <!-- CSS PERSO-->
     <link rel="stylesheet" href="assets/css/stylePanel.css" type="text/css">
+
+    <!-- Cookie  -->
+    <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="0df23692-fee1-4280-97ef-7c0506f2621d"
+        data-blockingmode="auto" type="text/javascript"></script>
+    <!-- Matomo -->
+    <script type="text/javascript">
+        var _paq = window._paq || [];
+        /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+        _paq.push(["setDocumentTitle", document.domain + "/" + document.title]);
+        _paq.push(["setCookieDomain", "*.noteuniv.fr"]);
+        _paq.push(['trackPageView']);
+        _paq.push(['enableLinkTracking']);
+        (function () {
+            var u = "//dev.noteuniv.fr/piwik/";
+            _paq.push(['setTrackerUrl', u + 'matomo.php']);
+            _paq.push(['setSiteId', '2']);
+            var d = document,
+                g = d.createElement('script'),
+                s = d.getElementsByTagName('script')[0];
+            g.type = 'text/javascript';
+            g.async = true;
+            g.defer = true;
+            g.src = u + 'matomo.js';
+            s.parentNode.insertBefore(g, s);
+        })();
+    </script>
+    <noscript>
+        <p><img src="//dev.noteuniv.fr/piwik/matomo.php?idsite=2&amp;rec=1" style="border:0;" alt="" /></p>
+    </noscript>
+    <!-- End Matomo Code -->
+
+
 </head>
 
 <body>
@@ -80,15 +161,24 @@ include "assets/include/moy.php";
                     <p class="as-etu">Etudiant</p>
                     <p>N°<?php echo $id_etu; ?></p>
                     <p class="as-small">Je suis actuellement en :</p>
-                    <button class="btn-etu">MMI</button> <br>
-                    <button class="btn-etu">SEMESTRE 1</button>
+                    <button class="btn-etu"><span class="tippy-note"
+                            data-tippy-content="T'as bien fait, c'est les meilleurs ;)">MMI</span></button> <br>
+                    <button class="btn-etu"> <span class="tippy-note"
+                            data-tippy-content="<a href='?change=true'>Changement de Semestre</a>"> SEMESTRE
+                            <?php echo $semestre;?></span></button>
                     <p class="as-small">Ma moyenne générale est :</p>
-                    <button class="btn-moy"><?php echo $moyenne; ?> / 20</button>
+                    <button class="btn-moy"><span class="tippy-note"
+                            data-tippy-content="<a href='ranking.php'>Besoin de voir ta grandeur ?</a>"><?php echo $moyenne; ?>
+                            / 20</span></button>
                     <?php
-                    if ($moyenne >= 10) {
-                        echo '<p class="green">Je passe au semestre suivant, YEAH !</p>';
-                    } else {
-                        echo '<p class="red">Merde, j\'ai foirée, je passe pas :(</p>';
+                    if ($moyenne >= 15) { // Moyenne sup ou égal à 15
+                        echo '<p class="green">Un Dieu.</p>';
+                    } else if ($moyenne >= 13) { // Sup/eg à 13
+                        echo '<p class="green">Honnêtement ? OKLM gros !</p>';
+                    } elseif ($moyenne >= 10) { // sup/eg à 10
+                        echo '<p class="orange">ALLEZZZ ! ça passe !</p>';
+                    } else { // en dessous de 10
+                        echo '<p class="red">aïe, trql on se motive!</p>';
                     }
                     ?>
                     <p class="btn-logout"><a href="last.php">Dernières notes</a></p>
@@ -101,9 +191,8 @@ include "assets/include/moy.php";
             <!-- ANCHOR NOTES -->
             <section class="note">
                 <!-- Phrase différentes selon le viewport, afin de gagner de la place  -->
-                <!-- <h1 class="hidden-xs hidden-sm">Retrouvez vos notes avec NoteUniv !</h1> -->
-                <!-- <h1 class="hidden-md hidden-lg hidden-xl">Mes notes</h1> -->
-                <h1>PAS A JOUR NSM LAISSEZ MOI DORMIR</h1>
+                <h1 class="hidden-xs hidden-sm">Le récapitulatif de mes notes </h1>
+                <h1 class="hidden-md hidden-lg hidden-xl">Mon récap'</h1>
 
                 <!-- Menu de navigation pour mobile  -->
                 <div class="row center-xs hidden-sm hidden-md hidden-lg hidden-xl nav">
@@ -114,7 +203,7 @@ include "assets/include/moy.php";
                         <p><a href="#ue2">UE2</a></p>
                     </div>
                     <div class="col-xs-3">
-                        <p><a href="#resultat">Recap</a></p>
+                        <p><a href="#resultat">S1</a></p>
                     </div>
                 </div>
 
@@ -151,15 +240,17 @@ include "assets/include/moy.php";
                                 <p>Points</p>
                             </div>
                             <div class="col-sm">
-                                <p>Notes</p>
+                                <p>Notes*</p>
                             </div>
                         </div>
                     </div>
                 </div>
                 <?php
-                foreach ($s1Ue1 as $key => $value) {
+                $pointUe1 = 0; // Point total de chaque étudiant pour l'UE1
+                $pointMinUe1 = 0; // Point Minimum à avoir pour l'UE1
+                foreach ($ue1 as $key => $value) {
 
-                    $s1Ue1Sql = $bdd->query("SELECT name_devoir, name_pdf, note_date, moy, mini, maxi, note_code, note_coeff, name_ens, type_note, note_semester, note_total, median, variance, deviation, type_epreuve FROM global WHERE note_code = '$value' AND note_semester = 'S1UE1' ORDER BY note_date DESC");
+                    $ue1Sql = $bdd->query("SELECT name_devoir, name_pdf, note_date, moy, mini, maxi, note_code, note_coeff, name_ens, type_note, note_semester, note_total, median, variance, deviation, type_epreuve FROM global WHERE note_code = '$value' ORDER BY note_date, id DESC");
                 
                 ?>
                 <!-- ANCHOR Notes par matière 1 -->
@@ -171,12 +262,12 @@ include "assets/include/moy.php";
                     <div class="col-sm-6 last-xs initial-order-sm">
                         <div class="row center-sm note-par-matiere">
                             <?php
-                        $i = 0;
-                        $point = [];
-                        $n = 0;
-                    while ($infoNote = $s1Ue1Sql -> fetch()) {
+                        $i = 1; // nombre de note
+                        $point = 0; // point par matière
+                        $n = 0; // nombre de note compté dans la moyenne
+                    while ($infoNote = $ue1Sql -> fetch()) {
                         
-                        $name = utf8_encode($infoNote['name_devoir']);
+                        $name = $infoNote['name_devoir'];
                         $pdf = $infoNote['name_pdf'];
                         $noteMoyenne = round($infoNote['moy'], 2);
                         $mini = $infoNote['mini'];
@@ -193,8 +284,13 @@ include "assets/include/moy.php";
                         $typeEpreuve = $infoNote['type_epreuve'];
                         $myNote = $bdd->query("SELECT note_etu FROM $infoNote[name_pdf] WHERE id_etu = $id_etu");
                         $noteEtu = $myNote->fetch();
-                        $pts = $noteEtu[0] * $coeff;
-                        array_push($point, $pts);
+                        if ($noteEtu[0] < 21 && ($type == "Note unique" || $type == "Moyenne de notes (+M)")) { // Si pas abs et pas note intermédiaire on le compte
+                            $pts = $noteEtu[0] * $coeff; // point de la note = note * coeff
+                            $n++;
+                            } else {
+                            $pts = 0;
+                            }
+                        $point += $pts; // Ajout des points de la note dans les points de la matière
                     ?>
                             <div class="col-sm col-xs-6">
                                 <a href="javascript:void(0);" data-template="<?php echo $matiere.$i?>"
@@ -202,7 +298,7 @@ include "assets/include/moy.php";
                                     <p> <span class="hidden-sm hidden-md hidden-lg hidden-xl">Note
                                             <?php echo $i;?><br></span>
                                         <?php 
-                                        if ($noteEtu[0] < $mini) {
+                                        if ($noteEtu[0] > 21) { // si pas abs
                                             echo '<span class="orange tippy-note" data-tippy-content="Hum, mais que c\'est il passé Billy ?">ABS</span>';
                                         } else {
                                             if ($noteEtu[0] < 10) {
@@ -226,7 +322,11 @@ include "assets/include/moy.php";
                                     <div class="user-note">
                                         <h2 class="note-header">Détails de la note</h2>
                                         <p class="b">Nom du devoir / Module :</p>
-                                        <p><?php echo $name;?></p>
+                                        <p><?php if ($type == "Moyenne de notes (+M)") {
+                                            echo "Moyenne des notes intermédiaires " . $typeEpreuve;
+                                        } else {
+                                            echo $name;
+                                        }?></p>
                                         <p class="b">Enseignant :</p>
                                         <p><?php echo $ens;?></p>
                                         <p class="b">Date de l'épreuve :</p>
@@ -242,7 +342,8 @@ include "assets/include/moy.php";
                                         <div class="row center-xs">
                                             <div class="col-sm-3 col-xs-6">
                                                 <div class="btn-etu">
-                                                    <p> <span class="b">Moyenne</span> <br><?php echo $moyenne;?></p>
+                                                    <p> <span class="b">Moyenne</span> <br><?php echo $noteMoyenne;?>
+                                                    </p>
                                                 </div>
                                             </div>
                                             <div class="col-sm-3 col-xs-6">
@@ -264,7 +365,7 @@ include "assets/include/moy.php";
                                         <div class="row center-xs separation-note">
                                             <div class="col-sm-6 col-xs-12">
                                                 <div class="btn-etu">
-                                                    <p> <span class="b">Total Notes</span> <br><?php echo $totalNote;?>
+                                                    <p> <span class="b"></span>Totale Notes<br><?php echo $totalNote;?>
                                                     </p>
                                                 </div>
                                             </div>
@@ -275,7 +376,7 @@ include "assets/include/moy.php";
                                             </div>
                                             <div class="col-sm-3 col-xs-6">
                                                 <div class="btn-etu">
-                                                    <p> <span class="b">deviation</span> <br><?php echo $deviation;?>
+                                                    <p> <span class="b">Ecart-type</span> <br><?php echo $deviation;?>
                                                     </p>
                                                 </div>
                                             </div>
@@ -286,9 +387,9 @@ include "assets/include/moy.php";
                             <!-- Fin intégration note modales  -->
                             <?php
                             $i++;
-                            $n++;
+                            
                             }
-                            while ($i < 4) {
+                            while ($i < 5) { // Si pas d'autre note on comble avec un "/" 
                                 ?>
                             <div class="col-sm col-xs-6">
                                 <p> <span class="hidden-sm hidden-md hidden-lg hidden-xl">Note
@@ -298,6 +399,7 @@ include "assets/include/moy.php";
                             <?php
                             $i++;
                             }
+                            $pointMinUe1 += $n * $coeff * 10;
                             ?>
                         </div>
                     </div>
@@ -311,8 +413,8 @@ include "assets/include/moy.php";
                                     <?php echo $coeff;?></p>
                             </div>
                             <div class="col-xs-4">
-                                <p><span
-                                        class="hidden-sm hidden-md hidden-lg hidden-xl">Points:</span><?php echo array_sum($point);?>
+                                <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Points:
+                                    </span><?php echo $point;?>
                                 </p>
                             </div>
                             <div class="col-xs-4">
@@ -321,8 +423,9 @@ include "assets/include/moy.php";
                             </div>
                         </div>
                     </div>
-                    </article>
+                </article>
                 <?php
+                $pointUe1 += $point;
 }
 ?>
                 <!-- ANCHOR Bandeau de l'UE 2 uniquement pc/tablette-->
@@ -355,7 +458,7 @@ include "assets/include/moy.php";
                                 <p>Points</p>
                             </div>
                             <div class="col-sm">
-                                <p>Notes</p>
+                                <p>Notes*</p>
                             </div>
                         </div>
                     </div>
@@ -366,12 +469,13 @@ include "assets/include/moy.php";
 
                 <!-- ANCHOR Notes par matière 2 -->
                 <?php
-                foreach ($s1Ue2 as $key => $value) {
+                $pointUe2 = 0; // Point total de chaque étudiant pour l'UE2
+                $pointMinUe2 = 0;// Point Minimum à avoir pour l'UE2
+                foreach ($ue2 as $key => $value) {
 
-                    $s1Ue1Sql = $bdd->query("SELECT name_devoir, name_pdf, note_date, moy, mini, maxi, note_code, note_coeff, name_ens, type_note, note_semester, note_total, median, variance, deviation, type_epreuve FROM global WHERE note_code = '$value' AND note_semester = 'S1UE2' ORDER BY note_date DESC");
+                    $ue1Sql = $bdd->query("SELECT name_devoir, name_pdf, note_date, moy, mini, maxi, note_code, note_coeff, name_ens, type_note, note_semester, note_total, median, variance, deviation, type_epreuve FROM global WHERE note_code = '$value' ORDER BY note_date, id DESC");
                 
                 ?>
-                <!-- ANCHOR Notes par matière 1 -->
                 <article class="row all-note">
                     <div class="col-sm-2 matiere first-xs">
                         <p><span><?php echo $value;?></span></p>
@@ -380,12 +484,12 @@ include "assets/include/moy.php";
                     <div class="col-sm-6 last-xs initial-order-sm">
                         <div class="row center-sm note-par-matiere">
                             <?php
-                        $i = 0;
-                        $point = [];
-                        $n = 0;
-                    while ($infoNote = $s1Ue1Sql -> fetch()) {
+                        $i = 1; // nombre de note
+                        $point = 0; // point par matière
+                        $n = 0; // nombre de note compté dans la moyenne
+                    while ($infoNote = $ue1Sql -> fetch()) {
                         
-                        $name = utf8_encode($infoNote['name_devoir']);
+                        $name = $infoNote['name_devoir'];
                         $pdf = $infoNote['name_pdf'];
                         $noteMoyenne = round($infoNote['moy'], 2);
                         $mini = $infoNote['mini'];
@@ -402,8 +506,13 @@ include "assets/include/moy.php";
                         $typeEpreuve = $infoNote['type_epreuve'];
                         $myNote = $bdd->query("SELECT note_etu FROM $infoNote[name_pdf] WHERE id_etu = $id_etu");
                         $noteEtu = $myNote->fetch();
-                        $pts = $noteEtu[0] * $coeff;
-                        array_push($point, $pts);
+                        if ($noteEtu[0] < 21 && ($type == "Note unique" || $type == "Moyenne de notes (+M)")) { // Si pas abs et pas note intermédiaire on le compte
+                            $pts = $noteEtu[0] * $coeff; // point de la note = note * coeff
+                            $n++;
+                            } else {
+                            $pts = 0;
+                            }
+                        $point += $pts; // Ajout des points de la note dans les points de la matière
                     ?>
                             <div class="col-sm col-xs-6">
                                 <a href="javascript:void(0);" data-template="<?php echo $matiere.$i?>"
@@ -411,7 +520,7 @@ include "assets/include/moy.php";
                                     <p> <span class="hidden-sm hidden-md hidden-lg hidden-xl">Note
                                             <?php echo $i;?><br></span>
                                         <?php 
-                                        if ($noteEtu[0] < $mini) {
+                                        if ($noteEtu[0] > 21) { // si pas abs
                                             echo '<span class="orange tippy-note" data-tippy-content="Hum, mais que c\'est il passé Billy ?">ABS</span>';
                                         } else {
                                             if ($noteEtu[0] < 10) {
@@ -435,7 +544,11 @@ include "assets/include/moy.php";
                                     <div class="user-note">
                                         <h2 class="note-header">Détails de la note</h2>
                                         <p class="b">Nom du devoir / Module :</p>
-                                        <p><?php echo $name;?></p>
+                                        <p><?php if ($type == "Moyenne de notes (+M)") {
+                                            echo "Moyenne des notes intérmédiaires ".$typeEpreuve;
+                                        } else {
+                                            echo $name;
+                                        }?></p>
                                         <p class="b">Enseignant :</p>
                                         <p><?php echo $ens;?></p>
                                         <p class="b">Date de l'épreuve :</p>
@@ -451,12 +564,13 @@ include "assets/include/moy.php";
                                         <div class="row center-xs">
                                             <div class="col-sm-3 col-xs-6">
                                                 <div class="btn-etu">
-                                                    <p> <span class="b">Moyenne</span> <br><?php echo $moyenne;?></p>
+                                                    <p> <span class="b">Moyenne</span> <br><?php echo $noteMoyenne;?>
+                                                    </p>
                                                 </div>
                                             </div>
                                             <div class="col-sm-3 col-xs-6">
                                                 <div class="btn-etu">
-                                                    <p> <span class="b">Median</span> <br><?php echo $median;?></p>
+                                                    <p> <span class="b">Mediane</span> <br><?php echo $median;?></p>
                                                 </div>
                                             </div>
                                             <div class="col-sm-3 col-xs-6">
@@ -484,7 +598,7 @@ include "assets/include/moy.php";
                                             </div>
                                             <div class="col-sm-3 col-xs-6">
                                                 <div class="btn-etu">
-                                                    <p> <span class="b">deviation</span> <br><?php echo $deviation;?>
+                                                    <p> <span class="b">Ecart-type</span> <br><?php echo $deviation;?>
                                                     </p>
                                                 </div>
                                             </div>
@@ -495,9 +609,8 @@ include "assets/include/moy.php";
                             <!-- Fin intégration note modales  -->
                             <?php
                             $i++;
-                            $n++;
                             }
-                            while ($i < 4) {
+                            while ($i < 5) { // Si pas d'autre note on comble avec un "/" 
                                 ?>
                             <div class="col-sm col-xs-6">
                                 <p> <span class="hidden-sm hidden-md hidden-lg hidden-xl">Note
@@ -507,6 +620,7 @@ include "assets/include/moy.php";
                             <?php
                             $i++;
                             }
+                            $pointMinUe2 += $n * $coeff * 10;
                             ?>
                         </div>
                     </div>
@@ -520,8 +634,8 @@ include "assets/include/moy.php";
                                     <?php echo $coeff;?></p>
                             </div>
                             <div class="col-xs-4">
-                                <p><span
-                                        class="hidden-sm hidden-md hidden-lg hidden-xl">Points:</span><?php echo array_sum($point);?>
+                                <p><span class="hidden-sm hidden-md hidden-lg hidden-xl ">Points:
+                                    </span><?php echo $point;?>
                                 </p>
                             </div>
                             <div class="col-xs-4">
@@ -530,14 +644,15 @@ include "assets/include/moy.php";
                             </div>
                         </div>
                     </div>
-                    </article>
+                </article>
                 <?php
+                $pointUe2 += $point;
 }
 ?>
             </section>
 
             <!-- ANCHOR RESUMER  -->
-            <article class="note">
+            <section class="note">
 
                 <!-- ANCHOR Bandeau resume, uniquement PC/Tablette -->
                 <div class="row resume-tab around-sm hidden-xs">
@@ -558,38 +673,170 @@ include "assets/include/moy.php";
                 </div>
                 <!-- Affichage  uniquement sur mobile car pas de bandeau  -->
                 <h1 class="hidden-sm hidden-md hidden-lg hidden-xl" id="resultat">Résultats</h1>
-
-                <!-- ANCHOR Notes par matière 2 -->
+                <?php
+                $coeffUe1 = $pointMinUe1 / 10;
+                $coeffUe2 = $pointMinUe2 / 10;
+                if ($coeffUe1 == 0) {
+                    $coeffUe1 = 1;
+                }
+                if ($coeffUe2 == 0) {
+                    $coeffUe2 = 1;
+                }
+                $moyUe1 = round($pointUe1 / $coeffUe1, 2);
+                $moyUe2 = round($pointUe2 / $coeffUe2, 2);
+                ?>
+                <!-- ANCHOR Resumer UE1 -->
                 <!-- Sur pc/tablette on affiche pas les span, car les informations sont contenu dans le bandeau, contrairement au téléphone -->
-                <div class="row all-note around-sm">
+                <article class="row all-note around-sm">
                     <div class="col-sm-1">
                         <h2 class="hidden-sm hidden-md hidden-lg hidden-xl">UE1</h2>
                         <p><span class="hidden-xs">UE1</span></p>
                     </div>
                     <div class="col-sm-2 center-sm">
-                        <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Total de points à avoir :</span> 260
+                        <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Total de points à avoir :</span>
+                            <?php echo $pointMinUe1;?>
                         </p>
                     </div>
                     <div class="col-sm-2 center-sm">
-                        <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Points possédés :</span> 170</p>
+                        <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Points possédés :</span>
+                            <?php echo $pointUe1;?></p>
                     </div>
                     <div class="col-sm-2 center-sm btn-moy">
-                        <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Moyenne sur 20 <br></span>13,08</p>
+                        <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Moyenne sur 20
+                                <br></span><?php echo $moyUe1 ;?></p>
                     </div>
+                    <?php 
+                        if ($moyUe1 >= 10) {
+                            ?>
                     <div class="col-sm-2 center-sm btn-moy mr-14">
-                        <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Résultats <br></span>UE Validé</p>
+                        <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Résultats <br></span> UE Validé</p>
                     </div>
-                </div>
-            </article>
+                    <?php
+                        } elseif ($moyUe1 < 8) {
+                            ?>
+                    <div class="col-sm-2 center-sm btn-red mr-14">
+                        <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Résultats <br></span>UE Echoué</p>
+                    </div>
+                    <?php
+                        } else {
+                            ?>
+                    <div class="col-sm-2 center-sm btn-orange mr-14">
+                        <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Résultats <br></span>UE Echoué</p>
+                    </div>
+                    <?php
+                        }
+                        ?>
+
+                </article>
+                <!-- ANCHOR Resumer UE2 -->
+                <!-- Sur pc/tablette on affiche pas les span, car les informations sont contenu dans le bandeau, contrairement au téléphone -->
+                <article class="row all-note around-sm">
+                    <div class="col-sm-1">
+                        <h2 class="hidden-sm hidden-md hidden-lg hidden-xl">UE2</h2>
+                        <p><span class="hidden-xs">UE2</span></p>
+                    </div>
+                    <div class="col-sm-2 center-sm">
+                        <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Total de points à avoir :</span>
+                            <?php echo $pointMinUe2;?>
+                        </p>
+                    </div>
+                    <div class="col-sm-2 center-sm">
+                        <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Points possédés :</span>
+                            <?php echo $pointUe2;?></p>
+                    </div>
+                    <div class="col-sm-2 center-sm btn-moy">
+                        <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Moyenne sur 20
+                                <br></span><?php echo $moyUe2;?></p>
+                    </div>
+                    <?php 
+                        if ($moyUe2 >= 10) {
+                            ?>
+                    <div class="col-sm-2 center-sm btn-moy mr-14">
+                        <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Résultats <br></span> UE Validé</p>
+                    </div>
+                    <?php
+                        } elseif ($moyUe2 < 8) {
+                            ?>
+                    <div class="col-sm-2 center-sm btn-red mr-14">
+                        <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Résultats <br></span>UE Echoué</p>
+                    </div>
+                    <?php
+                        } else {
+                            ?>
+                    <div class="col-sm-2 center-sm btn-orange mr-14">
+                        <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Résultats <br></span>UE Echoué</p>
+                    </div>
+                    <?php
+                        }
+                        ?>
+
+                </article>
+                <!-- ANCHOR Resumer S1 -->
+                <!-- Sur pc/tablette on affiche pas les span, car les informations sont contenu dans le bandeau, contrairement au téléphone -->
+                <article class="row all-note around-sm">
+                    <div class="col-sm-1">
+                        <h2 class="hidden-sm hidden-md hidden-lg hidden-xl">Semestre</h2>
+                        <p><span class="hidden-xs">S<?php echo $semestre?></span></p>
+                    </div>
+                    <div class="col-sm-2 center-sm">
+                        <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Total de points à avoir :</span>
+                            <?php echo ($pointMinUe1 + $pointMinUe2);?>
+                        </p>
+                    </div>
+                    <div class="col-sm-2 center-sm">
+                        <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Points possédés :</span>
+                            <?php echo ($pointUe1 +$pointUe2);?></p>
+                    </div>
+                    <div class="col-sm-2 center-sm btn-moy">
+                        <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Moyenne sur 20
+                                <br></span><?php echo $moyenne ;?></p>
+                    </div>
+                    <?php 
+                        if ($moyenne >= 10 && $moyUe1 >= 8 && $moyUe2 >= 8) {
+                            ?>
+                    <div class="col-sm-2 center-sm btn-moy mr-14">
+                        <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Résultats <br></span> Semestre Validé
+                        </p>
+                    </div>
+                    <?php
+                        } elseif ($moyenne >= 10 && ($moyUe1 < 8 || $moyUe2 < 8)) {
+                            ?>
+                    <div class="col-sm-2 center-sm btn-red mr-14">
+                        <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Résultats <br></span>Semestre Echoué
+                        </p>
+                    </div>
+                    <?php
+                        } else {
+                            ?>
+                    <div class="col-sm-2 center-sm btn-red mr-14">
+                        <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Résultats <br></span>Semestre Echoué
+                        </p>
+                    </div>
+                    <?php
+                        }
+                        ?>
+
+                </article>
+            </section>
+            <p>*: Notes comptant dans la moyenne</p>
         </div>
     </div>
+    <footer>
+        <div class="row center-xs">
+            <div class="col-xs-12">
+                <p class="as-small">Made with ❤️ By <a href="https://erosya.fr" target="_BLANK">Erosya</a> | <span
+                        class="tippy-note"
+                        data-tippy-content="Discord: Ynohtna#0001 / QuentiumYT#0207 | contact@anthony-adam.fr">Nous
+                        contacter</span> | <a href="terms.html">Mention légales</a></p>
+            </div>
 
-    </div>
-    <!-- SCRIPT EXT -->
-    <script src="https://unpkg.com/popper.js@1"></script>
-    <script src="https://unpkg.com/tippy.js@5"></script>
-    <!-- SCRIPT PERSO -->
-    <script src="assets/js/app.js"></script>
+        </div>
+        <!-- SCRIPT EXT -->
+        <script src="assets/js/popper.min.js"></script>
+        <script src="assets/js/tippy-bundle.iife.min.js"></script>
+        <!-- SCRIPT PERSO -->
+        <script src="assets/js/app.js"></script>
+    </footer>
 </body>
 
 </html>

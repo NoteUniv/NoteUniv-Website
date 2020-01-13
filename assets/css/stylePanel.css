@@ -6,9 +6,6 @@
     font-style: normal;
 }
 
-a {
-    text-decoration: none;
-}
 
 * {
     padding: 0;
@@ -17,8 +14,16 @@ a {
     font-family: "Montserrat";
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 h2 {
     text-decoration: underline;
+}
+
+a {
+    text-decoration: none;
 }
 
 .img-fluid {
@@ -28,7 +33,14 @@ h2 {
 
 .btn-moy {
     background-color: #2BE8C6;
+}
 
+.btn-orange {
+    background-color: orange;
+}
+
+.btn-red {
+    background-color: red;
 }
 
 .btn-etu {
@@ -51,11 +63,12 @@ h2 {
 .card {
     margin-top: 10px;
     margin-left: 10px;
-    padding-top: 50px;
+    padding-top: 5vh;
     margin-right: 10px;
     background: #110133;
     border-radius: 25px;
     color: white;
+    height: 92vh;
 }
 
 @media screen and (min-width: 993px) {
@@ -64,6 +77,12 @@ h2 {
         position: -webkit-sticky;
         position: sticky;
         top: 10px;
+    }
+}
+
+@media screen and (min-height: 747px) {
+    .card {
+        height: 80vh;
     }
 }
 
@@ -129,16 +148,20 @@ h2 {
     color: white;
 }
 
+.card .as-extra-small {
+    font-size: 10px;
+}
+
 .card .as-small+.btn-etu {
     margin-top: 0;
 }
 
 .card .btn-etu {
-    margin-top: 10px;
+    margin-top: 1vh;
 }
 
-.card .btn-etu+p {
-    margin-top: 50px;
+.card .btn-etu+.as-small {
+    margin-top: 5vh;
 }
 
 .card .btn-moy {
@@ -147,9 +170,17 @@ h2 {
 }
 
 .card .btn-moy+p {
-    margin-top: 10px;
-    margin-bottom: 50px;
+    margin-top: 1vh;
+    margin-bottom: 5vh;
     font-size: 15px;
+}
+
+@media screen and (max-height: 600px) {
+    .card .btn-moy+p {
+        margin-top: 1vh;
+        margin-bottom: 3vh;
+        font-size: 15px;
+    }
 }
 
 .btn-logout {
@@ -161,14 +192,14 @@ h2 {
     height: 35px;
     border-radius: 25px;
     color: white;
-    margin-bottom: 5px;
+    margin-bottom: 0.5vh;
     transition-duration: 0.2s;
     font-size: 15px;
 }
 
 .btn-logout+.btn-logout {
-    margin-top: 5px;
-    margin-bottom: 50px;
+    margin-top: 0.5vh;
+    margin-bottom: 5vh;
 }
 
 .btn-logout:hover {
@@ -183,20 +214,20 @@ h2 {
 
 .as-etu {
     font-size: 25px;
-    margin-top: 50px;
+    margin-top: 5vh;
     font-weight: bold;
-    margin-bottom: 5px;
+    margin-bottom: 0.5vh;
 }
 
 .as-etu+p {
     font-size: 20px;
-    margin-bottom: 50px;
+    margin-bottom: 5vh;
     margin-top: 0;
 }
 
 .as-small {
     font-size: 15px;
-    margin-bottom: 20px;
+    margin-bottom: 2vh;
 }
 
 /* ANCHOR Mobile NAV  */
@@ -283,7 +314,47 @@ h2 {
     color: #fff;
     border-radius: 30px;
     padding: 10px;
+    width: 30vw;
 }
+
+.tippy-tooltip.noteSpan-theme {
+    background-color: #110133;
+    color: #fff;
+    border-radius: 30px;
+    padding: 10px;
+}
+
+@media screen and (max-width: 1604px) {
+    .tippy-tooltip.note-theme {
+        width: 35vw;
+    }
+}
+
+@media screen and (max-width: 1375px) {
+    .tippy-tooltip.note-theme {
+        width: 40vw;
+    }
+}
+
+@media screen and (max-width: 1193px) {
+    .tippy-tooltip.note-theme {
+        width: 45vw;
+    }
+}
+
+@media screen and (max-width: 1067px) {
+    .tippy-tooltip.note-theme {
+        width: 50vw;
+    }
+}
+
+@media screen and (max-width: 991px) {
+    .tippy-tooltip.note-theme {
+        width: 100vw;
+    }
+}
+
+/* @media screen and (min-width: 1200px) {} */
 
 .tippy-tooltip.note-theme a {
     color: #fff;
@@ -291,7 +362,7 @@ h2 {
 
 .tippy-tooltip.note-theme .btn-etu {
     border-radius: 15px;
-    padding-right: 18px;
+    /* padding-right: 18px; */
 }
 
 .tippy-tooltip.note-theme .separation-note {
@@ -359,11 +430,15 @@ h2 {
 }
 
 .note .btn-etu,
-.btn-moy {
+.btn-moy,
+.btn-orange,
+.btn-red {
     border-radius: 25px;
 }
 
-.note .btn-moy {
+.note .btn-moy,
+.btn-orange,
+.btn-red {
     color: #110133;
 }
 
@@ -373,7 +448,16 @@ h2 {
 
 /* ANCHOR RESUME mobile  */
 @media screen and (max-width: 574px) {
-    .btn-moy {
+
+    .btn-moy,
+    .btn-orange,
+    .btn-red {
         margin-bottom: 10px;
     }
+}
+
+/* ANCHOR  FOOTER  */
+footer a {
+    color: #110133;
+    text-decoration: underline;
 }

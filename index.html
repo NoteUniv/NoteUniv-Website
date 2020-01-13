@@ -5,32 +5,114 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-
+    <meta name="title" content="Noteuniv, IUT Haguenau">
+    <meta name="description" content="Retrouvez facilement vos note de l'iut de haguenau grâce à Noteuniv !">
+    <meta name="keywords" content="noteuniv, haguenau, note iut haguenau, emploi du temps mmi, note mmi, noteuniv mmi">
+    <meta name="robots" content="index, follow">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="language" content="French">
+    <meta name="revisit-after" content="15 days">
+    <meta name="author" content="Ynohtna, Quentium">
     <title>NoteUniv - Accueil</title>
-    <link rel="icon" type="image/png" href="assets/images/logo_noteuniv_icon.jpg">
+    <link rel="apple-touch-icon" sizes="57x57" href="assets/images/favicon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="assets/images/favicon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="assets/images/favicon/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="assets/images/favicon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="assets/images/favicon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="assets/images/favicon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="assets/images/favicon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="assets/images/favicon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="assets/images/favicon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="assets/images/favicon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon/favicon-16x16.png">
+    <link rel="manifest" href="assets/images/favicon/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="assets/images/favicon/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
     <link rel="stylesheet" href="assets/css/flexboxgrid2.css" type="text/css">
     <link rel="stylesheet" href="assets/css/style.css">
+
+    <!-- Cookie  -->
+    <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="0df23692-fee1-4280-97ef-7c0506f2621d"
+        data-blockingmode="auto" type="text/javascript"></script>
+    <!-- Matomo -->
+    <script type="text/javascript">
+        var _paq = window._paq || [];
+        /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+        _paq.push(["setDocumentTitle", document.domain + "/" + document.title]);
+        _paq.push(["setCookieDomain", "*.noteuniv.fr"]);
+        _paq.push(['trackPageView']);
+        _paq.push(['enableLinkTracking']);
+        (function () {
+            var u = "//dev.noteuniv.fr/piwik/";
+            _paq.push(['setTrackerUrl', u + 'matomo.php']);
+            _paq.push(['setSiteId', '2']);
+            var d = document,
+                g = d.createElement('script'),
+                s = d.getElementsByTagName('script')[0];
+            g.type = 'text/javascript';
+            g.async = true;
+            g.defer = true;
+            g.src = u + 'matomo.js';
+            s.parentNode.insertBefore(g, s);
+        })();
+    </script>
+    <noscript>
+        <p><img src="//dev.noteuniv.fr/piwik/matomo.php?idsite=2&amp;rec=1" style="border:0;" alt="" /></p>
+    </noscript>
+    <!-- End Matomo Code -->
+
+
 </head>
 
 <body>
-    <div class="row start-lg">
-        <div class="col-xs-6">
-            <img class="logo-img" src="assets/images/logo_noteuniv_icon.svg" alt="Logo NoteUniv">
-            <img class="logo-txt" src="assets/images/logo_noteuniv_text.svg" alt="Logo Texte">
-            <p class="desc">Votre nouvel espace pour retrouver vos notes plus<br>facilement et savoir si vous passez votre semestre !</p>
-            <form action="last.php" id="sendID" method="POST">
-                <div id="inputAll" class="input out">
-                    <input id="numEtu" name="numEtu" type="number" class="input" required placeholder="Entrez votre numéro étudiant">
-                    <span id="submitForm" onclick="submitForm()"><i class="fas fa-arrow-right"></i></span>
-                    <p id="ShowMessage"></p>
+    <div class="row">
+        <div class="col-lg-1 hidden-xs hidden-sm hidden-md"></div>
+
+        <section class="col-xs-12 col-lg-5">
+            <article class="row center-xs start-lg">
+                <div class="col-xs-12">
+                    <img class="logo-img" src="assets/images/logo_noteuniv_icon.svg" alt="Logo NoteUniv">
                 </div>
-            </form>
-            <p class="sponso">Ce service est proposé par Erosya pour tous les étudiants de l'IUT de Haguenau.</p>
+                <div class="col-xs-12">
+                    <img class="logo-txt" src="assets/images/logo_noteuniv_text.svg" alt="Logo Texte">
+                </div>
+                <h1 class="desc">Votre nouvel espace pour retrouver vos notes plus facilement et savoir si vous passez
+                    votre semestre !</h1>
+                <div>
+                    <form action="last.php" id="sendID" method="POST">
+                        <div id="inputAll" class="input out">
+                            <input id="numEtu" name="numEtu" type="number" class="input" required
+                                placeholder="Numéro étudiant">
+                            <input type="hidden" name="sem" id="sem" value="">
+                            <span id="submitForm" onclick="submitForm()"><i class="fas fa-arrow-right"></i></span>
+                            <p id="showMessage"></p>
+                        </div>
+                    </form>
+                    <div class="row hidden-xs hidden-lg hidden-xl">
+                        <div class="col-xs-6">
+                            <p class="sponso">Ce service est proposé par Erosya pour tous les MMI1 de l'IUT de Haguenau.
+                            </p>
+                        </div>
+                        <div class="col-xs-6">
+                            <img class="img-etu hidden-lg hidden-xl" src="assets/images/background_image.webp"
+                                alt="img étudiants">
+                        </div>
+                    </div>
+                    <p class="sponso hidden-sm hidden-md">Ce service est proposé par Erosya pour tous les MMI1
+                        de l'IUT de Haguenau.
+                    </p>
+                </div>
+
+            </article>
+        </section>
+        <div class="col-lg-6 end-xs hidden-xs hidden-sm hidden-md">
+            <img class="img-etu" src="assets/images/background_image.webp" alt="img étudiants">
         </div>
-        <div class="col-xs-6">
-            <img class="logo-etu" src="assets/images/background_image.webp" alt="Logo étudiants">
-        </div>
+
     </div>
     <script src="assets/js/index.js"></script>
 </body>

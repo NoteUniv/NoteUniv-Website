@@ -5,45 +5,57 @@
     font-style: normal;
 }
 
+/* -webkit- add this if error */
+@keyframes autofill {
+    to {
+        color: #110133;
+        opacity: 0.7;
+        background: transparent;
+    }
+}
+
 * {
     margin: 0;
     padding: 0;
     border: 0;
     font-size: 100%;
     box-sizing: border-box;
+    font-family: "Montserrat";
 }
 
 body {
     background-color: #110133;
-    font-family: "Montserrat";
     overflow: hidden;
 }
 
-.left-side {
-    position: absolute;
-    height: 100vh;
-    max-width: 50%;
-    left: 160px;
+
+.img-etu {
+    width: 100%;
+    height: auto;
+    margin-top: -70px;
+    margin-right: -70px;
 }
 
 .logo-img {
-    display: block;
-    width: 200px;
-    height: 200px;
-    margin-top: 10vh;
-    margin-bottom: 8vh;
+    margin-top: 50px;
+    width: 100%;
+    height: auto;
+    max-width: 150px;
 }
 
 .logo-txt {
-    display: block;
-    width: 350px;
+    margin-top: 50px;
+    width: 100%;
     height: auto;
+    max-width: 350px;
 }
 
 .desc {
     color: white;
+    font-weight: normal;
     font-size: 30px;
-    margin: 7vh auto;
+    margin-top: 50px;
+    margin-bottom: 50px;
 }
 
 .input {
@@ -60,10 +72,27 @@ body {
     box-sizing: border-box;
     resize: none;
     background-color: transparent;
-    font-family: "Montserrat";
     font-size: 24px;
     user-select: none;
     outline: none;
+    -moz-appearance: textfield;
+
+}
+
+.input::-webkit-outer-spin-button,
+.input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.input:-webkit-autofill,
+.input:-webkit-autofill:hover,
+.input:-webkit-autofill:focus,
+.input:-webkit-autofill:active {
+    -webkit-animation-name: autofill;
+    -webkit-animation-fill-mode: both;
+    animation-name: autofill;
+    animation-fill-mode: both;
 }
 
 .out {
@@ -85,7 +114,63 @@ input::placeholder {
 }
 
 .sponso {
-    position: absolute;
     color: white;
-    bottom: 60px;
+    margin-top: 5vh;
+    font-size: 13px;
+}
+
+#showMessage {
+    margin-top: 10px;
+}
+
+@media screen and (max-width: 1536px) {
+    .desc {
+        font-size: 24px;
+    }
+
+    input::placeholder {
+        font-size: 18px;
+    }
+
+    .logo-img {
+        max-width: 100px;
+    }
+}
+
+@media screen and (max-width: 1144px) {
+    .out {
+        width: 290px;
+    }
+}
+
+@media screen and (max-width: 991px) {
+    form {
+        margin-bottom: 100px;
+    }
+
+    .img-etu {
+        max-width: 80%;
+    }
+
+    p {
+        padding: 20px;
+    }
+}
+
+@media screen and (max-width: 574px) {
+    form {
+        margin-bottom: 0;
+    }
+
+    .logo-img {
+        max-width: 20%;
+    }
+
+    .logo-txt {
+        max-width: 70%;
+    }
+
+    p {
+        padding: 0 20px;
+    }
 }
