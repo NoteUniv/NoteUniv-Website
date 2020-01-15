@@ -1,23 +1,25 @@
 <?php
 session_start();
+// Dépendances
+require "vendor/autoload.php";
 
-// changement semestre
+// Changement de semestre
 if (empty($_COOKIE['semestre']) || !is_numeric($_COOKIE['semestre'])) {
-    setcookie("semestre", "1", strtotime( '+360 days' ));
+    setcookie("semestre", "1", strtotime('+360 days'));
     $semestre = "1";
 } else {
     $semestre = htmlspecialchars($_COOKIE['semestre']);
 }
+
 // MMI-1 Accès uniquement au S1/S2
 if (isset($_GET['change']) && $semestre == 1) {
-    setcookie("semestre", "2");
+    setcookie("semestre", "2", strtotime('+360 days'));
     $semestre = 2;
 } elseif (isset($_GET['change']) && $semestre == 2) {
-    setcookie("semestre", "1");
+    setcookie("semestre", "1", strtotime('+360 days'));
     $semestre = 1;
 }
-//dependance
-require "vendor/autoload.php";
+
 // Récupération des variables d'environnement
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
@@ -34,7 +36,8 @@ try {
 } catch (PDOException $e) {
     echo "Connection failed: " . $e->getMessage();
 }
-// Récupération Numéro Etudiant du formulaire
+
+// Récupération Numéro Étudiant du formulaire
 if ((!empty($_POST["numEtu"]) && is_numeric($_POST["numEtu"]))) {
     $id_etu = htmlspecialchars($_POST["numEtu"]);
     $_SESSION['id_etu'] = $id_etu;
@@ -46,7 +49,7 @@ if ((!empty($_POST["numEtu"]) && is_numeric($_POST["numEtu"]))) {
 // $id_etu = 21901533;
 // $_SESSION['id_etu'] = $id_etu;
 
-// include
+// Include
 include "assets/include/moy.php";
 ?>
 <!DOCTYPE html>
@@ -87,10 +90,8 @@ include "assets/include/moy.php";
     <link rel="stylesheet" href="assets/css/flexboxgrid2.css" type="text/css">
     <!-- CSS PERSO-->
     <link rel="stylesheet" href="assets/css/stylePanel.css" type="text/css">
-
     <!-- Cookie  -->
-    <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="0df23692-fee1-4280-97ef-7c0506f2621d"
-        data-blockingmode="auto" type="text/javascript"></script>
+    <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="0df23692-fee1-4280-97ef-7c0506f2621d" data-blockingmode="auto" type="text/javascript"></script>
     <!-- Matomo -->
     <script type="text/javascript">
         var _paq = window._paq || [];
@@ -99,7 +100,7 @@ include "assets/include/moy.php";
         _paq.push(["setCookieDomain", "*.noteuniv.fr"]);
         _paq.push(['trackPageView']);
         _paq.push(['enableLinkTracking']);
-        (function () {
+        (function() {
             var u = "//dev.noteuniv.fr/piwik/";
             _paq.push(['setTrackerUrl', u + 'matomo.php']);
             _paq.push(['setSiteId', '2']);
@@ -117,8 +118,6 @@ include "assets/include/moy.php";
         <p><img src="//dev.noteuniv.fr/piwik/matomo.php?idsite=2&amp;rec=1" style="border:0;" alt="" /></p>
     </noscript>
     <!-- End Matomo Code -->
-
-
 </head>
 
 <body>
@@ -132,14 +131,11 @@ include "assets/include/moy.php";
                     <p class="as-etu">Etudiant</p>
                     <p>N°<?php echo $id_etu; ?></p>
                     <p class="as-small">Je suis actuellement en :</p>
-                    <button class="btn-etu"><span class="tippy-note"
-                            data-tippy-content="T'as bien fait, c'est les meilleurs ;)">MMI</span></button> <br>
-                    <button class="btn-etu"> <span class="tippy-note"
-                            data-tippy-content="<a href='?change=true'>Changement de Semestre</a>"> SEMESTRE
-                            <?php echo $semestre;?></span></button>
+                    <button class="btn-etu"><span class="tippy-note" data-tippy-content="T'as bien fait, c'est les meilleurs ;)">MMI</span></button> <br>
+                    <button class="btn-etu"> <span class="tippy-note" data-tippy-content="<a href='?change=true'>Changement de Semestre</a>"> SEMESTRE
+                            <?php echo $semestre; ?></span></button>
                     <p class="as-small">Ma moyenne générale est :</p>
-                    <button class="btn-moy"><span class="tippy-note"
-                            data-tippy-content="<a href='ranking.php'>Besoin de voir ta grandeur ?</a>"><?php echo $moyenne; ?>
+                    <button class="btn-moy"><span class="tippy-note" data-tippy-content="<a href='ranking.php'>Besoin de voir ta grandeur ?</a>"><?php echo $moyenne; ?>
                             / 20</span></button>
                     <?php
                     if ($moyenne >= 15) { // Moyenne sup ou égal à 15
@@ -202,22 +198,22 @@ include "assets/include/moy.php";
                 <?php
                 switch ($semestre) { // en fct du semestre on fait une requete
                     case '1':
-                        $sql_all_notes = "SELECT name_devoir, name_pdf, note_date, moy, mini, maxi, note_code, note_coeff, type_note, type_epreuve, note_semester FROM global WHERE note_semester = 'S1UE1' OR note_semester = 'S1UE2' ORDER BY note_date DESC";
+                        $sql_all_notes = "SELECT name_devoir, name_pdf, note_date, moy, mini, maxi, note_code, note_coeff, type_note, type_epreuve, note_semester FROM global_s1 WHERE note_semester = 'UE1' OR note_semester = 'UE2' ORDER BY note_date DESC";
                         break;
                     case '2':
-                        $sql_all_notes = "SELECT name_devoir, name_pdf, note_date, moy, mini, maxi, note_code, note_coeff, type_note, type_epreuve, note_semester FROM global WHERE note_semester = 'S2UE1' OR note_semester = 'S2UE2' ORDER BY note_date DESC";
+                        $sql_all_notes = "SELECT name_devoir, name_pdf, note_date, moy, mini, maxi, note_code, note_coeff, type_note, type_epreuve, note_semester FROM global_s2 WHERE note_semester = 'UE1' OR note_semester = 'UE2' ORDER BY note_date DESC";
                         break;
                     case '3':
-                        $sql_all_notes = "SELECT name_devoir, name_pdf, note_date, moy, mini, maxi, note_code, note_coeff, type_note, type_epreuve, note_semester FROM global  WHERE note_semester = 'S3UE1' OR note_semester = 'S3UE2' ORDER BY note_date DESC";
+                        $sql_all_notes = "SELECT name_devoir, name_pdf, note_date, moy, mini, maxi, note_code, note_coeff, type_note, type_epreuve, note_semester FROM global_s3  WHERE note_semester = 'UE1' OR note_semester = 'UE2' ORDER BY note_date DESC";
                         break;
                     case '4':
-                        $sql_all_notes = "SELECT name_devoir, name_pdf, note_date, moy, mini, maxi, note_code, note_coeff, type_note, type_epreuve, note_semester FROM global WHERE note_semester = 'S4UE1' OR note_semester = 'S4UE2' ORDER BY note_date DESC";
+                        $sql_all_notes = "SELECT name_devoir, name_pdf, note_date, moy, mini, maxi, note_code, note_coeff, type_note, type_epreuve, note_semester FROM global_s4 WHERE note_semester = 'UE1' OR note_semester = 'UE2' ORDER BY note_date DESC";
                         break;
                     default:
-                        $sql_all_notes = "SELECT name_devoir, name_pdf, note_date, moy, mini, maxi, note_code, note_coeff, type_note, type_epreuve, note_semester FROM global WHERE note_semester = 'S1UE1' OR    note_semester = 'S1UE2' ORDER BY note_date DESC";
+                        $sql_all_notes = "SELECT name_devoir, name_pdf, note_date, moy, mini, maxi, note_code, note_coeff, type_note, type_epreuve, note_semester FROM global_s1 WHERE note_semester = 'UE1' OR    note_semester = 'UE2' ORDER BY note_date DESC";
                         break;
                 }
-                
+
                 $list_notes = $bdd->query($sql_all_notes);
                 while ($note = $list_notes->fetch()) { // note = matière + date (nom du PDF)
                     $name = str_replace("_", " ", $note['name_devoir']);
@@ -232,31 +228,30 @@ include "assets/include/moy.php";
                     $sqlNote = "SELECT note_etu FROM $note[name_pdf] WHERE id_etu = $id_etu";
                     $myNote = $bdd->query($sqlNote);
                     $noteEtu = $myNote->fetch();
-                    
+
                 ?>
 
-                <article class="row all-note">
-                    <div class="col-sm-2 matiere first-xs">
-                        <p class='titre-mobile'><?php
+                    <article class="row all-note">
+                        <div class="col-sm-2 matiere first-xs">
+                            <p class='titre-mobile'><?php
                                                     if (preg_match("/AV1?/", $matiere)) { // Ester eggs
                                                     ?>
-                            <span class="tippy-note"
-                                data-tippy-content="<a href='https://youtu.be/CobknKR0t6k' target='_BLANK' class'green'>Tu veux voir un vrai truc en AV ? Clique !</a>"><?php echo $matiere ?></span>
-                            <?php
-                                
+                                    <span class="tippy-note" data-tippy-content="<a href='https://youtu.be/CobknKR0t6k' target='_BLANK' class'green'>Tu veux voir un vrai truc en AV ? Clique !</a>"><?php echo $matiere ?></span>
+                                <?php
+
                                                     } else if ($type !== "Note unique" && $type !== "Moyenne de notes (+M)") {
                                                         echo '<span class="orange tippy-note" data-tippy-content="Note Intermédiaire. Pas prise en compte dans la moyenne. Uniquement pour affichage">' . $matiere . '</span>';
                                                     } else {
                                                         echo $matiere;
                                                     }
                                 ?></p>
-                    </div>
-                    <!-- Si mobile, on affiche les notes à la fin, et les coef en 2ème  -->
-                    <div class="col-sm-6 last-xs initial-order-sm">
-                        <div class="row center-sm note-par-matiere">
-                            <div class="col-sm col-xs-6">
-                                <p> <span class="hidden-sm hidden-md hidden-lg hidden-xl">Note<br><br></span>
-                                    <?php
+                        </div>
+                        <!-- Si mobile, on affiche les notes à la fin, et les coef en 2ème  -->
+                        <div class="col-sm-6 last-xs initial-order-sm">
+                            <div class="row center-sm note-par-matiere">
+                                <div class="col-sm col-xs-6">
+                                    <p> <span class="hidden-sm hidden-md hidden-lg hidden-xl">Note<br><br></span>
+                                        <?php
                                         if ($noteEtu[0] > 21) { // 100 = abs
                                             echo '<span class="orange tippy-note" data-tippy-content="Hum, mais que c\'est il passé Billy ?">ABS</span>';
                                         } else {
@@ -271,40 +266,40 @@ include "assets/include/moy.php";
                                             }
                                         }
                                         ?> </p>
-                            </div>
-                            <div class="col-sm col-xs-6">
-                                <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Moyenne<br><br></span>
-                                    <?php echo $noteMoyenne; ?></p>
-                            </div>
-                            <div class="col-sm col-xs-6">
-                                <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Note Min<br><br></span>
-                                    <?php echo $mini; ?></p>
-                            </div>
-                            <div class="col-sm col-xs-6">
-                                <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Note Max<br><br></span>
-                                    <?php echo $maxi; ?></p>
-                                </a>
+                                </div>
+                                <div class="col-sm col-xs-6">
+                                    <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Moyenne<br><br></span>
+                                        <?php echo $noteMoyenne; ?></p>
+                                </div>
+                                <div class="col-sm col-xs-6">
+                                    <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Note Min<br><br></span>
+                                        <?php echo $mini; ?></p>
+                                </div>
+                                <div class="col-sm col-xs-6">
+                                    <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Note Max<br><br></span>
+                                        <?php echo $maxi; ?></p>
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="row start-xs center-sm">
-                            <div class="col-xs-12 col-sm-5 first-sm">
-                                <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Coeff: </span>
-                                    <?php echo $coeff; ?>
-                                </p>
-                            </div>
-                            <div class="col-xs-12 col-sm-7 first-xs">
-                                <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Nom du devoir: </span>
-                                    <?php if ($type == "Moyenne de notes (+M)") {
-                                            echo "Moyenne des notes intermédiaires ".$epreuve;
+                        <div class="col-sm-4">
+                            <div class="row start-xs center-sm">
+                                <div class="col-xs-12 col-sm-5 first-sm">
+                                    <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Coeff: </span>
+                                        <?php echo $coeff; ?>
+                                    </p>
+                                </div>
+                                <div class="col-xs-12 col-sm-7 first-xs">
+                                    <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Nom du devoir: </span>
+                                        <?php if ($type == "Moyenne de notes (+M)") {
+                                            echo "Moyenne des notes intermédiaires " . $epreuve;
                                         } else {
                                             echo $name;
-                                        }?></p>
+                                        } ?></p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </article>
+                    </article>
                 <?php
                 }
                 ?>
@@ -316,16 +311,14 @@ include "assets/include/moy.php";
     <footer>
         <div class="row center-xs">
             <div class="col-xs-12">
-                <p class="as-small">Made with ❤️ By <a href="https://erosya.fr" target="_BLANK">Erosya</a> | <span
-                        class="tippy-note"
-                        data-tippy-content="Discord: Ynohtna#0001 / QuentiumYT#0207 | contact@anthony-adam.fr">Nous
+                <p class="as-small">Made with ❤️ By <a href="https://erosya.fr" target="_BLANK">Erosya</a> | <span class="tippy-note" data-tippy-content="Discord: Ynohtna#0001 / QuentiumYT#0207 | contact@anthony-adam.fr">Nous
                         contacter</span> | <a href="terms.html">Mention légales</a></p>
             </div>
 
         </div>
         <!-- SCRIPT EXT -->
-        <script src="assets/js/popper.min.js"></script>
-        <script src="assets/js/tippy-bundle.iife.min.js"></script>
+        <script src="https://unpkg.com/popper.js"></script>
+        <script src="https://unpkg.com/tippy.js"></script>
         <!-- SCRIPT PERSO -->
         <script src="assets/js/app.js"></script>
     </footer>

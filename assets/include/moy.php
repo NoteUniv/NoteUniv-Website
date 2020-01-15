@@ -1,19 +1,19 @@
 <?php
 switch ($semestre) { // en fct du semestre on fait une requete
     case '1':
-        $sql_all_notes = "SELECT name_pdf, mini, note_coeff, type_note, note_semester FROM global WHERE note_semester = 'S1UE1' OR note_semester = 'S1UE2'";
+        $sql_all_notes = "SELECT name_pdf, mini, note_coeff, type_note, note_semester FROM global_s1 WHERE note_semester = 'UE1' OR note_semester = 'UE2'";
         break;
     case '2':
-        $sql_all_notes = "SELECT name_pdf, mini, note_coeff, type_note, note_semester FROM global WHERE note_semester = 'S2UE1' OR note_semester = 'S2UE2'";
+        $sql_all_notes = "SELECT name_pdf, mini, note_coeff, type_note, note_semester FROM global_s2 WHERE note_semester = 'UE1' OR note_semester = 'UE2'";
         break;
     case '3':
-        $sql_all_notes = "SELECT name_pdf, mini, note_coeff, type_note, note_semester FROM global  WHERE note_semester = 'S3UE1' OR note_semester = 'S3UE2'";
+        $sql_all_notes = "SELECT name_pdf, mini, note_coeff, type_note, note_semester FROM global_s3  WHERE note_semester = 'UE1' OR note_semester = 'UE2'";
         break;
     case '4':
-        $sql_all_notes = "SELECT name_pdf, mini, note_coeff, type_note, note_semester FROM global WHERE note_semester = 'S4UE1' OR note_semester = 'S4UE2'";
+        $sql_all_notes = "SELECT name_pdf, mini, note_coeff, type_note, note_semester FROM global_s4 WHERE note_semester = 'UE1' OR note_semester = 'UE2'";
         break;
     default:
-        $sql_all_notes = "SELECT name_pdf, mini, note_coeff, type_note, note_semester FROM global WHERE note_semester = 'S1UE1' OR    note_semester = 'S1UE2'";
+        $sql_all_notes = "SELECT name_pdf, mini, note_coeff, type_note, note_semester FROM global_s1 WHERE note_semester = 'UE1' OR    note_semester = 'UE2'";
         break;
 }
 $list_notes = $bdd->query($sql_all_notes);
@@ -34,4 +34,3 @@ if (array_sum($totalCoeff) == 0) {
 }
 $moyenne = array_sum($totalNote) / array_sum($totalCoeff); // on fait la moyenne : Ensemble des notes du tableau / tot de coeff
 $moyenne = round($moyenne, 2);
-
