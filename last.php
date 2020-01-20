@@ -4,9 +4,8 @@ session_start();
 require "vendor/autoload.php";
 
 // Changement de semestre
-if (empty($_COOKIE['semestre']) || !is_numeric($_COOKIE['semestre'])) {
-    setcookie("semestre", "1", strtotime('+360 days'));
-    $semestre = 1;
+if (!isset($_COOKIE['semestre']) || !is_numeric($_COOKIE['semestre'])) {
+    header('Location: https://noteuniv.fr/');
 } else {
     $semestre = htmlspecialchars($_COOKIE['semestre']);
 }
@@ -52,7 +51,7 @@ if ((!empty($_POST["numEtu"]) && is_numeric($_POST["numEtu"]))) {
 } else if (!empty($_SESSION['id_etu']) && is_numeric($_SESSION['id_etu'])) {
     $id_etu = $_SESSION['id_etu'];
 } else {
-    header('Location: https://noteuniv.fr');
+    header('Location: https://noteuniv.fr/');
 }
 // $id_etu = 21901533;
 // $_SESSION['id_etu'] = $id_etu;
