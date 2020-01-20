@@ -6,7 +6,7 @@ require "vendor/autoload.php";
 // Changement de semestre
 if (empty($_COOKIE['semestre']) || !is_numeric($_COOKIE['semestre'])) {
     setcookie("semestre", "1", strtotime('+360 days'));
-    $semestre = "1";
+    $semestre = 1;
 } else {
     $semestre = htmlspecialchars($_COOKIE['semestre']);
 }
@@ -18,6 +18,14 @@ if (isset($_GET['change']) && $semestre == 1) {
 } elseif (isset($_GET['change']) && $semestre == 2) {
     setcookie("semestre", "1", strtotime('+360 days'));
     $semestre = 1;
+}
+// MMI-2 = Accès uniquement au S3/S4 
+if (isset($_GET['change']) && $semestre == 3) {
+    setcookie("semestre", "4", strtotime('+360 days'));
+    $semestre = 4;
+} elseif (isset($_GET['change']) && $semestre == 4) {
+    setcookie("semestre", "3", strtotime('+360 days'));
+    $semestre = 3;
 }
 
 // Récupération des variables d'environnement
@@ -67,6 +75,7 @@ include "assets/include/moy.php";
     <meta name="language" content="French">
     <meta name="revisit-after" content="15 days">
     <meta name="author" content="Ynohtna, Quentium">
+    <meta name="theme-color" content="#110133">
     <title>NoteUniv | Panel</title>
     <!-- FAVICON  -->
     <link rel="apple-touch-icon" sizes="57x57" href="assets/images/favicon/apple-icon-57x57.png">
@@ -83,9 +92,9 @@ include "assets/include/moy.php";
     <link rel="icon" type="image/png" sizes="96x96" href="assets/images/favicon/favicon-96x96.png">
     <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon/favicon-16x16.png">
     <link rel="manifest" href="assets/images/favicon/manifest.json">
-    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileColor" content="#110133">
     <meta name="msapplication-TileImage" content="assets/images/favicon/ms-icon-144x144.png">
-    <meta name="theme-color" content="#ffffff">
+    <meta name="theme-color" content="#110133">
     <!-- CSS EXT-->
     <link rel="stylesheet" href="assets/css/flexboxgrid2.css" type="text/css">
     <!-- CSS PERSO-->
@@ -126,14 +135,14 @@ include "assets/include/moy.php";
         <aside class="col-sm col-lg-3">
             <div class="row center-sm card">
                 <div class="col-sm-12">
-                    <img src="assets/images/logo_noteuniv_icon.svg" alt="" class="img-fluid img-ico">
-                    <img src="assets/images/logo_noteuniv_text.svg" alt="" class="img-fluid img-txt">
+                    <img src="assets/images/noteuniv_logo.svg" alt="" class="img-fluid img-ico">
+                    <img src="assets/images/noteuniv_text.svg" alt="" class="img-fluid img-txt">
                     <p class="as-etu">Etudiant</p>
                     <p>N°<?php echo $id_etu; ?></p>
                     <p class="as-small">Je suis actuellement en :</p>
                     <button class="btn-etu"><span class="tippy-note" data-tippy-content="T'as bien fait, c'est les meilleurs ;)">MMI</span></button> <br>
-                    <button class="btn-etu"> <span class="tippy-note" data-tippy-content="<a href='?change=true'>Changement de Semestre</a>"> SEMESTRE
-                            <?php echo $semestre; ?></span></button>
+                    <button class="btn-etu"> <span class="tippy-note" data-tippy-content="Changement de Semestre"> <a href='?change=true'>SEMESTRE
+                                <?php echo $semestre; ?></a></span></button>
                     <p class="as-small">Ma moyenne générale est :</p>
                     <button class="btn-moy"><span class="tippy-note" data-tippy-content="<a href='ranking.php'>Besoin de voir ta grandeur ?</a>"><?php echo $moyenne; ?>
                             / 20</span></button>
@@ -198,19 +207,19 @@ include "assets/include/moy.php";
                 <?php
                 switch ($semestre) { // en fct du semestre on fait une requete
                     case '1':
-                        $sql_all_notes = "SELECT name_devoir, name_pdf, note_date, moy, mini, maxi, note_code, note_coeff, type_note, type_epreuve, note_semester FROM global_s1 WHERE note_semester = 'UE1' OR note_semester = 'UE2' ORDER BY note_date DESC";
+                        $sql_all_notes = "SELECT name_devoir, name_pdf, note_date, moy, mini, maxi, note_code, note_coeff, type_note, type_epreuve, note_semester FROM global_s1 ORDER BY note_date DESC";
                         break;
                     case '2':
-                        $sql_all_notes = "SELECT name_devoir, name_pdf, note_date, moy, mini, maxi, note_code, note_coeff, type_note, type_epreuve, note_semester FROM global_s2 WHERE note_semester = 'UE1' OR note_semester = 'UE2' ORDER BY note_date DESC";
+                        $sql_all_notes = "SELECT name_devoir, name_pdf, note_date, moy, mini, maxi, note_code, note_coeff, type_note, type_epreuve, note_semester FROM global_s2 ORDER BY note_date DESC";
                         break;
                     case '3':
-                        $sql_all_notes = "SELECT name_devoir, name_pdf, note_date, moy, mini, maxi, note_code, note_coeff, type_note, type_epreuve, note_semester FROM global_s3  WHERE note_semester = 'UE1' OR note_semester = 'UE2' ORDER BY note_date DESC";
+                        $sql_all_notes = "SELECT name_devoir, name_pdf, note_date, moy, mini, maxi, note_code, note_coeff, type_note, type_epreuve, note_semester ORDER BY note_date DESC";
                         break;
                     case '4':
-                        $sql_all_notes = "SELECT name_devoir, name_pdf, note_date, moy, mini, maxi, note_code, note_coeff, type_note, type_epreuve, note_semester FROM global_s4 WHERE note_semester = 'UE1' OR note_semester = 'UE2' ORDER BY note_date DESC";
+                        $sql_all_notes = "SELECT name_devoir, name_pdf, note_date, moy, mini, maxi, note_code, note_coeff, type_note, type_epreuve, note_semester FROM global_s4 ORDER BY note_date DESC";
                         break;
                     default:
-                        $sql_all_notes = "SELECT name_devoir, name_pdf, note_date, moy, mini, maxi, note_code, note_coeff, type_note, type_epreuve, note_semester FROM global_s1 WHERE note_semester = 'UE1' OR    note_semester = 'UE2' ORDER BY note_date DESC";
+                        $sql_all_notes = "SELECT name_devoir, name_pdf, note_date, moy, mini, maxi, note_code, note_coeff, type_note, type_epreuve, note_semester FROM global_s1 ORDER BY note_date DESC";
                         break;
                 }
 
@@ -317,8 +326,8 @@ include "assets/include/moy.php";
 
         </div>
         <!-- SCRIPT EXT -->
-        <script src="https://unpkg.com/popper.js"></script>
-        <script src="https://unpkg.com/tippy.js"></script>
+        <script src="assets/js/popper.min.js"></script>
+        <script src="assets/js/tippy-bundle.iife.min.js"></script>
         <!-- SCRIPT PERSO -->
         <script src="assets/js/app.js"></script>
     </footer>
