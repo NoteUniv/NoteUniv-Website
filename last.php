@@ -212,7 +212,7 @@ include "assets/include/moy.php";
                         $sql_all_notes = "SELECT name_devoir, name_pdf, note_date, moy, mini, maxi, note_code, note_coeff, type_note, type_epreuve, note_semester FROM global_s2 ORDER BY note_date DESC";
                         break;
                     case '3':
-                        $sql_all_notes = "SELECT name_devoir, name_pdf, note_date, moy, mini, maxi, note_code, note_coeff, type_note, type_epreuve, note_semester ORDER BY note_date DESC";
+                        $sql_all_notes = "SELECT name_devoir, name_pdf, note_date, moy, mini, maxi, note_code, note_coeff, type_note, type_epreuve, note_semester FROM global_s3 ORDER BY note_date DESC";
                         break;
                     case '4':
                         $sql_all_notes = "SELECT name_devoir, name_pdf, note_date, moy, mini, maxi, note_code, note_coeff, type_note, type_epreuve, note_semester FROM global_s4 ORDER BY note_date DESC";
@@ -320,7 +320,7 @@ include "assets/include/moy.php";
         <div class="row center-xs">
             <div class="col-xs-12">
                 <p class="as-small">Made with ❤️ By <a href="https://erosya.fr" target="_BLANK">Erosya</a> | <span class="tippy-note" data-tippy-content="Discord: Ynohtna#0001 / QuentiumYT#0207 | contact@anthony-adam.fr">Nous
-                        contacter</span> | <a href="terms.html">Mention légales</a></p>
+                        contacter</span> | <a href="terms.html">Mentions légales</a></p>
             </div>
 
         </div>

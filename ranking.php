@@ -180,7 +180,24 @@ include "assets/include/moy.php";
 
                 <!-- ANCHOR Notes -->
                 <?php
-                $sqlMoy = $bdd->query("SELECT id_etu, moy_etu FROM ranking_s1 ORDER BY moy_etu DESC");
+                switch ($semestre) {
+                    case '1':
+                        $sqlRank = "SELECT id_etu, moy_etu FROM ranking_s1 ORDER BY moy_etu DESC";
+                        break;
+                    case '2':
+                        $sqlRank = "SELECT id_etu, moy_etu FROM ranking_s2 ORDER BY moy_etu DESC";
+                        break;
+                    case '3':
+                        $sqlRank = "SELECT id_etu, moy_etu FROM ranking_s3 ORDER BY moy_etu DESC";
+                        break;
+                    case '4':
+                        $sqlRank = "SELECT id_etu, moy_etu FROM ranking_s4 ORDER BY moy_etu DESC";
+                        break;
+                    default:
+                        # code...
+                        break;
+                }
+                $sqlMoy = $bdd->query($sqlRank);
                 $i = 1;
                 while ($moy = $sqlMoy->fetch()) {
                 ?>
@@ -234,7 +251,7 @@ include "assets/include/moy.php";
                                 print('<div class="col-sm-4 center-sm last-xs"><p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Récompense : </span>250 Erya</p></div>');
                                 break;
                             case '4':
-                                print('<div class="col-sm-4 center-sm last-xs"><p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Récompense : </span><span class="tippy-note" data-tippy-content="CHECH">LE SEUM</span></p></div>');
+                                print('<div class="col-sm-4 center-sm last-xs"><p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Récompense : </span><span class="tippy-note" data-tippy-content="CHEH">LE SEUM</span></p></div>');
                                 break;
                             default:
                                 print('<div class="col-sm-4 center-sm last-xs"><p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Récompense : </span>Aucune</p></div>');
@@ -252,7 +269,7 @@ include "assets/include/moy.php";
     <footer>
         <div class="row center-xs">
             <div class="col-xs-12">
-                <p class="as-small">Made with ❤️ By <a href="https://erosya.fr" target="_BLANK">Erosya</a> | <span class="tippy-note" data-tippy-content="Discord: Ynohtna#0001 / QuentiumYT#0207 | contact@anthony-adam.fr">Nous contacter</span> | <a href="terms.html">Mention légales</a> </p>
+                <p class="as-small">Made with ❤️ By <a href="https://erosya.fr" target="_BLANK">Erosya</a> | <span class="tippy-note" data-tippy-content="Discord: Ynohtna#0001 / QuentiumYT#0207 | contact@anthony-adam.fr">Nous contacter</span> | <a href="terms.html">Mentions légales</a> </p>
             </div>
 
         </div>

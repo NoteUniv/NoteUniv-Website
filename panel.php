@@ -19,7 +19,14 @@ if (isset($_GET['change']) && $semestre == 1) {
     setcookie("semestre", "1", strtotime('+360 days'));
     $semestre = 1;
 }
-
+// MMI-2 Accès uniquement au S3/S4
+if (isset($_GET['change']) && $semestre == 3) {
+    setcookie("semestre", "4", strtotime('+360 days'));
+    $semestre = 4;
+} elseif (isset($_GET['change']) && $semestre == 4) {
+    setcookie("semestre", "3", strtotime('+360 days'));
+    $semestre = 3;
+}
 // Récupération des variables d'environnement
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
@@ -243,8 +250,26 @@ include "assets/include/moy.php";
                 <?php
                 $pointUe1 = 0; // Point total de chaque étudiant pour l'UE1
                 $pointMinUe1 = 0; // Point Minimum à avoir pour l'UE1
+                
                 foreach ($ue1 as $key => $value) {
-                    $ue1Sql = $bdd->query("SELECT name_devoir, name_pdf, note_date, moy, mini, maxi, note_code, note_coeff, name_ens, type_note, note_semester, note_total, median, variance, deviation, type_epreuve FROM global_s1 WHERE note_code = '$value' ORDER BY note_date, id DESC");
+                    switch ($semestre) {
+                        case '1':
+                            $sqlSem = "SELECT name_devoir, name_pdf, note_date, moy, mini, maxi, note_code, note_coeff, name_ens, type_note, note_semester, note_total, median, variance, deviation, type_epreuve FROM global_s1 WHERE note_code = '$value' ORDER BY note_date, id DESC";
+                            break;
+                        case '2':
+                            $sqlSem  = "SELECT name_devoir, name_pdf, note_date, moy, mini, maxi, note_code, note_coeff, name_ens, type_note, note_semester, note_total, median, variance, deviation, type_epreuve FROM global_s2 WHERE note_code = '$value' ORDER BY note_date, id DESC";
+                            break;
+                        case '3':
+                            $sqlSem = "SELECT name_devoir, name_pdf, note_date, moy, mini, maxi, note_code, note_coeff, name_ens, type_note, note_semester, note_total, median, variance, deviation, type_epreuve FROM global_s3 WHERE note_code = '$value' ORDER BY note_date, id DESC";
+                            break;
+                        case '4':
+                            $sqlSem = "SELECT name_devoir, name_pdf, note_date, moy, mini, maxi, note_code, note_coeff, name_ens, type_note, note_semester, note_total, median, variance, deviation, type_epreuve FROM global_s4 WHERE note_code = '$value' ORDER BY note_date, id DESC";
+                            break;
+                        default:
+                            # code...
+                            break;
+                    }
+                    $ue1Sql = $bdd->query($sqlSem);
                 ?>
                     <!-- ANCHOR Notes par matière 1 -->
                     <article class="row all-note">
@@ -463,7 +488,24 @@ include "assets/include/moy.php";
                 $pointUe2 = 0; // Point total de chaque étudiant pour l'UE2
                 $pointMinUe2 = 0; // Point Minimum à avoir pour l'UE2
                 foreach ($ue2 as $key => $value) {
-                    $ue1Sql = $bdd->query("SELECT name_devoir, name_pdf, note_date, moy, mini, maxi, note_code, note_coeff, name_ens, type_note, note_semester, note_total, median, variance, deviation, type_epreuve FROM global_s1 WHERE note_code = '$value' ORDER BY note_date, id DESC");
+                    switch ($semestre) {
+                        case '1':
+                            $sqlSem = "SELECT name_devoir, name_pdf, note_date, moy, mini, maxi, note_code, note_coeff, name_ens, type_note, note_semester, note_total, median, variance, deviation, type_epreuve FROM global_s1 WHERE note_code = '$value' ORDER BY note_date, id DESC";
+                            break;
+                        case '2':
+                            $sqlSem  = "SELECT name_devoir, name_pdf, note_date, moy, mini, maxi, note_code, note_coeff, name_ens, type_note, note_semester, note_total, median, variance, deviation, type_epreuve FROM global_s2 WHERE note_code = '$value' ORDER BY note_date, id DESC";
+                            break;
+                        case '3':
+                            $sqlSem = "SELECT name_devoir, name_pdf, note_date, moy, mini, maxi, note_code, note_coeff, name_ens, type_note, note_semester, note_total, median, variance, deviation, type_epreuve FROM global_s3 WHERE note_code = '$value' ORDER BY note_date, id DESC";
+                            break;
+                        case '4':
+                            $sqlSem = "SELECT name_devoir, name_pdf, note_date, moy, mini, maxi, note_code, note_coeff, name_ens, type_note, note_semester, note_total, median, variance, deviation, type_epreuve FROM global_s4 WHERE note_code = '$value' ORDER BY note_date, id DESC";
+                            break;
+                        default:
+                            # code...
+                            break;
+                    }
+                    $ue1Sql = $bdd->query($sqlSem);
                 ?>
                     <article class="row all-note">
                         <div class="col-sm-2 matiere first-xs">
@@ -813,7 +855,7 @@ include "assets/include/moy.php";
         <div class="row center-xs">
             <div class="col-xs-12">
                 <p class="as-small">Made with ❤️ By <a href="https://erosya.fr" target="_BLANK">Erosya</a> | <span class="tippy-note" data-tippy-content="Discord: Ynohtna#0001 / QuentiumYT#0207 | contact@anthony-adam.fr">Nous
-                        contacter</span> | <a href="terms.html">Mention légales</a></p>
+                        contacter</span> | <a href="terms.html">Mentions légales</a></p>
             </div>
 
         </div>
