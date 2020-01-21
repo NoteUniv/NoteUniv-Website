@@ -82,15 +82,15 @@
                 </div>
                 <h1 class="desc">Votre nouvel espace pour retrouver vos notes plus facilement et savoir si vous passez
                     votre semestre !</h1>
-                <div>
+                <div class="row center-xs start-lg">
                     <form action="last.php" id="sendID" method="POST">
                         <div id="inputAll" class="input out">
                             <input id="numEtu" name="numEtu" type="number" class="input" required
                                 placeholder="Numéro étudiant">
                             <input type="hidden" name="sem" id="sem" value="">
                             <span id="submitForm" onclick="submitForm()"><i class="fas fa-arrow-right"></i></span>
-                            <p id="showMessage"></p>
                         </div>
+                        <p id="showMessage"></p>
                     </form>
                     <div class="row hidden-xs hidden-lg hidden-xl">
                         <div class="col-xs-6">
