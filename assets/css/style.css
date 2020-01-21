@@ -96,7 +96,6 @@ body {
 
 .out {
     display: flex;
-    align-items: center;
     justify-content: space-between;
     margin: 8px 0;
     padding: 0 20px;
@@ -111,7 +110,16 @@ input::placeholder {
 }
 
 #submitForm {
+    height: 100%;
     opacity: 0.5;
+    cursor: pointer;
+    background-color: transparent;
+    transition: opacity 0.2s;
+}
+
+#submitForm:focus {
+    outline: none;
+    opacity: 0.8;
 }
 
 .sponso {
