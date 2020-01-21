@@ -34,5 +34,6 @@ venv.bak/
 
 # VS Code
 .code
+.vscode
 
 vendor/

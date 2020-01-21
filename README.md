@@ -15,13 +15,29 @@
 
 ## 📥 Installation
 
--   Download the source code [here](https://github.com/NoteUniv/NoteUniv-Website/archive/master.zip) and install the dependencies.
+### Requirements
 
--   Download composer [here](https://getcomposer.org/download/) for dotenv module.
+- PHP >= 5.4
+- Have [Composer](https://getcomposer.org/download/) installed
+- Git
 
--   Install [phpdotenv](https://github.com/vlucas/phpdotenv) following the guide.
+### Running the project
 
-`composer require vlucas/phpdotenv`
+- Clone the repository
+
+```sh
+$ git clone https://github.com/NoteUniv/NoteUniv-Website.git
+```
+
+```sh
+$ cd NoteUniv-Website
+```
+
+- Install dependencies with Composer
+
+```sh
+$ composer install
+```
 
 ## 🚀 Usage
 
@@ -29,7 +45,7 @@
 
 Rename the .env.example to .env and edit with your constants / tokens.
 
-Run the website using wamp, uwamp or wampp.
+Run the website using wamp or equivalent.
 
 ## 🤝 Contributing
 
