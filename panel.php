@@ -4,29 +4,35 @@ session_start();
 require "vendor/autoload.php";
 
 // Changement de semestre
-if (empty($_COOKIE['semestre']) || !is_numeric($_COOKIE['semestre'])) {
-    setcookie("semestre", "1", strtotime('+360 days'));
-    $semestre = "1";
+if (!isset($_COOKIE['semestre']) || !is_numeric($_COOKIE['semestre'])) {
+    header('Location: https://noteuniv.fr/');
 } else {
     $semestre = htmlspecialchars($_COOKIE['semestre']);
 }
 
-// MMI-1 Accès uniquement au S1/S2
-if (isset($_GET['change']) && $semestre == 1) {
-    setcookie("semestre", "2", strtotime('+360 days'));
-    $semestre = 2;
-} elseif (isset($_GET['change']) && $semestre == 2) {
-    setcookie("semestre", "1", strtotime('+360 days'));
-    $semestre = 1;
+if (isset($_GET['change'])) {
+    // MMI-1 Accès uniquement au S1/S2
+    if ($semestre == 1) {
+        setcookie("semestre", "2", strtotime('+360 days'));
+        $semestre = 2;
+    } elseif ($semestre == 2) {
+        setcookie("semestre", "1", strtotime('+360 days'));
+        $semestre = 1;
+    }
+    // MMI-2 Accès uniquement au S3/S4
+    if ($semestre == 3) {
+        setcookie("semestre", "4", strtotime('+360 days'));
+        $semestre = 4;
+    } elseif ($semestre == 4) {
+        setcookie("semestre", "3", strtotime('+360 days'));
+        $semestre = 3;
+    }
+    // Modification de l'URL si paramètre GET
+    echo '<script>
+        window.history.replaceState({}, document.title, location.pathname);
+    </script>';
 }
-// MMI-2 Accès uniquement au S3/S4
-if (isset($_GET['change']) && $semestre == 3) {
-    setcookie("semestre", "4", strtotime('+360 days'));
-    $semestre = 4;
-} elseif (isset($_GET['change']) && $semestre == 4) {
-    setcookie("semestre", "3", strtotime('+360 days'));
-    $semestre = 3;
-}
+
 // Récupération des variables d'environnement
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
@@ -184,7 +190,7 @@ include "assets/include/moy.php";
                     }
                     ?>
                     <p class="btn-logout"><a href="last.php">Dernières notes</a></p>
-                    <p class="btn-logout"><a href="https://noteuniv.fr/">Se déconnecter</a></p>
+                    <p class="btn-logout"><a href="./">Se déconnecter</a></p>
                 </div>
             </div>
         </aside>
@@ -250,7 +256,7 @@ include "assets/include/moy.php";
                 <?php
                 $pointUe1 = 0; // Point total de chaque étudiant pour l'UE1
                 $pointMinUe1 = 0; // Point Minimum à avoir pour l'UE1
-                
+
                 foreach ($ue1 as $key => $value) {
                     switch ($semestre) {
                         case '1':

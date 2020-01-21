@@ -4,20 +4,33 @@ session_start();
 require "vendor/autoload.php";
 
 // Changement de semestre
-if (empty($_COOKIE['semestre']) || !is_numeric($_COOKIE['semestre'])) {
-    setcookie("semestre", "1", strtotime('+360 days'));
-    $semestre = "1";
+if (!isset($_COOKIE['semestre']) || !is_numeric($_COOKIE['semestre'])) {
+    header('Location: https://noteuniv.fr/');
 } else {
     $semestre = htmlspecialchars($_COOKIE['semestre']);
 }
 
-// MMI-1 Accès uniquement au S1/S2
-if (isset($_GET['change']) && $semestre == 1) {
-    setcookie("semestre", "2", strtotime('+360 days'));
-    $semestre = 2;
-} elseif (isset($_GET['change']) && $semestre == 2) {
-    setcookie("semestre", "1", strtotime('+360 days'));
-    $semestre = 1;
+if (isset($_GET['change'])) {
+    // MMI-1 Accès uniquement au S1/S2
+    if ($semestre == 1) {
+        setcookie("semestre", "2", strtotime('+360 days'));
+        $semestre = 2;
+    } elseif ($semestre == 2) {
+        setcookie("semestre", "1", strtotime('+360 days'));
+        $semestre = 1;
+    }
+    // MMI-2 Accès uniquement au S3/S4
+    if ($semestre == 3) {
+        setcookie("semestre", "4", strtotime('+360 days'));
+        $semestre = 4;
+    } elseif ($semestre == 4) {
+        setcookie("semestre", "3", strtotime('+360 days'));
+        $semestre = 3;
+    }
+    // Modification de l'URL si paramètre GET
+    echo '<script>
+        window.history.replaceState({}, document.title, location.pathname);
+    </script>';
 }
 
 // Récupération des variables d'environnement
@@ -128,8 +141,7 @@ include "assets/include/moy.php";
                     <p>N°<?php echo $id_etu; ?></p>
                     <p class="as-small">Je suis actuellement en :</p>
                     <button class="btn-etu"><span class="tippy-note" data-tippy-content="T'as bien fait, c'est les meilleurs ;)">MMI</span></button> <br>
-                    <button class="btn-etu"> <span class="tippy-note" data-tippy-content="Changement de Semestre"> <a href='?change=true'>SEMESTRE
-                                <?php echo $semestre; ?></a></span></button>
+                    <button class="btn-etu"> <span class="tippy-note" data-tippy-content="Changement de Semestre"><a href='?change=true'>SEMESTRE <?php echo $semestre; ?></a></span></button>
                     <p class="as-small">Ma moyenne générale est :</p>
                     <button class="btn-moy"><span class="tippy-note" data-tippy-content="<a href='ranking.php'>Besoin de voir ta grandeur ?</a>"><?php echo $moyenne; ?>
                             / 20</span></button>
@@ -145,7 +157,7 @@ include "assets/include/moy.php";
                     }
                     ?>
                     <p class="btn-logout"><a href="last.php">Dernières notes</a></p>
-                    <p class="btn-logout"><a href="https://noteuniv.fr/">Se déconnecter</a></p>
+                    <p class="btn-logout"><a href="./">Se déconnecter</a></p>
                 </div>
             </div>
         </aside>
@@ -154,9 +166,9 @@ include "assets/include/moy.php";
             <!-- ANCHOR NOTES -->
             <section class="note">
                 <!-- Phrase différentes selon le viewport, afin de gagner de la place  -->
-                <h1 class="hidden-xs hidden-sm">El Classement de la muerté </h1>
+                <h1 class="hidden-xs hidden-sm">El Classement de la muerté</h1>
                 <h1 class="hidden-md hidden-lg hidden-xl">Classement</h1>
-                <p><a href="#me"> Cliquez moi pour allez à votre position !</a></p>
+                <p><a href="#me">Cliquez moi pour allez à votre position !</a></p>
 
                 <!-- ANCHOR Bandeau de l'UE 1 uniquement PC/Tablette -->
                 <div class="row ue-tab hidden-xs">
@@ -194,27 +206,27 @@ include "assets/include/moy.php";
                         $sqlRank = "SELECT id_etu, moy_etu FROM ranking_s4 ORDER BY moy_etu DESC";
                         break;
                     default:
-                        # code...
                         break;
                 }
                 $sqlMoy = $bdd->query($sqlRank);
                 $i = 1;
                 while ($moy = $sqlMoy->fetch()) {
                 ?>
-
                     <article class="row all-note">
                         <div class="col-sm-2 matiere first-xs">
-                            <p class='titre-mobile'><?php
-                                                    if ($i < 4) {
-                                                        if ($i == 1) {
-                                                            echo '<span class="green tippy-note" data-tippy-content="Mieux que les TOP1 Fortnite non ?">' . $i . '</span>';
-                                                        } else {
-                                                            echo '<span class="green">' . $i . '</span>';
-                                                        }
-                                                    } else {
-                                                        echo $i;
-                                                    }
-                                                    ?></p>
+                            <p class='titre-mobile'>
+                                <?php
+                                if ($i < 4) {
+                                    if ($i == 1) {
+                                        echo '<span class="green tippy-note" data-tippy-content="Mieux que les TOP1 Fortnite non ?">' . $i . '</span>';
+                                    } else {
+                                        echo '<span class="green">' . $i . '</span>';
+                                    }
+                                } else {
+                                    echo $i;
+                                }
+                                ?>
+                            </p>
                         </div>
                         <!-- Si mobile, on affiche les notes à la fin, et les coef en 2ème  -->
                         <div class="col-sm-6 last-xs initial-order-sm">
@@ -223,14 +235,14 @@ include "assets/include/moy.php";
                                     <p> <span class="hidden-sm hidden-md hidden-lg hidden-xl">Moyenne<br><br></span>
                                         <?php
                                         if ($moy[1] == $moyenne && $moy[0] == $id_etu) {
-                                            echo '<span id="me" class="green tippy-note" data-tippy-content="C\'est toi gros ! J\'espère que ça te va :)">' . $moy[1] . '</span>';
+                                            echo '<span id="me" class="green tippy-note-me" data-tippy-content="C\'est toi gros ! J\'espère que ça te va :)">' . $moy[1] . '</span>';
                                         } else {
                                             echo $moy[1];
                                         }
                                         ?> </p>
                                 </div>
                                 <div class="col-sm col-xs">
-                                    <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Etudiant<br><br></span>
+                                    <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Étudiant<br><br></span>
                                         <?php
                                         echo $moy[0];
                                         // echo "Supprimé temporairement";
@@ -269,9 +281,8 @@ include "assets/include/moy.php";
     <footer>
         <div class="row center-xs">
             <div class="col-xs-12">
-                <p class="as-small">Made with ❤️ By <a href="https://erosya.fr" target="_BLANK">Erosya</a> | <span class="tippy-note" data-tippy-content="Discord: Ynohtna#0001 / QuentiumYT#0207 | contact@anthony-adam.fr">Nous contacter</span> | <a href="terms.html">Mentions légales</a> </p>
+                <p class="as-small">Made with ❤️ By <a href="https://erosya.fr/" target="_BLANK">Erosya</a> | <span class="tippy-note" data-tippy-content="Discord: Ynohtna#0001 / QuentiumYT#0207 | contact@anthony-adam.fr / support@quentium.fr">Nous contacter</span> | <a href="terms.html">Mentions légales</a> </p>
             </div>
-
         </div>
         <!-- SCRIPT EXT -->
         <script src="assets/js/popper.min.js"></script>

@@ -1,4 +1,4 @@
-/* GLOBAL */
+/* ANCHOR GLOBAL */
 @font-face {
     font-family: "Montserrat";
     src: url("../fonts/Montserrat-SemiBold.ttf");
@@ -59,7 +59,7 @@ a {
     color: rgb(207, 56, 56);
 }
 
-/* CARD-aside  */
+/* ANCHOR CARD-aside  */
 .card {
     margin-top: 10px;
     margin-left: 10px;
@@ -290,6 +290,11 @@ a {
     margin-bottom: 100px;
 }
 
+span.green {
+    padding-top: 200px;
+    margin-top: -200px;
+}
+
 .note-par-matiere {
     max-width: 600px;
 }
@@ -308,7 +313,7 @@ a {
     font-weight: bold;
 }
 
-/* TIPPY THEME FOR POPUP */
+/* ANCHOR TIPPY THEME FOR POPUP */
 .tippy-tooltip.note-theme {
     background-color: #110133;
     color: #fff;
@@ -354,15 +359,12 @@ a {
     }
 }
 
-/* @media screen and (min-width: 1200px) {} */
-
 .tippy-tooltip.note-theme a {
     color: #fff;
 }
 
 .tippy-tooltip.note-theme .btn-etu {
     border-radius: 15px;
-    /* padding-right: 18px; */
 }
 
 .tippy-tooltip.note-theme .separation-note {

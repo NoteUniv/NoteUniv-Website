@@ -1,3 +1,10 @@
+<?php
+if (strpos($_SERVER['HTTP_ACCEPT'], 'image/webp') !== false) {
+    $img = "assets/images/background_image.webp";
+} else {
+    $img = "assets/images/background_image.png";
+}
+?>
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -39,8 +46,7 @@
     <!-- CSS PERSO-->
     <link rel="stylesheet" href="assets/css/style.css">
     <!-- Cookie  -->
-    <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="0df23692-fee1-4280-97ef-7c0506f2621d"
-        data-blockingmode="auto" type="text/javascript"></script>
+    <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="0df23692-fee1-4280-97ef-7c0506f2621d" data-blockingmode="auto" type="text/javascript"></script>
     <!-- Matomo -->
     <script type="text/javascript">
         var _paq = window._paq || [];
@@ -49,7 +55,7 @@
         _paq.push(["setCookieDomain", "*.noteuniv.fr"]);
         _paq.push(['trackPageView']);
         _paq.push(['enableLinkTracking']);
-        (function () {
+        (function() {
             var u = "//dev.noteuniv.fr/piwik/";
             _paq.push(['setTrackerUrl', u + 'matomo.php']);
             _paq.push(['setSiteId', '2']);
@@ -85,8 +91,7 @@
                 <div class="row center-xs start-lg">
                     <form class="login-form" action="last.php" id="sendID" method="POST">
                         <div id="inputAll" class="input out">
-                            <input id="numEtu" name="numEtu" type="number" class="input" required
-                                placeholder="Numéro étudiant">
+                            <input id="numEtu" name="numEtu" type="number" class="input" required placeholder="Numéro étudiant">
                             <input type="hidden" name="sem" id="sem" value="">
                             <button id="submitForm" onclick="submitForm()">
                                 <i class="fas fa-arrow-right"></i>
@@ -96,20 +101,19 @@
                     </form>
                     <div class="row hidden-xs hidden-lg hidden-xl">
                         <div class="col-xs-6">
-                            <p class="sponso">Ce service est proposé par Erosya pour tous les MMI1 de l'IUT de Haguenau.
-                            </p>
+                            <p class="sponso">Ce service est proposé par Erosya pour tous les MMI1 de l'IUT de Haguenau.</p>
                         </div>
                         <div class="col-xs-6">
-                            <img class="img-etu hidden-lg hidden-xl" src="assets/images/background_image.webp" alt="Image étudiants">
+                            <img class="img-etu hidden-lg hidden-xl" src="<?= $img ?>" alt="Image étudiants">
                         </div>
                     </div>
                     <p class="sponso hidden-sm hidden-md">Ce service est proposé par Erosya pour tous les MMI de l'IUT de Haguenau.</p>
                 </div>
-
             </article>
         </section>
+
         <div class="col-lg-6 end-xs hidden-xs hidden-sm hidden-md">
-            <img class="img-etu" src="assets/images/background_image.webp" alt="Image étudiants">
+            <img class="img-etu" src="<?= $img ?>" alt="Image étudiants">
         </div>
     </div>
     <script src="assets/js/index.js"></script>

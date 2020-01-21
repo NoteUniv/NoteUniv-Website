@@ -10,21 +10,27 @@ if (!isset($_COOKIE['semestre']) || !is_numeric($_COOKIE['semestre'])) {
     $semestre = htmlspecialchars($_COOKIE['semestre']);
 }
 
-// MMI-1 Accès uniquement au S1/S2
-if (isset($_GET['change']) && $semestre == 1) {
-    setcookie("semestre", "2", strtotime('+360 days'));
-    $semestre = 2;
-} elseif (isset($_GET['change']) && $semestre == 2) {
-    setcookie("semestre", "1", strtotime('+360 days'));
-    $semestre = 1;
-}
-// MMI-2 = Accès uniquement au S3/S4 
-if (isset($_GET['change']) && $semestre == 3) {
-    setcookie("semestre", "4", strtotime('+360 days'));
-    $semestre = 4;
-} elseif (isset($_GET['change']) && $semestre == 4) {
-    setcookie("semestre", "3", strtotime('+360 days'));
-    $semestre = 3;
+if (isset($_GET['change'])) {
+    // MMI-1 Accès uniquement au S1/S2
+    if ($semestre == 1) {
+        setcookie("semestre", "2", strtotime('+360 days'));
+        $semestre = 2;
+    } elseif ($semestre == 2) {
+        setcookie("semestre", "1", strtotime('+360 days'));
+        $semestre = 1;
+    }
+    // MMI-2 Accès uniquement au S3/S4
+    if ($semestre == 3) {
+        setcookie("semestre", "4", strtotime('+360 days'));
+        $semestre = 4;
+    } elseif ($semestre == 4) {
+        setcookie("semestre", "3", strtotime('+360 days'));
+        $semestre = 3;
+    }
+    // Modification de l'URL si paramètre GET
+    echo '<script>
+        window.history.replaceState({}, document.title, location.pathname);
+    </script>';
 }
 
 // Récupération des variables d'environnement
@@ -75,7 +81,7 @@ include "assets/include/moy.php";
     <meta name="revisit-after" content="15 days">
     <meta name="author" content="Ynohtna, Quentium">
     <meta name="theme-color" content="#110133">
-    <title>NoteUniv | Panel</title>
+    <title>NoteUniv | Last</title>
     <!-- FAVICON  -->
     <link rel="apple-touch-icon" sizes="57x57" href="assets/images/favicon/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="assets/images/favicon/apple-icon-60x60.png">
@@ -157,7 +163,7 @@ include "assets/include/moy.php";
                     }
                     ?>
                     <p class="btn-logout"><a href="panel.php">Récapitulatif</a></p>
-                    <p class="btn-logout"><a href="https://noteuniv.fr/">Se déconnecter</a></p>
+                    <p class="btn-logout"><a href="./">Se déconnecter</a></p>
                 </div>
             </div>
         </aside>

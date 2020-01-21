@@ -5,8 +5,15 @@
     font-style: normal;
 }
 
-/* -webkit- add this if error */
 @keyframes autofill {
+    to {
+        color: #110133;
+        opacity: 0.7;
+        background: transparent;
+    }
+}
+
+@-webkit-keyframes autofill {
     to {
         color: #110133;
         opacity: 0.7;
@@ -28,12 +35,19 @@ body {
     overflow: hidden;
 }
 
-
 .img-etu {
     width: 100%;
     height: auto;
     margin-top: -70px;
     margin-right: -70px;
+}
+
+/* IE bullshit (negative margin right doesn't work) */
+@media screen and (-ms-high-contrast: active),
+(-ms-high-contrast: none) {
+    .img-etu {
+        margin-right: 35px;
+    }
 }
 
 .logo-img {
@@ -61,8 +75,8 @@ body {
 .input {
     width: 85%;
     height: 50px;
+    padding: 0px 14px;
     display: inline-block;
-    border: 0;
     border-radius: 32px;
     -webkit-border-radius: 32px;
     -moz-border-radius: 32px;
@@ -75,7 +89,6 @@ body {
     user-select: none;
     outline: none;
     -moz-appearance: textfield;
-
 }
 
 .input::-webkit-outer-spin-button,
@@ -98,7 +111,6 @@ body {
     display: flex;
     justify-content: space-between;
     margin: 8px 0;
-    padding: 0 20px;
     width: 25vw;
     background-color: white;
 }
@@ -119,8 +131,10 @@ input::placeholder {
     height: 100%;
     opacity: 0.5;
     cursor: pointer;
+    color: #110133;
     background-color: transparent;
     transition: opacity 0.2s;
+    padding: 0 20px;
 }
 
 #submitForm:focus {
