@@ -1,4 +1,5 @@
 <?php
+// Dépendances
 require "vendor/autoload.php";
 // Recupération des variables d'environnement
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
@@ -7,6 +8,7 @@ $servername = getenv('SERVERNAME');
 $dbname = getenv('DBNAME');
 $username = getenv('USER');
 $password = getenv('PASSWORD');
+
 // Connexion bdd
 try {
     $bdd = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);

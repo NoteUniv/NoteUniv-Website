@@ -143,27 +143,32 @@ include "assets/include/moy.php";
                     <img src="assets/images/noteuniv_logo.svg" alt="" class="img-fluid img-ico">
                     <img src="assets/images/noteuniv_text.svg" alt="" class="img-fluid img-txt">
                     <p class="as-etu">Etudiant</p>
-                    <p>N°<?php echo $id_etu; ?></p>
+                    <p>N°<?= $id_etu; ?></p>
                     <p class="as-small">Je suis actuellement en :</p>
-                    <button class="btn-etu"><span class="tippy-note" data-tippy-content="T'as bien fait, c'est les meilleurs ;)">MMI</span></button> <br>
-                    <button class="btn-etu"> <span class="tippy-note" data-tippy-content="Changement de Semestre"> <a href='?change=true'>SEMESTRE
-                                <?php echo $semestre; ?></a></span></button>
+                    <span class="btn btn-etu">
+                        <span class="tippy-note" data-tippy-content="T'as bien fait, c'est les meilleurs ;)">MMI</span>
+                    </span>
+                    <br>
+                    <span class="btn btn-etu">
+                        <span class="tippy-note" data-tippy-content="Changement de Semestre"><a href='?change=true'>SEMESTRE <?php echo $semestre; ?></a></span>
+                    </span>
                     <p class="as-small">Ma moyenne générale est :</p>
-                    <button class="btn-moy"><span class="tippy-note" data-tippy-content="<a href='ranking.php'>Besoin de voir ta grandeur ?</a>"><?php echo $moyenne; ?>
-                            / 20</span></button>
+                    <span class="btn btn-moy">
+                        <span class="tippy-note" data-tippy-content="<a href='ranking.php'>Besoin de voir ta grandeur ?</a>"><?php echo $moyenne; ?> / 20</span>
+                    </span>
                     <?php
-                    if ($moyenne >= 15) { // Moyenne sup ou égal à 15
-                        echo '<p class="green">Un Dieu.</p>';
-                    } else if ($moyenne >= 13) { // Sup/eg à 13
+                    if ($moyenne >= 15) {
+                        echo '<p class="green">Un Dieu !</p>';
+                    } else if ($moyenne >= 13) {
                         echo '<p class="green">Honnêtement ? OKLM gros !</p>';
-                    } elseif ($moyenne >= 10) { // sup/eg à 10
-                        echo '<p class="orange">ALLEZZZ ! ça passe !</p>';
-                    } else { // en dessous de 10
-                        echo '<p class="red">aïe, trql on se motive!</p>';
+                    } elseif ($moyenne >= 10) {
+                        echo '<p class="orange">ALLEEEZZZ ! ça passe !</p>';
+                    } else {
+                        echo '<p class="red">Aïe, trql on se motive !</p>';
                     }
                     ?>
-                    <p class="btn-logout"><a href="panel.php">Récapitulatif</a></p>
-                    <p class="btn-logout"><a href="./">Se déconnecter</a></p>
+                    <span class="btn btn-logout"><a href="panel.php">Récapitulatif</a></span>
+                    <span class="btn btn-logout"><a href="./">Se déconnecter</a></span>
                 </div>
             </div>
         </aside>
@@ -326,7 +331,7 @@ include "assets/include/moy.php";
         <div class="row center-xs">
             <div class="col-xs-12">
                 <p class="as-small">Made with ❤️ By <a href="https://erosya.fr" target="_BLANK">Erosya</a> | <span class="tippy-note" data-tippy-content="Discord: Ynohtna#0001 / QuentiumYT#0207 | contact@anthony-adam.fr">Nous
-                        contacter</span> | <a href="terms.html">Mentions légales</a></p>
+                        contacter</button> | <a href="terms.html">Mentions légales</a></p>
             </div>
 
         </div>

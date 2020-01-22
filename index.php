@@ -89,25 +89,24 @@ if (strpos($_SERVER['HTTP_ACCEPT'], 'image/webp') !== false) {
                 <h1 class="desc">Votre nouvel espace pour retrouver vos notes plus facilement et savoir si vous passez
                     votre semestre !</h1>
                 <div class="row center-xs start-lg">
-                    <form class="login-form" action="last.php" id="sendID" method="POST">
+                    <form class="login-form" id="sendID" action="last.php" method="POST">
                         <div id="inputAll" class="input out">
                             <input id="numEtu" name="numEtu" type="number" class="input" required placeholder="Numéro étudiant">
-                            <input type="hidden" name="sem" id="sem" value="">
-                            <button id="submitForm" onclick="submitForm()">
+                            <span id="submitForm" onclick="submitForm()">
                                 <i class="fas fa-arrow-right"></i>
-                            </button>
+                            </span>
                         </div>
                         <p id="showMessage"></p>
                     </form>
                     <div class="row hidden-xs hidden-lg hidden-xl">
                         <div class="col-xs-6">
-                            <p class="sponso">Ce service est proposé par Erosya pour tous les MMI1 de l'IUT de Haguenau.</p>
+                            <p class="sponso">Ce service est proposé par <a href="https://erosya.fr/">Erosya</a> pour tous les MMI1 de l'IUT de Haguenau.</p>
                         </div>
                         <div class="col-xs-6">
                             <img class="img-etu hidden-lg hidden-xl" src="<?= $img ?>" alt="Image étudiants">
                         </div>
                     </div>
-                    <p class="sponso hidden-sm hidden-md">Ce service est proposé par Erosya pour tous les MMI de l'IUT de Haguenau.</p>
+                    <p class="sponso hidden-sm hidden-md">Ce service est proposé par <a href="https://erosya.fr/">Erosya</a> pour tous les MMI de l'IUT de Haguenau.</p>
                 </div>
             </article>
         </section>

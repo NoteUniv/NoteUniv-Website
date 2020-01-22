@@ -72,6 +72,12 @@ body {
     margin-bottom: 50px;
 }
 
+.login-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .input {
     width: 85%;
     height: 50px;
@@ -121,23 +127,16 @@ input::placeholder {
     font-size: 24px;
 }
 
-.login-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
 #submitForm {
-    height: 100%;
-    opacity: 0.5;
+    opacity: 0.6;
     cursor: pointer;
     color: #110133;
     background-color: transparent;
     transition: opacity 0.2s;
-    padding: 0 20px;
+    padding: 10px 20px;
 }
 
-#submitForm:focus {
+#submitForm:hover {
     outline: none;
     opacity: 0.8;
 }
@@ -146,6 +145,11 @@ input::placeholder {
     color: white;
     margin-top: 5vh;
     font-size: 13px;
+}
+
+.sponso a {
+    color: white;
+    text-decoration: none;
 }
 
 #showMessage {
