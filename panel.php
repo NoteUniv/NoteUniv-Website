@@ -36,14 +36,14 @@ if (isset($_GET['change'])) {
 // Récupération des variables d'environnement
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
-$servername = getenv('SERVERNAME');
-$dbname = getenv('DBNAME');
-$username = getenv('USER');
-$password = getenv('PASSWORD');
+$hostname = getenv('BDD_HOST');
+$dbname = getenv('BDD_NAME');
+$username = getenv('BDD_LOGIN');
+$password = getenv('BDD_PASSWD');
 
-// Connection bdd
+// Connexion bdd
 try {
-    $bdd = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+    $bdd = new PDO("mysql:host=$hostname;dbname=$dbname", $username, $password);
     $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $bdd->exec('SET NAMES utf8');
 } catch (PDOException $e) {
@@ -58,23 +58,8 @@ if (!empty($_SESSION["id_etu"]) && is_numeric($_SESSION["id_etu"])) {
 }
 
 // Recupération des note du semestre
-switch ($semestre) { // en fct du semestre on fait une requete
-    case '1':
-        $sql_all_notes = "SELECT note_date, note_code, note_semester FROM global_s1 ORDER BY note_date";
-        break;
-    case '2':
-        $sql_all_notes = "SELECT note_date, note_code, note_semester FROM global_s2 ORDER BY note_date";
-        break;
-    case '3':
-        $sql_all_notes = "SELECT note_date, note_code, note_semester FROM global_s3 ORDER BY note_date";
-        break;
-    case '4':
-        $sql_all_notes = "SELECT note_date, note_code, note_semester FROM global_s4 ORDER BY note_date";
-        break;
-    default:
-        $sql_all_notes = "SELECT note_date, note_code, note_semester FROM global_s1 ORDER BY note_date";
-        break;
-}
+$sql_all_notes = "SELECT note_date_c, note_code, note_semester FROM global_s$semestre ORDER BY note_date_c";
+
 $list_notes = $bdd->query($sql_all_notes);
 $ue1 = []; // liste des note UE1
 $ue2 = []; // liste des note UE1
@@ -100,7 +85,7 @@ include "assets/include/moy.php";
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="title" content="Noteuniv, IUT Haguenau">
-    <meta name="description" content="Retrouvez facilement vos note de l'iut de haguenau grâce à Noteuniv !">
+    <meta name="description" content="Retrouvez plus facilement vos notes de l'IUT de Haguenau grâce à NoteUniv !">
     <meta name="keywords" content="noteuniv, haguenau, note iut haguenau, emploi du temps mmi, note mmi, noteuniv mmi">
     <meta name="robots" content="index, follow">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -167,9 +152,9 @@ include "assets/include/moy.php";
         <aside class="col-sm col-lg-3">
             <div class="row center-sm card">
                 <div class="col-sm-12">
-                    <img src="assets/images/noteuniv_logo.svg" alt="" class="img-fluid img-ico">
-                    <img src="assets/images/noteuniv_text.svg" alt="" class="img-fluid img-txt">
-                    <p class="as-etu">Etudiant</p>
+                    <img src="assets/images/noteuniv_logo.svg" alt="Logo NoteUniv" class="img-fluid img-ico">
+                    <img src="assets/images/noteuniv_text.svg" alt="Texte NoteUniv" class="img-fluid img-txt">
+                    <p class="as-etu">Étudiant</p>
                     <p>N°<?= $id_etu; ?></p>
                     <p class="as-small">Je suis actuellement en :</p>
                     <span class="btn btn-etu">
@@ -263,23 +248,7 @@ include "assets/include/moy.php";
                 $pointMinUe1 = 0; // Point Minimum à avoir pour l'UE1
 
                 foreach ($ue1 as $key => $value) {
-                    switch ($semestre) {
-                        case '1':
-                            $sqlSem = "SELECT name_devoir, name_pdf, note_date, moy, mini, maxi, note_code, note_coeff, name_ens, type_note, note_semester, note_total, median, variance, deviation, type_epreuve FROM global_s1 WHERE note_code = '$value' ORDER BY note_date, id DESC";
-                            break;
-                        case '2':
-                            $sqlSem  = "SELECT name_devoir, name_pdf, note_date, moy, mini, maxi, note_code, note_coeff, name_ens, type_note, note_semester, note_total, median, variance, deviation, type_epreuve FROM global_s2 WHERE note_code = '$value' ORDER BY note_date, id DESC";
-                            break;
-                        case '3':
-                            $sqlSem = "SELECT name_devoir, name_pdf, note_date, moy, mini, maxi, note_code, note_coeff, name_ens, type_note, note_semester, note_total, median, variance, deviation, type_epreuve FROM global_s3 WHERE note_code = '$value' ORDER BY note_date, id DESC";
-                            break;
-                        case '4':
-                            $sqlSem = "SELECT name_devoir, name_pdf, note_date, moy, mini, maxi, note_code, note_coeff, name_ens, type_note, note_semester, note_total, median, variance, deviation, type_epreuve FROM global_s4 WHERE note_code = '$value' ORDER BY note_date, id DESC";
-                            break;
-                        default:
-                            # code...
-                            break;
-                    }
+                    $sqlSem = "SELECT name_note, name_pdf, note_date_c, average, minimum, maximum, note_code, note_coeff, name_teacher, type_note, note_semester, note_total, median, variance, deviation, type_exam FROM global_s$semestre WHERE note_code = '$value' ORDER BY note_date_c, id DESC";
                     $ue1Sql = $bdd->query($sqlSem);
                 ?>
                     <!-- ANCHOR Notes par matière 1 -->
@@ -296,21 +265,21 @@ include "assets/include/moy.php";
                                 $n = 0; // nombre de note compté dans la moyenne
                                 while ($infoNote = $ue1Sql->fetch()) {
 
-                                    $name = $infoNote['name_devoir'];
+                                    $name = $infoNote['name_note'];
                                     $pdf = $infoNote['name_pdf'];
-                                    $noteMoyenne = round($infoNote['moy'], 2);
-                                    $mini = $infoNote['mini'];
-                                    $maxi = $infoNote['maxi'];
+                                    $noteMoyenne = round($infoNote['average'], 2);
+                                    $minimum = $infoNote['minimum'];
+                                    $maximum = $infoNote['maximum'];
                                     $coeff = $infoNote['note_coeff'];
                                     $type = $infoNote['type_note'];
-                                    $date = $infoNote['note_date'];
-                                    $ens = $infoNote['name_ens'];
+                                    $date = $infoNote['note_date_c'];
+                                    $ens = $infoNote['name_teacher'];
                                     $totalNote = $infoNote['note_total'];
                                     $median = $infoNote['median'];
                                     $variance = round($infoNote['variance'], 2);
                                     $deviation = round($infoNote['deviation'], 2);
                                     $matiere = $infoNote['note_code'];
-                                    $typeEpreuve = $infoNote['type_epreuve'];
+                                    $typeEpreuve = $infoNote['type_exam'];
                                     $myNote = $bdd->query("SELECT note_etu FROM $infoNote[name_pdf] WHERE id_etu = $id_etu");
                                     $noteEtu = $myNote->fetch();
                                     if ($noteEtu[0] < 21 && ($type == "Note unique" || $type == "Moyenne de notes (+M)")) { // Si pas abs et pas note intermédiaire on le compte
@@ -381,12 +350,12 @@ include "assets/include/moy.php";
                                                     </div>
                                                     <div class="col-sm-3 col-xs-6">
                                                         <div class="btn-etu">
-                                                            <p> <span class="b">Min</span> <br><?php echo $mini; ?></p>
+                                                            <p> <span class="b">Min</span> <br><?php echo $minimum; ?></p>
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-3 col-xs-6">
                                                         <div class="btn-etu">
-                                                            <p> <span class="b">Max</span> <br><?php echo $maxi; ?></p>
+                                                            <p> <span class="b">Max</span> <br><?php echo $maximum; ?></p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -499,23 +468,7 @@ include "assets/include/moy.php";
                 $pointUe2 = 0; // Point total de chaque étudiant pour l'UE2
                 $pointMinUe2 = 0; // Point Minimum à avoir pour l'UE2
                 foreach ($ue2 as $key => $value) {
-                    switch ($semestre) {
-                        case '1':
-                            $sqlSem = "SELECT name_devoir, name_pdf, note_date, moy, mini, maxi, note_code, note_coeff, name_ens, type_note, note_semester, note_total, median, variance, deviation, type_epreuve FROM global_s1 WHERE note_code = '$value' ORDER BY note_date, id DESC";
-                            break;
-                        case '2':
-                            $sqlSem  = "SELECT name_devoir, name_pdf, note_date, moy, mini, maxi, note_code, note_coeff, name_ens, type_note, note_semester, note_total, median, variance, deviation, type_epreuve FROM global_s2 WHERE note_code = '$value' ORDER BY note_date, id DESC";
-                            break;
-                        case '3':
-                            $sqlSem = "SELECT name_devoir, name_pdf, note_date, moy, mini, maxi, note_code, note_coeff, name_ens, type_note, note_semester, note_total, median, variance, deviation, type_epreuve FROM global_s3 WHERE note_code = '$value' ORDER BY note_date, id DESC";
-                            break;
-                        case '4':
-                            $sqlSem = "SELECT name_devoir, name_pdf, note_date, moy, mini, maxi, note_code, note_coeff, name_ens, type_note, note_semester, note_total, median, variance, deviation, type_epreuve FROM global_s4 WHERE note_code = '$value' ORDER BY note_date, id DESC";
-                            break;
-                        default:
-                            # code...
-                            break;
-                    }
+                    $sqlSem = "SELECT name_note, name_pdf, note_date_c, average, minimum, maximum, note_code, note_coeff, name_teacher, type_note, note_semester, note_total, median, variance, deviation, type_exam FROM global_s$semestre WHERE note_code = '$value' ORDER BY note_date_c, id DESC";
                     $ue1Sql = $bdd->query($sqlSem);
                 ?>
                     <article class="row all-note">
@@ -531,21 +484,21 @@ include "assets/include/moy.php";
                                 $n = 0; // nombre de note compté dans la moyenne
                                 while ($infoNote = $ue1Sql->fetch()) {
 
-                                    $name = $infoNote['name_devoir'];
+                                    $name = $infoNote['name_note'];
                                     $pdf = $infoNote['name_pdf'];
-                                    $noteMoyenne = round($infoNote['moy'], 2);
-                                    $mini = $infoNote['mini'];
-                                    $maxi = $infoNote['maxi'];
+                                    $noteMoyenne = round($infoNote['average'], 2);
+                                    $minimum = $infoNote['minimum'];
+                                    $maximum = $infoNote['maximum'];
                                     $coeff = $infoNote['note_coeff'];
                                     $type = $infoNote['type_note'];
-                                    $date = $infoNote['note_date'];
-                                    $ens = $infoNote['name_ens'];
+                                    $date = $infoNote['note_date_c'];
+                                    $ens = $infoNote['name_teacher'];
                                     $totalNote = $infoNote['note_total'];
                                     $median = $infoNote['median'];
                                     $variance = round($infoNote['variance'], 2);
                                     $deviation = round($infoNote['deviation'], 2);
                                     $matiere = $infoNote['note_code'];
-                                    $typeEpreuve = $infoNote['type_epreuve'];
+                                    $typeEpreuve = $infoNote['type_exam'];
                                     $myNote = $bdd->query("SELECT note_etu FROM $infoNote[name_pdf] WHERE id_etu = $id_etu");
                                     $noteEtu = $myNote->fetch();
                                     if ($noteEtu[0] < 21 && ($type == "Note unique" || $type == "Moyenne de notes (+M)")) { // Si pas abs et pas note intermédiaire on le compte
@@ -616,12 +569,12 @@ include "assets/include/moy.php";
                                                     </div>
                                                     <div class="col-sm-3 col-xs-6">
                                                         <div class="btn-etu">
-                                                            <p> <span class="b">Min</span> <br><?php echo $mini; ?></p>
+                                                            <p> <span class="b">Min</span> <br><?php echo $minimum; ?></p>
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-3 col-xs-6">
                                                         <div class="btn-etu">
-                                                            <p> <span class="b">Max</span> <br><?php echo $maxi; ?></p>
+                                                            <p> <span class="b">Max</span> <br><?php echo $maximum; ?></p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -654,9 +607,9 @@ include "assets/include/moy.php";
                                 while ($i < 5) { // Si pas d'autre note on comble avec un "/" 
                                 ?>
                                     <div class="col-sm col-xs-6">
-                                        <p> <span class="hidden-sm hidden-md hidden-lg hidden-xl">Note
-                                                <?php echo $i; ?><br></span>
-                                            / </p>
+                                        <p>
+                                            <span class="hidden-sm hidden-md hidden-lg hidden-xl">Note <?php echo $i; ?><br></span>
+                                        </p>
                                     </div>
                                 <?php
                                     $i++;
@@ -665,8 +618,6 @@ include "assets/include/moy.php";
                                 ?>
                             </div>
                         </div>
-
-
 
                         <div class="col-sm-4">
                             <div class="row center-xs">
@@ -865,7 +816,7 @@ include "assets/include/moy.php";
     <footer>
         <div class="row center-xs">
             <div class="col-xs-12">
-                <p class="as-small">Made with ❤️ By <a href="https://erosya.fr" target="_BLANK">Erosya</a> | <span class="tippy-note" data-tippy-content="Discord: Ynohtna#0001 / QuentiumYT#0207 | contact@anthony-adam.fr">Nous
+                <p class="as-small">Made with ❤️ By <a href="https://erosya.fr/" target="_BLANK">Erosya</a> | <span class="tippy-note" data-tippy-content="Discord: Ynohtna#0001 / QuentiumYT#0207 | contact@anthony-adam.fr">Nous
                         contacter</span> | <a href="terms.html">Mentions légales</a></p>
             </div>
 

@@ -36,14 +36,14 @@ if (isset($_GET['change'])) {
 // Récupération des variables d'environnement
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
-$servername = getenv('SERVERNAME');
-$dbname = getenv('DBNAME');
-$username = getenv('USER');
-$password = getenv('PASSWORD');
+$hostname = getenv('BDD_HOST');
+$dbname = getenv('BDD_NAME');
+$username = getenv('BDD_LOGIN');
+$password = getenv('BDD_PASSWD');
 
-// Connection bdd
+// Connexion bdd
 try {
-    $bdd = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+    $bdd = new PDO("mysql:host=$hostname;dbname=$dbname", $username, $password);
     $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $bdd->exec('SET NAMES utf8');
 } catch (PDOException $e) {
@@ -68,7 +68,7 @@ include "assets/include/moy.php";
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="title" content="Noteuniv, IUT Haguenau">
-    <meta name="description" content="Retrouvez facilement vos note de l'iut de haguenau grâce à Noteuniv !">
+    <meta name="description" content="Retrouvez plus facilement vos notes de l'IUT de Haguenau grâce à NoteUniv !">
     <meta name="keywords" content="noteuniv, haguenau, note iut haguenau, emploi du temps mmi, note mmi, noteuniv mmi">
     <meta name="robots" content="index, follow">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -135,9 +135,9 @@ include "assets/include/moy.php";
         <aside class="col-sm col-lg-3">
             <div class="row center-sm card">
                 <div class="col-sm-12">
-                    <img src="assets/images/noteuniv_logo.svg" alt="" class="img-fluid img-ico">
-                    <img src="assets/images/noteuniv_text.svg" alt="" class="img-fluid img-txt">
-                    <p class="as-etu">Etudiant</p>
+                    <img src="assets/images/noteuniv_logo.svg" alt="Logo NoteUniv" class="img-fluid img-ico">
+                    <img src="assets/images/noteuniv_text.svg" alt="Texte NoteUniv" class="img-fluid img-txt">
+                    <p class="as-etu">Étudiant</p>
                     <p>N°<?= $id_etu; ?></p>
                     <p class="as-small">Je suis actuellement en :</p>
                     <span class="btn btn-etu">
@@ -187,7 +187,7 @@ include "assets/include/moy.php";
                                 <p>Moyenne</p>
                             </div>
                             <div class="col-sm">
-                                <p>Etudiant</p>
+                                <p>Étudiant</p>
                             </div>
                         </div>
                     </div>

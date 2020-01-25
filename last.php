@@ -36,14 +36,14 @@ if (isset($_GET['change'])) {
 // Récupération des variables d'environnement
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
-$servername = getenv('SERVERNAME');
-$dbname = getenv('DBNAME');
-$username = getenv('USER');
-$password = getenv('PASSWORD');
+$hostname = getenv('BDD_HOST');
+$dbname = getenv('BDD_NAME');
+$username = getenv('BDD_LOGIN');
+$password = getenv('BDD_PASSWD');
 
-// Connection bdd
+// Connexion bdd
 try {
-    $bdd = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+    $bdd = new PDO("mysql:host=$hostname;dbname=$dbname", $username, $password);
     $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $bdd->exec('SET NAMES utf8');
 } catch (PDOException $e) {
@@ -73,7 +73,7 @@ include "assets/include/moy.php";
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="title" content="Noteuniv, IUT Haguenau">
-    <meta name="description" content="Retrouvez facilement vos note de l'iut de haguenau grâce à Noteuniv !">
+    <meta name="description" content="Retrouvez plus facilement vos notes de l'IUT de Haguenau grâce à NoteUniv !">
     <meta name="keywords" content="noteuniv, haguenau, note iut haguenau, emploi du temps mmi, note mmi, noteuniv mmi">
     <meta name="robots" content="index, follow">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -140,9 +140,9 @@ include "assets/include/moy.php";
         <aside class="col-sm col-lg-3">
             <div class="row center-sm card">
                 <div class="col-sm-12">
-                    <img src="assets/images/noteuniv_logo.svg" alt="" class="img-fluid img-ico">
-                    <img src="assets/images/noteuniv_text.svg" alt="" class="img-fluid img-txt">
-                    <p class="as-etu">Etudiant</p>
+                    <img src="assets/images/noteuniv_logo.svg" alt="Logo NoteUniv" class="img-fluid img-ico">
+                    <img src="assets/images/noteuniv_text.svg" alt="Texte NoteUniv" class="img-fluid img-txt">
+                    <p class="as-etu">Étudiant</p>
                     <p>N°<?= $id_etu; ?></p>
                     <p class="as-small">Je suis actuellement en :</p>
                     <span class="btn btn-etu">
@@ -177,7 +177,10 @@ include "assets/include/moy.php";
             <!-- ANCHOR NOTES -->
             <section class="note">
                 <!-- Phrase différentes selon le viewport, afin de gagner de la place  -->
-                <h1 class="hidden-xs hidden-sm">Mes dernières Notes </h1>
+                <?php
+                $nb_notes = $bdd->query("SELECT COUNT(*) FROM global_s$semestre")->fetchColumn();
+                ?>
+                <h1 class="hidden-xs hidden-sm">Mes dernières notes (<?= $nb_notes ?> au total)</h1>
                 <h1 class="hidden-md hidden-lg hidden-xl">Mes dernière notes</h1>
 
                 <!-- ANCHOR Bandeau de l'UE 1 uniquement PC/Tablette -->
@@ -215,55 +218,39 @@ include "assets/include/moy.php";
 
                 <!-- ANCHOR Notes -->
                 <?php
-                switch ($semestre) { // en fct du semestre on fait une requete
-                    case '1':
-                        $sql_all_notes = "SELECT name_devoir, name_pdf, note_date, moy, mini, maxi, note_code, note_coeff, type_note, type_epreuve, note_semester FROM global_s1 ORDER BY note_date DESC";
-                        break;
-                    case '2':
-                        $sql_all_notes = "SELECT name_devoir, name_pdf, note_date, moy, mini, maxi, note_code, note_coeff, type_note, type_epreuve, note_semester FROM global_s2 ORDER BY note_date DESC";
-                        break;
-                    case '3':
-                        $sql_all_notes = "SELECT name_devoir, name_pdf, note_date, moy, mini, maxi, note_code, note_coeff, type_note, type_epreuve, note_semester FROM global_s3 ORDER BY note_date DESC";
-                        break;
-                    case '4':
-                        $sql_all_notes = "SELECT name_devoir, name_pdf, note_date, moy, mini, maxi, note_code, note_coeff, type_note, type_epreuve, note_semester FROM global_s4 ORDER BY note_date DESC";
-                        break;
-                    default:
-                        $sql_all_notes = "SELECT name_devoir, name_pdf, note_date, moy, mini, maxi, note_code, note_coeff, type_note, type_epreuve, note_semester FROM global_s1 ORDER BY note_date DESC";
-                        break;
-                }
-
+                $sql_all_notes = "SELECT name_note, name_pdf, note_date_c, average, minimum, maximum, note_code, note_coeff, type_note, type_exam, note_semester FROM global_s$semestre ORDER BY note_date_c DESC";
                 $list_notes = $bdd->query($sql_all_notes);
                 while ($note = $list_notes->fetch()) { // note = matière + date (nom du PDF)
-                    $name = str_replace("_", " ", $note['name_devoir']);
+                    $name = str_replace("_", " ", $note['name_note']);
                     $pdf = $note['name_pdf'];
-                    $noteMoyenne = round($note['moy'], 2);
-                    $mini = $note['mini'];
-                    $maxi = $note['maxi'];
+                    $noteMoyenne = round($note['average'], 2);
+                    $minimum = $note['minimum'];
+                    $maximum = $note['maximum'];
                     $coeff = $note['note_coeff'];
                     $matiere = $note['note_code'];
                     $type = $note['type_note'];
-                    $epreuve = $note['type_epreuve'];
+                    $epreuve = $note['type_exam'];
                     $sqlNote = "SELECT note_etu FROM $note[name_pdf] WHERE id_etu = $id_etu";
                     $myNote = $bdd->query($sqlNote);
                     $noteEtu = $myNote->fetch();
-
                 ?>
 
                     <article class="row all-note">
                         <div class="col-sm-2 matiere first-xs">
-                            <p class='titre-mobile'><?php
-                                                    if (preg_match("/AV1?/", $matiere)) { // Ester eggs
-                                                    ?>
+                            <p class='titre-mobile'>
+                                <?php
+                                if (preg_match("/AV1?/", $matiere)) { // Ester eggs
+                                ?>
                                     <span class="tippy-note" data-tippy-content="<a href='https://youtu.be/CobknKR0t6k' target='_BLANK' class'green'>Tu veux voir un vrai truc en AV ? Clique !</a>"><?php echo $matiere ?></span>
                                 <?php
 
-                                                    } else if ($type !== "Note unique" && $type !== "Moyenne de notes (+M)") {
-                                                        echo '<span class="orange tippy-note" data-tippy-content="Note Intermédiaire. Pas prise en compte dans la moyenne. Uniquement pour affichage">' . $matiere . '</span>';
-                                                    } else {
-                                                        echo $matiere;
-                                                    }
-                                ?></p>
+                                } else if ($type !== "Note unique" && $type !== "Moyenne de notes (+M)") {
+                                    echo '<span class="orange tippy-note" data-tippy-content="Note Intermédiaire. Pas prise en compte dans la moyenne. Uniquement pour affichage">' . $matiere . '</span>';
+                                } else {
+                                    echo $matiere;
+                                }
+                                ?>
+                            </p>
                         </div>
                         <!-- Si mobile, on affiche les notes à la fin, et les coef en 2ème  -->
                         <div class="col-sm-6 last-xs initial-order-sm">
@@ -292,11 +279,11 @@ include "assets/include/moy.php";
                                 </div>
                                 <div class="col-sm col-xs-6">
                                     <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Note Min<br><br></span>
-                                        <?php echo $mini; ?></p>
+                                        <?php echo $minimum; ?></p>
                                 </div>
                                 <div class="col-sm col-xs-6">
                                     <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Note Max<br><br></span>
-                                        <?php echo $maxi; ?></p>
+                                        <?php echo $maximum; ?></p>
                                     </a>
                                 </div>
                             </div>

@@ -26,9 +26,14 @@ a {
     text-decoration: none;
 }
 
+br {
+    user-select: none;
+}
+
 .img-fluid {
     max-width: 100%;
     height: auto;
+    user-select: none;
 }
 
 .btn-moy {
@@ -69,7 +74,6 @@ a {
     border-radius: 25px;
     color: white;
     height: 92vh;
-    user-select: none;
 }
 
 @media screen and (min-width: 993px) {
@@ -99,6 +103,7 @@ a {
     border-radius: 26px;
     font-size: 16px;
     cursor: pointer;
+    user-select: none;
 }
 
 .card .img-txt {

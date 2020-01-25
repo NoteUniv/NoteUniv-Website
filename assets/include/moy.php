@@ -1,21 +1,5 @@
 <?php
-switch ($semestre) { // en fct du semestre on fait une requete
-    case '1':
-        $sql_all_notes = "SELECT name_pdf, mini, note_coeff, type_note, note_semester FROM global_s1 WHERE note_semester = 'UE1' OR note_semester = 'UE2'";
-        break;
-    case '2':
-        $sql_all_notes = "SELECT name_pdf, mini, note_coeff, type_note, note_semester FROM global_s2 WHERE note_semester = 'UE1' OR note_semester = 'UE2'";
-        break;
-    case '3':
-        $sql_all_notes = "SELECT name_pdf, mini, note_coeff, type_note, note_semester FROM global_s3  WHERE note_semester = 'UE1' OR note_semester = 'UE2'";
-        break;
-    case '4':
-        $sql_all_notes = "SELECT name_pdf, mini, note_coeff, type_note, note_semester FROM global_s4 WHERE note_semester = 'UE1' OR note_semester = 'UE2'";
-        break;
-    default:
-        $sql_all_notes = "SELECT name_pdf, mini, note_coeff, type_note, note_semester FROM global_s1 WHERE note_semester = 'UE1' OR    note_semester = 'UE2'";
-        break;
-}
+$sql_all_notes = "SELECT name_pdf, note_coeff, type_note, note_semester FROM global_s$semestre WHERE note_semester = 'UE1' OR note_semester = 'UE2'";
 $list_notes = $bdd->query($sql_all_notes);
 $totalNote = []; // tableau de toutes les notes de l'élève
 $totalCoeff = [];
