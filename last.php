@@ -5,7 +5,7 @@ require "vendor/autoload.php";
 
 // Changement de semestre
 if (!isset($_COOKIE['semestre']) || !is_numeric($_COOKIE['semestre'])) {
-    header('Location: https://noteuniv.fr/');
+    setcookie("semestre", "1", strtotime('+360 days'));
 } else {
     $semestre = htmlspecialchars($_COOKIE['semestre']);
 }
@@ -140,8 +140,10 @@ include "assets/include/moy.php";
         <aside class="col-sm col-lg-3">
             <div class="row center-sm card">
                 <div class="col-sm-12">
-                    <img src="assets/images/noteuniv_logo.svg" alt="Logo NoteUniv" class="img-fluid img-ico">
-                    <img src="assets/images/noteuniv_text.svg" alt="Texte NoteUniv" class="img-fluid img-txt">
+                    <div class="logos">
+                        <img src="assets/images/noteuniv_logo.svg" alt="Logo NoteUniv" class="img-fluid img-ico">
+                        <img src="assets/images/noteuniv_text.svg" alt="Texte NoteUniv" class="img-fluid img-txt">
+                    </div>
                     <p class="as-etu">Étudiant</p>
                     <p>N°<?= $id_etu; ?></p>
                     <p class="as-small">Je suis actuellement en :</p>
@@ -149,12 +151,14 @@ include "assets/include/moy.php";
                         <span class="tippy-note" data-tippy-content="T'as bien fait, c'est les meilleurs ;)">MMI</span>
                     </span>
                     <br>
-                    <span class="btn btn-etu">
-                        <span class="tippy-note" data-tippy-content="Changement de Semestre"><a href='?change=true'>SEMESTRE <?php echo $semestre; ?></a></span>
-                    </span>
+                    <a href="?change=true">
+                        <span class="btn btn-etu">
+                            <span class="tippy-note" data-tippy-content="Changement de semestre">SEMESTRE <?= $semestre ?></span>
+                        </span>
+                    </a>
                     <p class="as-small">Ma moyenne générale est :</p>
                     <span class="btn btn-moy">
-                        <span class="tippy-note" data-tippy-content="<a href='ranking.php'>Besoin de voir ta grandeur ?</a>"><?php echo $moyenne; ?> / 20</span>
+                        <span class="tippy-note" data-tippy-content="<a href='ranking.php'>Besoin de voir ta grandeur ?</a>"><?= $moyenne ?> / 20</span>
                     </span>
                     <?php
                     if ($moyenne >= 15) {
@@ -162,13 +166,13 @@ include "assets/include/moy.php";
                     } else if ($moyenne >= 13) {
                         echo '<p class="green">Honnêtement ? OKLM gros !</p>';
                     } elseif ($moyenne >= 10) {
-                        echo '<p class="orange">ALLEEEZZZ ! ça passe !</p>';
+                        echo '<p class="orange">ALLEEEZZZ ! Ça passe !</p>';
                     } else {
                         echo '<p class="red">Aïe, trql on se motive !</p>';
                     }
                     ?>
-                    <span class="btn btn-logout"><a href="panel.php">Récapitulatif</a></span>
-                    <span class="btn btn-logout"><a href="./">Se déconnecter</a></span>
+                    <a href="panel.php"><span class="btn btn-logout">Récapitulatif</span></a>
+                    <a href="./"><span class="btn btn-logout">Se déconnecter</span></a>
                 </div>
             </div>
         </aside>
@@ -181,7 +185,7 @@ include "assets/include/moy.php";
                 $nb_notes = $bdd->query("SELECT COUNT(*) FROM global_s$semestre")->fetchColumn();
                 ?>
                 <h1 class="hidden-xs hidden-sm">Mes dernières notes (<?= $nb_notes ?> au total)</h1>
-                <h1 class="hidden-md hidden-lg hidden-xl">Mes dernière notes</h1>
+                <h1 class="hidden-md hidden-lg hidden-xl">Mes dernière notes (<?= $nb_notes ?> au total)</h1>
 
                 <!-- ANCHOR Bandeau de l'UE 1 uniquement PC/Tablette -->
                 <div class="row ue-tab hidden-xs">
@@ -207,7 +211,7 @@ include "assets/include/moy.php";
                     <div class="col-sm-4">
                         <div class="row center-sm">
                             <div class="col-sm-5">
-                                <p>Coef</p>
+                                <p>Coeff</p>
                             </div>
                             <div class="col-sm-7">
                                 <p>Nom du devoir</p>
@@ -235,76 +239,81 @@ include "assets/include/moy.php";
                     $noteEtu = $myNote->fetch();
                 ?>
 
-                    <article class="row all-note">
-                        <div class="col-sm-2 matiere first-xs">
-                            <p class='titre-mobile'>
-                                <?php
-                                if (preg_match("/AV1?/", $matiere)) { // Ester eggs
-                                ?>
-                                    <span class="tippy-note" data-tippy-content="<a href='https://youtu.be/CobknKR0t6k' target='_BLANK' class'green'>Tu veux voir un vrai truc en AV ? Clique !</a>"><?php echo $matiere ?></span>
-                                <?php
-
-                                } else if ($type !== "Note unique" && $type !== "Moyenne de notes (+M)") {
-                                    echo '<span class="orange tippy-note" data-tippy-content="Note Intermédiaire. Pas prise en compte dans la moyenne. Uniquement pour affichage">' . $matiere . '</span>';
-                                } else {
-                                    echo $matiere;
-                                }
-                                ?>
-                            </p>
-                        </div>
-                        <!-- Si mobile, on affiche les notes à la fin, et les coef en 2ème  -->
-                        <div class="col-sm-6 last-xs initial-order-sm">
-                            <div class="row center-sm note-par-matiere">
-                                <div class="col-sm col-xs-6">
-                                    <p> <span class="hidden-sm hidden-md hidden-lg hidden-xl">Note<br><br></span>
-                                        <?php
-                                        if ($noteEtu[0] > 21) { // 100 = abs
-                                            echo '<span class="orange tippy-note" data-tippy-content="Hum, mais que c\'est il passé Billy ?">ABS</span>';
+                    <?php
+                    if ($type !== "Note unique" && $type !== "Moyenne de notes (+M)") {
+                        echo '<article class="row all-note faded">';
+                    } else {
+                        echo '<article class="row all-note">';
+                    }
+                    ?>
+                    <div class="col-sm-2 matiere first-xs">
+                        <p class='titre-mobile'>
+                            <?php
+                            if (preg_match("/AV1?/", $matiere)) { // Ester eggs
+                            ?>
+                                <span class="tippy-note" data-tippy-content="<a href='https://youtu.be/CobknKR0t6k' target='_BLANK' class='green'>Tu veux voir un vrai truc en AV ? Clique !</a>"><?php echo $matiere ?></span>
+                            <?php
+                            } else if ($type !== "Note unique" && $type !== "Moyenne de notes (+M)") {
+                                echo '<span class="orange tippy-note" data-tippy-content="Note Intermédiaire. Pas prise en compte dans la moyenne. Uniquement pour affichage">' . $matiere . '</span>';
+                            } else {
+                                echo $matiere;
+                            }
+                            ?>
+                        </p>
+                    </div>
+                    <!-- Si mobile, on affiche les notes à la fin, et les coef en 2ème  -->
+                    <div class="col-sm-6 last-xs initial-order-sm">
+                        <div class="row center-sm note-par-matiere">
+                            <div class="col-sm col-xs-6">
+                                <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Note<br><br></span>
+                                    <?php
+                                    if ($noteEtu[0] > 21) { // 100 = abs
+                                        echo '<span class="orange tippy-note" data-tippy-content="Hum, mais que s\'est-il passé Billy ?">ABS</span>';
+                                    } else {
+                                        if ($noteEtu[0] < 10) {
+                                            echo '<span class="red">' . $noteEtu[0] . '</span>';
+                                        } elseif ($noteEtu[0] < $noteMoyenne) {
+                                            echo '<span class="orange">' . $noteEtu[0] . '</span>';
+                                        } elseif ($noteEtu[0] == 20) {
+                                            echo '<span class="green tippy-note" data-tippy-content="MAIS TU ES UN DIEU BILLY !">' . $noteEtu[0] . '</span>';
                                         } else {
-                                            if ($noteEtu[0] < 10) {
-                                                echo '<span class="red">' . $noteEtu[0] . '</span>';
-                                            } elseif ($noteEtu[0] < $noteMoyenne) {
-                                                echo '<span class="orange">' . $noteEtu[0] . '</span>';
-                                            } elseif ($noteEtu[0] == 20) {
-                                                echo '<span class="green tippy-note" data-tippy-content="MAIS TU ES UN DIEU BILLY !">' . $noteEtu[0] . '</span>';
-                                            } else {
-                                                echo '<span class="green">' . $noteEtu[0] . '</span>';
-                                            }
+                                            echo '<span class="green">' . $noteEtu[0] . '</span>';
                                         }
-                                        ?> </p>
-                                </div>
-                                <div class="col-sm col-xs-6">
-                                    <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Moyenne<br><br></span>
-                                        <?php echo $noteMoyenne; ?></p>
-                                </div>
-                                <div class="col-sm col-xs-6">
-                                    <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Note Min<br><br></span>
-                                        <?php echo $minimum; ?></p>
-                                </div>
-                                <div class="col-sm col-xs-6">
-                                    <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Note Max<br><br></span>
-                                        <?php echo $maximum; ?></p>
-                                    </a>
-                                </div>
+                                    }
+                                    ?> </p>
+                            </div>
+                            <div class="col-sm col-xs-6">
+                                <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Moyenne<br><br></span>
+                                    <?php echo $noteMoyenne; ?></p>
+                            </div>
+                            <div class="col-sm col-xs-6">
+                                <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Note Min<br><br></span>
+                                    <?php echo $minimum; ?></p>
+                            </div>
+                            <div class="col-sm col-xs-6">
+                                <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Note Max<br><br></span>
+                                    <?php echo $maximum; ?></p>
+                                </a>
                             </div>
                         </div>
-                        <div class="col-sm-4">
-                            <div class="row start-xs center-sm">
-                                <div class="col-xs-12 col-sm-5 first-sm">
-                                    <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Coeff: </span>
-                                        <?php echo $coeff; ?>
-                                    </p>
-                                </div>
-                                <div class="col-xs-12 col-sm-7 first-xs">
-                                    <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Nom du devoir: </span>
-                                        <?php if ($type == "Moyenne de notes (+M)") {
-                                            echo "Moyenne des notes intermédiaires " . $epreuve;
-                                        } else {
-                                            echo $name;
-                                        } ?></p>
-                                </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="row start-xs center-sm">
+                            <div class="col-xs-12 col-sm-5 first-sm">
+                                <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Coeff: </span>
+                                    <?php echo $coeff; ?>
+                                </p>
+                            </div>
+                            <div class="col-xs-12 col-sm-7 first-xs">
+                                <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Nom du devoir: </span>
+                                    <?php if ($type == "Moyenne de notes (+M)") {
+                                        echo "Moyenne des notes intermédiaires " . $epreuve;
+                                    } else {
+                                        echo $name;
+                                    } ?></p>
                             </div>
                         </div>
+                    </div>
                     </article>
                 <?php
                 }

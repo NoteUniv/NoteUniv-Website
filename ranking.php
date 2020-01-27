@@ -5,7 +5,7 @@ require "vendor/autoload.php";
 
 // Changement de semestre
 if (!isset($_COOKIE['semestre']) || !is_numeric($_COOKIE['semestre'])) {
-    header('Location: https://noteuniv.fr/');
+    setcookie("semestre", "1", strtotime('+360 days'));
 } else {
     $semestre = htmlspecialchars($_COOKIE['semestre']);
 }
@@ -135,8 +135,10 @@ include "assets/include/moy.php";
         <aside class="col-sm col-lg-3">
             <div class="row center-sm card">
                 <div class="col-sm-12">
-                    <img src="assets/images/noteuniv_logo.svg" alt="Logo NoteUniv" class="img-fluid img-ico">
-                    <img src="assets/images/noteuniv_text.svg" alt="Texte NoteUniv" class="img-fluid img-txt">
+                    <div class="logos">
+                        <img src="assets/images/noteuniv_logo.svg" alt="Logo NoteUniv" class="img-fluid img-ico">
+                        <img src="assets/images/noteuniv_text.svg" alt="Texte NoteUniv" class="img-fluid img-txt">
+                    </div>
                     <p class="as-etu">Étudiant</p>
                     <p>N°<?= $id_etu; ?></p>
                     <p class="as-small">Je suis actuellement en :</p>
@@ -144,12 +146,14 @@ include "assets/include/moy.php";
                         <span class="tippy-note" data-tippy-content="T'as bien fait, c'est les meilleurs ;)">MMI</span>
                     </span>
                     <br>
-                    <span class="btn btn-etu">
-                        <span class="tippy-note" data-tippy-content="Changement de Semestre"><a href='?change=true'>SEMESTRE <?php echo $semestre; ?></a></span>
-                    </span>
+                    <a href="?change=true">
+                        <span class="btn btn-etu">
+                            <span class="tippy-note" data-tippy-content="Changement de semestre">SEMESTRE <?= $semestre ?></span>
+                        </span>
+                    </a>
                     <p class="as-small">Ma moyenne générale est :</p>
                     <span class="btn btn-moy">
-                        <span class="tippy-note" data-tippy-content="<a href='ranking.php'>Besoin de voir ta grandeur ?</a>"><?php echo $moyenne; ?> / 20</span>
+                        <span class="tippy-note" data-tippy-content="<a href='ranking.php'>Besoin de voir ta grandeur ?</a>"><?= $moyenne ?> / 20</span>
                     </span>
                     <?php
                     if ($moyenne >= 15) {
@@ -157,13 +161,13 @@ include "assets/include/moy.php";
                     } else if ($moyenne >= 13) {
                         echo '<p class="green">Honnêtement ? OKLM gros !</p>';
                     } elseif ($moyenne >= 10) {
-                        echo '<p class="orange">ALLEEEZZZ ! ça passe !</p>';
+                        echo '<p class="orange">ALLEEEZZZ ! Ça passe !</p>';
                     } else {
                         echo '<p class="red">Aïe, trql on se motive !</p>';
                     }
                     ?>
-                    <span class="btn btn-logout"><a href="last.php">Dernières notes</a></span>
-                    <span class="btn btn-logout"><a href="./">Se déconnecter</a></span>
+                    <a href="last.php"><span class="btn btn-logout">Dernières notes</span></a>
+                    <a href="./"><span class="btn btn-logout">Se déconnecter</span></a>
                 </div>
             </div>
         </aside>

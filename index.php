@@ -1,7 +1,11 @@
 <?php
-if (strpos($_SERVER['HTTP_ACCEPT'], 'image/webp') !== false) {
-    $img = "assets/images/background_image.webp";
-} else {
+try {
+    if (strpos($_SERVER['HTTP_ACCEPT'], 'image/webp') !== false) {
+        $img = "assets/images/background_image.webp";
+    } else {
+        $img = "assets/images/background_image.png";
+    }
+} catch (Exception $e) {
     $img = "assets/images/background_image.png";
 }
 ?>

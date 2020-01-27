@@ -3,8 +3,10 @@ $sql_all_notes = "SELECT name_pdf, note_coeff, type_note, note_semester FROM glo
 $list_notes = $bdd->query($sql_all_notes);
 $totalNote = []; // tableau de toutes les notes de l'élève
 $totalCoeff = [];
+
 while ($note = $list_notes->fetch()) { // note = matière + date (nom du PDF)
-    $sqlNote = "SELECT note_etu FROM $note[0] WHERE id_etu = $id_etu";
+    $table_name = $note[0];
+    $sqlNote = "SELECT note_etu FROM $table_name WHERE id_etu = $id_etu";
     $myNote = $bdd->query($sqlNote);
     $noteEtudiant = $myNote->fetch();
     if ($noteEtudiant[0] < 21 && ($note['type_note'] == "Note unique" || $note['type_note'] == "Moyenne de notes (+M)")) {
@@ -13,8 +15,10 @@ while ($note = $list_notes->fetch()) { // note = matière + date (nom du PDF)
         array_push($totalCoeff, $note["note_coeff"]);
     }
 }
+
 if (array_sum($totalCoeff) == 0) {
     array_push($totalCoeff, 1);
 }
-$moyenne = array_sum($totalNote) / array_sum($totalCoeff); // on fait la moyenne : Ensemble des notes du tableau / tot de coeff
-$moyenne = round($moyenne, 2);
+
+$moyenne_raw = array_sum($totalNote) / array_sum($totalCoeff); // on fait la moyenne : Ensemble des notes du tableau / tot de coeff
+$moyenne = round($moyenne_raw, 2);

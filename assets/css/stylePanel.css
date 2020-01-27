@@ -33,6 +33,9 @@ br {
 .img-fluid {
     max-width: 100%;
     height: auto;
+}
+
+div.logos {
     user-select: none;
 }
 
@@ -168,10 +171,6 @@ br {
     margin-top: 1vh;
 }
 
-.card .btn-etu+.as-small {
-    margin-top: 5vh;
-}
-
 .card .btn-moy {
     color: #110133;
     font-size: 20px;
@@ -194,7 +193,7 @@ br {
 .btn-logout {
     border: 2px solid white;
     background-color: #110133;
-    margin-bottom: 0.5vh;
+    margin-bottom: 1vh;
     transition-duration: 0.2s;
     line-height: 34px;
 }
@@ -210,7 +209,7 @@ br {
     transition-duration: 1s;
 }
 
-.btn-logout:hover a {
+a .btn-logout:hover {
     color: #110133;
 }
 
@@ -229,7 +228,7 @@ br {
 
 .as-small {
     font-size: 15px;
-    margin-bottom: 2vh;
+    margin: 5vh 0 2vh 0;
 }
 
 /* ANCHOR Mobile NAV  */
@@ -237,7 +236,7 @@ br {
     background: #110133 0% 0% no-repeat padding-box;
     box-shadow: 0px 20px 30px #0000000D;
     border-radius: 25px;
-    color: #FFFFFF;
+    color: #ffffff;
     padding: 5px;
 }
 
@@ -258,14 +257,14 @@ br {
 }
 
 .nav a {
-    color: #fff;
+    color: #ffffff;
 }
 
 .ue-tab {
     background: #110133 0% 0% no-repeat padding-box;
     box-shadow: 0px 20px 30px #0000000D;
     border-radius: 40px;
-    color: #FFF;
+    color: #ffffff;
     padding: 10px 0;
     margin-top: 50px;
 }
@@ -282,7 +281,7 @@ br {
 }
 
 .all-note {
-    background: #FFFFFF 0% 0% no-repeat padding-box;
+    background: #ffffff 0% 0% no-repeat padding-box;
     box-shadow: 0px 20px 30px #0000000D;
     margin-top: 15px;
     padding: 10px;
@@ -292,6 +291,11 @@ br {
     margin-bottom: 100px;
 }
 
+.faded {
+    opacity: 0.5;
+    background-color: #eeeeee;
+}
+
 span#me {
     padding-top: 200px;
     margin-top: -200px;
@@ -299,11 +303,6 @@ span#me {
 
 .note-par-matiere {
     max-width: 600px;
-}
-
-.note-par-matiere div:hover {
-    background: #F5F5F5 0% 0% no-repeat padding-box;
-    border-radius: 35px;
 }
 
 .note-header {
@@ -318,7 +317,7 @@ span#me {
 /* ANCHOR TIPPY THEME FOR POPUP */
 .tippy-tooltip.note-theme {
     background-color: #110133;
-    color: #fff;
+    color: #ffffff;
     border-radius: 30px;
     padding: 10px;
     width: 30vw;
@@ -326,7 +325,7 @@ span#me {
 
 .tippy-tooltip.noteSpan-theme {
     background-color: #110133;
-    color: #fff;
+    color: #ffffff;
     border-radius: 30px;
     padding: 10px;
 }
@@ -362,7 +361,7 @@ span#me {
 }
 
 .tippy-tooltip.note-theme a {
-    color: #fff;
+    color: #ffffff;
 }
 
 .tippy-tooltip.note-theme .btn-etu {
@@ -428,7 +427,7 @@ span#me {
     background: #110133 0% 0% no-repeat padding-box;
     box-shadow: 0px 20px 30px #0000000D;
     border-radius: 40px;
-    color: #FFF;
+    color: #ffffff;
     padding: 10px 0;
     margin-top: 50px;
 }
