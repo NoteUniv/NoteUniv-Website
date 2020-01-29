@@ -1,7 +1,7 @@
 <?php
 session_start();
 // Dépendances
-require "vendor/autoload.php";
+require_once "vendor/autoload.php";
 
 // Changement de semestre
 if (!isset($_COOKIE['semestre']) || !is_numeric($_COOKIE['semestre'])) {
@@ -50,11 +50,38 @@ try {
     echo "Connection failed: " . $e->getMessage();
 }
 
+
 // Récupération Numéro Étudiant du formulaire
 if (!empty($_SESSION["id_etu"]) && is_numeric($_SESSION["id_etu"])) {
     $id_etu = htmlspecialchars($_SESSION['id_etu']);
 } else {
     header('Location: https://noteuniv.fr');
+}
+
+$sqlEtu = $bdd->query("SELECT tp, promo FROM data_etu WHERE id_etu = $id_etu");
+$data = $sqlEtu->fetch();
+$tp = $data[0];
+$promo = $data[1];
+
+$json_edt_url = file_get_contents("assets/js/edt_url.json");
+$edt_url = json_decode($json_edt_url, true);
+$linkIcal = $edt_url[$promo]['TP' . $tp];
+
+use ICal\ICal;
+
+try {
+    $ical = new ICal('ICal.ics', array(
+        'defaultSpan'                 => 2,     // Default value
+        'defaultTimeZone'             => 'UTC',
+        'defaultWeekStart'            => 'MO',  // Default value
+        'disableCharacterReplacement' => false, // Default value
+        'filterDaysAfter'             => null,  // Default value
+        'filterDaysBefore'            => null,  // Default value
+        'skipRecurrence'              => false, // Default value
+    ));
+    $ical->initUrl($linkIcal, $username = null, $password = null, $userAgent = null);
+} catch (\Exception $e) {
+    die($e);
 }
 
 // Include
@@ -75,7 +102,8 @@ include "assets/include/moy.php";
     <meta name="language" content="French">
     <meta name="revisit-after" content="15 days">
     <meta name="author" content="Ynohtna, Quentium">
-    <title>NoteUniv | Ranking</title>
+    <meta name="theme-color" content="#110133">
+    <title>NoteUniv - EDT</title>
     <!-- FAVICON  -->
     <link rel="apple-touch-icon" sizes="57x57" href="assets/images/favicon/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="assets/images/favicon/apple-icon-60x60.png">
@@ -93,11 +121,15 @@ include "assets/include/moy.php";
     <link rel="manifest" href="assets/images/favicon/manifest.json">
     <meta name="msapplication-TileColor" content="#110133">
     <meta name="msapplication-TileImage" content="assets/images/favicon/ms-icon-144x144.png">
-    <meta name="theme-color" content="#110133">
     <!-- CSS EXT-->
     <link rel="stylesheet" href="assets/css/flexboxgrid2.css" type="text/css">
     <!-- CSS PERSO-->
     <link rel="stylesheet" href="assets/css/stylePanel.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/edt.css" type="text/css">
+    <!-- CSS EDT  -->
+    <link href='assets/packages/core/main.css' rel='stylesheet' />
+    <link href='assets/packages/daygrid/main.css' rel='stylesheet' />
+    <link rel="stylesheet" href="assets/packages/timegrid/main.css">
     <!-- Cookie  -->
     <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="0df23692-fee1-4280-97ef-7c0506f2621d" data-blockingmode="auto" type="text/javascript"></script>
     <!-- Matomo -->
@@ -160,7 +192,7 @@ include "assets/include/moy.php";
                     } else if ($moyenne >= 13) {
                         echo '<p class="green">Honnêtement ? OKLM gros !</p>';
                     } elseif ($moyenne >= 10) {
-                        echo '<p class="orange">ALLEEEZZZ ! Ça passe !</p>';
+                        echo '<p class="orange">ALLEEEZZZ ! ça passe !</p>';
                     } else {
                         echo '<p class="red">Aïe, trql on se motive !</p>';
                     }
@@ -175,158 +207,126 @@ include "assets/include/moy.php";
             <!-- ANCHOR NOTES -->
             <section class="note">
                 <!-- Phrase différentes selon le viewport, afin de gagner de la place  -->
-                <h1 class="hidden-xs hidden-sm">El Classement de la muerté</h1>
-                <h1 class="hidden-md hidden-lg hidden-xl">Classement</h1>
-                <div class="row">
-                    <div class="col-xs-6">
-                        <p><a href="#me">Cliquez moi pour allez à votre position !</a></p>
-                    </div>
-                    <div class="col-xs-6">
-                        <?php
-                        $sqlEtu = $bdd->query('SELECT ranking FROM data_etu WHERE id_etu = ' . $id_etu);
-                        $ranking = $sqlEtu->fetch();
-                        $ranking = $ranking[0];
-                        if ($ranking == 1) {
-                        ?>
-                            <form action="assets/include/ranking_post.php" method='POST' class="ranking-form">
-                                <label for="rank">Si le classement n'est pas éthique, si il est élitiste ou si vous ne voulez pas montrer votre puissance au monde, cliquez !</label>
-                                <br>
-                                <input type="checkbox" name="rank" id="rank" value="hide"><input type="submit" value="Je valide" class="btn-sub">
-                            </form>
-                        <?php
-                        } else {
-                        ?>
-                            <form action="assets/include/ranking_post.php" method='POST' class="ranking-form">
-                                <label for="rank">Fini de se cacher ? Allons afficher votre puissance au monde, cliquez !</label>
-                                <br>
-                                <input type="checkbox" name="rank" id="rank" value="show"><input type="submit" value="Je valide" class="btn-sub">
-                            </form>
-                        <?php
-                        }
-                        ?>
-                    </div>
-                </div>
+                <h1 class="hidden-xs hidden-sm">L'emploi du temps (TP<?php echo $tp; ?>)</h1>
+                <h1 class="hidden-md hidden-lg hidden-xl">EDT (TP<?php echo $tp; ?>)</h1>
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        var calendarEl = document.getElementById('calendar');
 
-                <!-- ANCHOR Bandeau de l'UE 1 uniquement PC/Tablette -->
-                <div class="row ue-tab hidden-xs">
-                    <div class="col-sm-2 ue-nbr">
-                        <p>Rang</p>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="row note-overlay center-sm">
-                            <div class="col-sm">
-                                <p>Moyenne</p>
-                            </div>
-                            <div class="col-sm">
-                                <p>Étudiant</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-4 center-sm">
-                        <p>Récompense</p>
-                    </div>
-                </div>
+                        var calendar = new FullCalendar.Calendar(calendarEl, {
+                            plugins: ['dayGrid', 'timeGrid'], // an array of strings!
+                            defaultView: 'timeGridWeek',
+                            height: 'auto',
+                            footer: {
+                                center: 'timeGridWeek,dayGridMonth',
+                            },
+                            locale: 'fr',
+                            buttonText: {
+                                today: 'Aujourd\'hui',
+                                month: 'Mois',
+                                week: 'Semaine',
+                                day: 'Jour'
+                            },
+                            allDaySlot: false,
+                            minTime: "08:30:00",
+                            maxTime: "18:30:00",
+                            nowIndicator: true,
+                            slotLabelInterval: "00:30",
+                            weekends: false,
+                            events: [
+                                <?php
+                                $events = $ical->sortEventsWithOrder($ical->events());
+                                foreach ($events as $event) {
+                                    $title = $event->summary;
+                                    $dtstart = $ical->iCalDateToDateTime($event->dtstart_array[3]);
+                                    $start = $dtstart->format('c');
+                                    $dtend = $ical->iCalDateToDateTime($event->dtend_array[3]);
+                                    $end = $dtend->format('c');
+                                    $location = $event->location;
+                                    $descri = $event->description;
+                                    $title = str_replace('_', ' ', $title);
+                                    $location = str_replace('_', ' ', $location);
+                                    if (preg_match('/^WEB?/', $title)) {
+                                        $class = 'web';
+                                    } else if (preg_match('/^ANG/', $title)) {
+                                        $class = 'ang';
+                                    } else if (preg_match('/^BD/', $title)) {
+                                        $class = 'bd';
+                                    } else if (preg_match('/^ART/', $title)) {
+                                        $class = 'art';
+                                    } else if (preg_match('/^COM/', $title)) {
+                                        $class = 'com';
+                                    } else if (preg_match('/^ECO/', $title)) {
+                                        $class = 'eco';
+                                    } else if (preg_match('/^IC/', $title)) {
+                                        $class = 'ic';
+                                    } else if (preg_match('/^ALL/', $title) || preg_match('/^ESP/', $title)) {
+                                        $class = 'lv';
+                                    } else if (preg_match('/^MEDIA/', $title)) {
+                                        $class = 'media';
+                                    } else if (preg_match('/^PRJ/', $title)) {
+                                        $class = 'prj';
+                                    } else if (preg_match('/^AV/', $title)) {
+                                        $class = 'av';
+                                    } else if (preg_match('/^CREA/', $title)) {
+                                        $class = 'crea';
+                                    } else if (preg_match('/^INFO/', $title)) {
+                                        $class = 'info';
+                                    } else if (preg_match('/^REZS/', $title)) {
+                                        $class = 'rezs';
+                                    } else if (preg_match('/^SCI/', $title)) {
+                                        $class = 'sci';
+                                    } else if (preg_match('/^PTWEB/', $title)) {
+                                        $class = 'ptweb';
+                                    } else {
+                                        $class = 'none';
+                                    }
+                                ?> {
 
-                <!-- ANCHOR Notes -->
-                <?php
-                $sqlRank = "SELECT id_etu, moy_etu FROM ranking_s$semestre ORDER BY moy_etu DESC";
-                $sqlMoy = $bdd->query($sqlRank);
-                $i = 1;
-                while ($moy = $sqlMoy->fetch()) {
-                    $sqlEtu = $bdd->query('SELECT ranking FROM data_etu WHERE id_etu = ' . $moy[0]);
-                    $ranking = $sqlEtu->fetch();
-                    $ranking = $ranking[0];
-                    if ($ranking == 1) { // ok pour classement
-                        echo '<article class="row all-note ">';
-                    } else {
-                        echo '<article class="row all-note hidden-xs hidden-sm hidden-md hidden-lg hidden-xl">';
-                    }
-                ?>
+                                        title: '<?php echo $title . '\n' . $location; ?>',
+                                        start: '<?php echo $start; ?>',
+                                        end: '<?php echo $end; ?>',
+                                        textColor: 'black',
+                                        classNames: '<?php echo $class; ?>',
+                                    },
 
-                    <div class="col-sm-2 matiere first-xs">
-                        <p class='titre-mobile'>
-                            <?php
-                            if ($i < 4) {
-                                if ($i == 1) {
-                                    echo '<span class="green tippy-note" data-tippy-content="Mieux que les TOP1 Fortnite non ?">' . $i . '</span>';
-                                } else {
-                                    echo '<span class="green">' . $i . '</span>';
+                                <?php
                                 }
-                            } elseif ($moy[1] == $moyenne && $moy[0] == $id_etu) {
-                                echo '<span class="green">' . $i . '</span>';
-                            } else {
-                                echo $i;
-                            }
-                            ?>
-                        </p>
-                    </div>
-                    <!-- Si mobile, on affiche les notes à la fin, et les coef en 2ème  -->
-                    <div class="col-sm-6 last-xs initial-order-sm">
-                        <div class="row center-sm note-par-matiere">
-                            <div class="col-sm col-xs">
-                                <p> <span class="hidden-sm hidden-md hidden-lg hidden-xl">Moyenne<br><br></span>
-                                    <?php
-                                    if ($ranking == 1) { // ok pour classement
-                                        if ($moy[1] == $moyenne && $moy[0] == $id_etu) {
-                                            echo '<span id="me" class="green">' . $moy[1] . '</span>';
-                                        } else {
-                                            echo $moy[1];
-                                        }
-                                    } else {
-                                        echo 'Bien tenté !';
-                                    }
+                                ?>
+                            ],
+                        });
 
-                                    ?> </p>
-                            </div>
-                            <div class="col-sm col-xs">
-                                <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Étudiant<br><br></span>
-                                    <?php
-                                    if ($ranking == 1) { // ok pour classement
-                                        echo $moy[0];
-                                    } else {
-                                        echo 'Bien tenté !';
-                                    }
-
-                                    // echo "Supprimé temporairement";
-                                    ?>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <?php
-                    switch ($i) {
-                        case '1':
-                            print('<div class="col-sm-4 center-sm last-xs"><p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Récompense : </span>La grosse tête</p></div>');
-                            break;
-                        case '2':
-                            print('<div class="col-sm-4 center-sm last-xs"><p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Récompense : </span>Le respect</p></div>');
-                            break;
-                        case '3':
-                            print('<div class="col-sm-4 center-sm last-xs"><p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Récompense : </span>L\'envie de faire mieux</p></div>');
-                            break;
-                        case '4':
-                            print('<div class="col-sm-4 center-sm last-xs"><p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Récompense : </span><span class="tippy-note" data-tippy-content="CHEH">LE SEUM</span></p></div>');
-                            break;
-                        default:
-                            print('<div class="col-sm-4 center-sm last-xs"><p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Récompense : </span>Aucune</p></div>');
-                            break;
-                    }
-                    ?>
-                    </article>
-                <?php
-                    $i++;
-                }
-                ?>
+                        calendar.render();
+                    });
+                </script>
+                <div id="calendar"></div>
             </section>
         </div>
     </div>
     <footer>
         <div class="row center-xs">
+            <form action="assets/include/edt_post.php" method="POST">
+                <select name="tp" class="custom-select">
+                    <?php
+                    foreach ($edt_url[$promo] as $key => $value) {
+                        if ($tp === $key[-1]) {
+                            echo '<option selected="selected" value="' . $key[-1] . '">' . $key . '</option>';
+                        } else {
+                            echo '<option value="' . $key[-1] . '">' . $key . '</option>';
+                        }
+                    }
+                    ?>
+                </select>
+                <input type="submit" value="Changer de TP !" class="btn-sub">
+            </form>
             <div class="col-xs-12">
-                <p class="as-small">Made with ❤️ By <a href="https://erosya.fr/" target="_BLANK">Erosya</a> | <span class="tippy-note" data-tippy-content="Discord: Ynohtna#0001 / QuentiumYT#0207 | contact@anthony-adam.fr / support@quentium.fr">Nous contacter</span> | <a href="terms.html">Mentions légales</a> </p>
+                <p class="as-small">Made with ❤️ By <a href="https://erosya.fr/" target="_BLANK">Erosya</a> | <span class="tippy-note" data-tippy-content="Discord: Ynohtna#0001 / QuentiumYT#0207 | contact@anthony-adam.fr / support@quentium.fr">Nous contacter</span> | <a href="terms.html">Mentions légales</a></p>
             </div>
         </div>
         <!-- SCRIPT EXT -->
+        <script src='assets/packages/core/main.js'></script>
+        <script src='assets/packages/daygrid/main.js'></script>
+        <script src='assets/packages/timegrid/main.js'></script>
         <script src="assets/js/popper.min.js"></script>
         <script src="assets/js/tippy-bundle.iife.min.js"></script>
         <!-- SCRIPT PERSO -->

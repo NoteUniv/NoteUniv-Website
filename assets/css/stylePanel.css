@@ -26,17 +26,9 @@ a {
     text-decoration: none;
 }
 
-br {
-    user-select: none;
-}
-
 .img-fluid {
     max-width: 100%;
     height: auto;
-}
-
-div.logos {
-    user-select: none;
 }
 
 .btn-moy {
@@ -63,6 +55,10 @@ div.logos {
     color: orange;
 }
 
+.grey {
+    color: grey;
+}
+
 .red {
     color: rgb(207, 56, 56);
 }
@@ -77,6 +73,7 @@ div.logos {
     border-radius: 25px;
     color: white;
     height: 92vh;
+    user-select: none;
 }
 
 @media screen and (min-width: 993px) {
@@ -106,7 +103,6 @@ div.logos {
     border-radius: 26px;
     font-size: 16px;
     cursor: pointer;
-    user-select: none;
 }
 
 .card .img-txt {
@@ -171,6 +167,10 @@ div.logos {
     margin-top: 1vh;
 }
 
+.card .btn-etu+.as-small {
+    margin-top: 5vh;
+}
+
 .card .btn-moy {
     color: #110133;
     font-size: 20px;
@@ -193,7 +193,7 @@ div.logos {
 .btn-logout {
     border: 2px solid white;
     background-color: #110133;
-    margin-bottom: 1vh;
+    margin-bottom: 0.5vh;
     transition-duration: 0.2s;
     line-height: 34px;
 }
@@ -204,13 +204,10 @@ div.logos {
 }
 
 .btn-logout:hover {
+    color: #110133;
     background-color: white;
     border: 2px solid #110133;
     transition-duration: 1s;
-}
-
-a .btn-logout:hover {
-    color: #110133;
 }
 
 .as-etu {
@@ -228,7 +225,7 @@ a .btn-logout:hover {
 
 .as-small {
     font-size: 15px;
-    margin: 5vh 0 2vh 0;
+    margin-bottom: 2vh;
 }
 
 /* ANCHOR Mobile NAV  */
@@ -236,7 +233,7 @@ a .btn-logout:hover {
     background: #110133 0% 0% no-repeat padding-box;
     box-shadow: 0px 20px 30px #0000000D;
     border-radius: 25px;
-    color: #ffffff;
+    color: white;
     padding: 5px;
 }
 
@@ -245,6 +242,10 @@ a .btn-logout:hover {
     margin-top: 50px;
     margin-left: 20px;
     margin-right: 20px;
+}
+
+.faded {
+    opacity: 0.5;
 }
 
 .note h1 {
@@ -257,14 +258,14 @@ a .btn-logout:hover {
 }
 
 .nav a {
-    color: #ffffff;
+    color: #fff;
 }
 
 .ue-tab {
     background: #110133 0% 0% no-repeat padding-box;
     box-shadow: 0px 20px 30px #0000000D;
     border-radius: 40px;
-    color: #ffffff;
+    color: #FFF;
     padding: 10px 0;
     margin-top: 50px;
 }
@@ -281,7 +282,7 @@ a .btn-logout:hover {
 }
 
 .all-note {
-    background: #ffffff 0% 0% no-repeat padding-box;
+    background: white 0% 0% no-repeat padding-box;
     box-shadow: 0px 20px 30px #0000000D;
     margin-top: 15px;
     padding: 10px;
@@ -291,11 +292,6 @@ a .btn-logout:hover {
     margin-bottom: 100px;
 }
 
-.faded {
-    opacity: 0.5;
-    background-color: #eeeeee;
-}
-
 span#me {
     padding-top: 200px;
     margin-top: -200px;
@@ -303,6 +299,11 @@ span#me {
 
 .note-par-matiere {
     max-width: 600px;
+}
+
+.note-par-matiere div:hover {
+    background: #F5F5F5 0% 0% no-repeat padding-box;
+    border-radius: 35px;
 }
 
 .note-header {
@@ -317,7 +318,7 @@ span#me {
 /* ANCHOR TIPPY THEME FOR POPUP */
 .tippy-tooltip.note-theme {
     background-color: #110133;
-    color: #ffffff;
+    color: #fff;
     border-radius: 30px;
     padding: 10px;
     width: 30vw;
@@ -325,7 +326,7 @@ span#me {
 
 .tippy-tooltip.noteSpan-theme {
     background-color: #110133;
-    color: #ffffff;
+    color: #fff;
     border-radius: 30px;
     padding: 10px;
 }
@@ -361,7 +362,7 @@ span#me {
 }
 
 .tippy-tooltip.note-theme a {
-    color: #ffffff;
+    color: #fff;
 }
 
 .tippy-tooltip.note-theme .btn-etu {
@@ -427,7 +428,7 @@ span#me {
     background: #110133 0% 0% no-repeat padding-box;
     box-shadow: 0px 20px 30px #0000000D;
     border-radius: 40px;
-    color: #ffffff;
+    color: #FFF;
     padding: 10px 0;
     margin-top: 50px;
 }
@@ -449,6 +450,15 @@ span#me {
     margin-right: -14px;
 }
 
+.sem div {
+    display: flex;
+}
+
+.sem div p {
+    padding: 10px;
+    margin: auto;
+}
+
 /* ANCHOR RESUME mobile  */
 @media screen and (max-width: 574px) {
 
@@ -457,6 +467,28 @@ span#me {
     .btn-red {
         margin-bottom: 10px;
     }
+}
+
+/* ANCHOR RANKING  */
+.btn-sub {
+    color: white;
+    padding: 5px;
+    margin-top: 10px;
+    border: 2px solid white;
+    background-color: #110133;
+    transition-duration: 0.2s;
+    border-radius: 5px;
+}
+
+.btn-sub:hover {
+    color: #110133;
+    background-color: white;
+    border: 2px solid #110133;
+    transition-duration: 1s;
+}
+
+.ranking-form .btn-sub {
+    margin-left: 10px;
 }
 
 /* ANCHOR  FOOTER  */

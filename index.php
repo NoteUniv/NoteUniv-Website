@@ -24,7 +24,6 @@ try {
     <meta name="language" content="French">
     <meta name="revisit-after" content="15 days">
     <meta name="author" content="Ynohtna, Quentium">
-    <meta name="theme-color" content="#110133">
     <title>NoteUniv - Accueil</title>
     <!-- FAVICON  -->
     <link rel="apple-touch-icon" sizes="57x57" href="assets/images/favicon/apple-icon-57x57.png">

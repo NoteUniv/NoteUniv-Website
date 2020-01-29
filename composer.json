@@ -1,5 +1,6 @@
 {
     "require": {
+        "johngrogg/ics-parser": "^2.1",
         "vlucas/phpdotenv": "^4.1"
     }
 }

@@ -80,7 +80,6 @@ include "assets/include/moy.php";
     <meta name="language" content="French">
     <meta name="revisit-after" content="15 days">
     <meta name="author" content="Ynohtna, Quentium">
-    <meta name="theme-color" content="#110133">
     <title>NoteUniv | Last</title>
     <!-- FAVICON  -->
     <link rel="apple-touch-icon" sizes="57x57" href="assets/images/favicon/apple-icon-57x57.png">
@@ -171,8 +170,8 @@ include "assets/include/moy.php";
                         echo '<p class="red">Aïe, trql on se motive !</p>';
                     }
                     ?>
+                    <a href="edt.php"><span class="btn btn-logout">Emploi du temps</span></a>
                     <a href="panel.php"><span class="btn btn-logout">Récapitulatif</span></a>
-                    <a href="./"><span class="btn btn-logout">Se déconnecter</span></a>
                 </div>
             </div>
         </aside>
@@ -254,7 +253,7 @@ include "assets/include/moy.php";
                                 <span class="tippy-note" data-tippy-content="<a href='https://youtu.be/CobknKR0t6k' target='_BLANK' class='green'>Tu veux voir un vrai truc en AV ? Clique !</a>"><?php echo $matiere ?></span>
                             <?php
                             } else if ($type !== "Note unique" && $type !== "Moyenne de notes (+M)") {
-                                echo '<span class="orange tippy-note" data-tippy-content="Note Intermédiaire. Pas prise en compte dans la moyenne. Uniquement pour affichage">' . $matiere . '</span>';
+                                echo '<span class="grey">' . $matiere . '*</span>';
                             } else {
                                 echo $matiere;
                             }
@@ -268,14 +267,12 @@ include "assets/include/moy.php";
                                 <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Note<br><br></span>
                                     <?php
                                     if ($noteEtu[0] > 21) { // 100 = abs
-                                        echo '<span class="orange tippy-note" data-tippy-content="Hum, mais que s\'est-il passé Billy ?">ABS</span>';
+                                        echo '<span class="orange">ABS</span>';
                                     } else {
                                         if ($noteEtu[0] < 10) {
                                             echo '<span class="red">' . $noteEtu[0] . '</span>';
                                         } elseif ($noteEtu[0] < $noteMoyenne) {
                                             echo '<span class="orange">' . $noteEtu[0] . '</span>';
-                                        } elseif ($noteEtu[0] == 20) {
-                                            echo '<span class="green tippy-note" data-tippy-content="MAIS TU ES UN DIEU BILLY !">' . $noteEtu[0] . '</span>';
                                         } else {
                                             echo '<span class="green">' . $noteEtu[0] . '</span>';
                                         }
@@ -318,6 +315,11 @@ include "assets/include/moy.php";
                 <?php
                 }
                 ?>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <p>*: Note Intermédiaire. Pas prise en compte dans la moyenne. Uniquement pour affichage</p>
+                    </div>
+                </div>
             </section>
         </div>
     </div>

@@ -1,0 +1,156 @@
+#calendar .web,
+.web:hover {
+    background-color: yellow;
+
+}
+
+#calendar .bd,
+.bd:hover {
+    background-color: #f9af2f;
+
+}
+
+#calendar .ang,
+.ang:hover {
+    background-color: purple;
+
+}
+
+#calendar .art,
+.art:hover {
+    background-color: pink;
+
+}
+
+#calendar .com,
+.com:hover {
+    background-color: #6be5b8;
+
+}
+
+#calendar .crea,
+.crea:hover {
+    background-color: #e27171;
+
+}
+
+#calendar .eco,
+.eco:hover {
+    background-color: grey;
+
+}
+
+#calendar .ic,
+.ic:hover {
+    background-color: #98d0e2;
+
+}
+
+#calendar .lv,
+.lv:hover {
+    background-color: #c96304;
+
+}
+
+#calendar .media,
+.media:hover {
+    background-color: #7168ed;
+
+}
+
+#calendar .prj,
+.prj:hover {
+    background-color: #039685;
+
+}
+
+#calendar .av,
+.av:hover {
+    background-color: #a7e5ab;
+
+}
+
+#calendar .info,
+.info:hover {
+    background-color: #515050;
+
+}
+
+#calendar .rezs,
+.resz:hover {
+    background-color: #d64695;
+
+}
+
+#calendar .sci,
+.sci:hover {
+    background-color: #529abf;
+
+}
+
+#calendar .ptweb,
+.ptweb:hover {
+    background-color: #7e9e5b;
+
+}
+
+footer form .btn-sub {
+    color: white;
+    padding: 8px;
+    margin-top: 10px;
+    border: 2px solid white;
+    background-color: #110133;
+    transition-duration: 0.2s;
+    border-radius: 5px;
+}
+
+footer form .btn-sub:hover {
+    color: #110133;
+    background-color: white;
+    border: 2px solid #110133;
+    transition-duration: 1s;
+}
+
+footer form .custom-select {
+    display: block;
+    font-size: 16px;
+    color: #444;
+    line-height: 1.3;
+    padding: .6em 1.4em .5em .8em;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    margin: 0;
+    border: 1px solid #aaa;
+    box-shadow: 0 1px 0 1px rgba(0, 0, 0, .04);
+    border-radius: 16px;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: white;
+    background-image: url('data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292%22%20height%3D%22292%22%3E%3Cpath%20fill%3D%22%23110133%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E'),
+      linear-gradient(to bottom, white 0%,#e5e5e5 100%);
+    background-repeat: no-repeat, repeat;
+    background-position: right .7em top 50%, 0 0;
+    background-size: .65em auto, 100%;
+}
+
+.custom-select::-ms-expand {
+    display: none;
+}
+
+.custom-select:hover {
+    border-color: #888;
+}
+
+.custom-select:focus {
+    border-color: #aaa;
+    box-shadow: 0 0 1px 3px rgba(59, 153, 252, .7);
+    box-shadow: 0 0 0 3px -moz-mac-focusring;
+    color: #222;
+    outline: none;
+}
+
+.select-css option {
+    font-weight: normal;
+}

@@ -33,6 +33,7 @@ env.bak/
 venv.bak/
 
 # VS Code
+.vs
 .code
 .vscode
 
