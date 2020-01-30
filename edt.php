@@ -6,6 +6,7 @@ require_once "vendor/autoload.php";
 // Changement de semestre
 if (!isset($_COOKIE['semestre']) || !is_numeric($_COOKIE['semestre'])) {
     setcookie("semestre", "1", strtotime('+360 days'));
+    header('Location: https://noteuniv.fr/');
 } else {
     $semestre = htmlspecialchars($_COOKIE['semestre']);
 }
@@ -166,10 +167,12 @@ include "assets/include/moy.php";
         <aside class="col-sm col-lg-3">
             <div class="row center-sm card">
                 <div class="col-sm-12">
-                    <div class="logos">
-                        <img src="assets/images/noteuniv_logo.svg" alt="Logo NoteUniv" class="img-fluid img-ico">
-                        <img src="assets/images/noteuniv_text.svg" alt="Texte NoteUniv" class="img-fluid img-txt">
-                    </div>
+                    <a href="./">
+                        <div class="logos">
+                            <img src="assets/images/noteuniv_logo.svg" alt="Logo NoteUniv" class="img-fluid img-ico">
+                            <img src="assets/images/noteuniv_text.svg" alt="Texte NoteUniv" class="img-fluid img-txt">
+                        </div>
+                    </a>
                     <p class="as-etu">Étudiant</p>
                     <p>N°<?= $id_etu; ?></p>
                     <p class="as-small">Je suis actuellement en :</p>
@@ -209,32 +212,47 @@ include "assets/include/moy.php";
                 <!-- Phrase différentes selon le viewport, afin de gagner de la place  -->
                 <h1 class="hidden-xs hidden-sm">L'emploi du temps (TP<?php echo $tp; ?>)</h1>
                 <h1 class="hidden-md hidden-lg hidden-xl">EDT (TP<?php echo $tp; ?>)</h1>
+                <form action="assets/include/edt_post.php" method="POST">
+                    <select name="tp" class="custom-select" onchange="this.form.submit()">
+                        <?php
+                        foreach ($edt_url[$promo] as $key => $value) {
+                            if ($tp === $key[-1]) {
+                                echo '<option selected="selected" value="' . $key[-1] . '">' . $key . '</option>';
+                            } else {
+                                echo '<option value="' . $key[-1] . '">' . $key . '</option>';
+                            }
+                        }
+                        ?>
+                    </select>
+                    <!-- <input type="submit" value="Changer de TP !" class="btn-sub"> -->
+                </form>
                 <script>
                     document.addEventListener('DOMContentLoaded', function() {
                         var calendarEl = document.getElementById('calendar');
 
                         var calendar = new FullCalendar.Calendar(calendarEl, {
-                            plugins: ['dayGrid', 'timeGrid'], // an array of strings!
-                            defaultView: 'timeGridWeek',
-                            height: 'auto',
-                            footer: {
-                                center: 'timeGridWeek,dayGridMonth',
-                            },
-                            locale: 'fr',
-                            buttonText: {
-                                today: 'Aujourd\'hui',
-                                month: 'Mois',
-                                week: 'Semaine',
-                                day: 'Jour'
-                            },
-                            allDaySlot: false,
-                            minTime: "08:30:00",
-                            maxTime: "18:30:00",
-                            nowIndicator: true,
-                            slotLabelInterval: "00:30",
-                            weekends: false,
-                            events: [
+                                plugins: ['dayGrid', 'timeGrid'], // an array of strings!
+                                defaultView: 'timeGridWeek',
+                                height: 'auto',
+                                footer: {
+                                    center: 'timeGridWeek,dayGridMonth',
+                                },
+                                locale: 'fr',
+                                buttonText: {
+                                    today: 'Aujourd\'hui',
+                                    month: 'Mois',
+                                    week: 'Semaine',
+                                    day: 'Jour'
+                                },
+                                allDaySlot: false,
+                                minTime: "08:30:00",
+                                maxTime: "18:30:00",
+                                nowIndicator: true,
+                                slotLabelInterval: "00:30",
+                                weekends: false,
+
                                 <?php
+                                echo 'events: [';
                                 $events = $ical->sortEventsWithOrder($ical->events());
                                 foreach ($events as $event) {
                                     $title = $event->summary;
@@ -281,7 +299,9 @@ include "assets/include/moy.php";
                                     } else {
                                         $class = 'none';
                                     }
-                                ?> {
+                                ?>
+
+                                    {
 
                                         title: '<?php echo $title . '\n' . $location; ?>',
                                         start: '<?php echo $start; ?>',
@@ -296,7 +316,7 @@ include "assets/include/moy.php";
                             ],
                         });
 
-                        calendar.render();
+                    calendar.render();
                     });
                 </script>
                 <div id="calendar"></div>
@@ -305,20 +325,6 @@ include "assets/include/moy.php";
     </div>
     <footer>
         <div class="row center-xs">
-            <form action="assets/include/edt_post.php" method="POST">
-                <select name="tp" class="custom-select">
-                    <?php
-                    foreach ($edt_url[$promo] as $key => $value) {
-                        if ($tp === $key[-1]) {
-                            echo '<option selected="selected" value="' . $key[-1] . '">' . $key . '</option>';
-                        } else {
-                            echo '<option value="' . $key[-1] . '">' . $key . '</option>';
-                        }
-                    }
-                    ?>
-                </select>
-                <input type="submit" value="Changer de TP !" class="btn-sub">
-            </form>
             <div class="col-xs-12">
                 <p class="as-small">Made with ❤️ By <a href="https://erosya.fr/" target="_BLANK">Erosya</a> | <span class="tippy-note" data-tippy-content="Discord: Ynohtna#0001 / QuentiumYT#0207 | contact@anthony-adam.fr / support@quentium.fr">Nous contacter</span> | <a href="terms.html">Mentions légales</a></p>
             </div>

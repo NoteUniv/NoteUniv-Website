@@ -6,6 +6,7 @@ require "vendor/autoload.php";
 // Changement de semestre
 if (!isset($_COOKIE['semestre']) || !is_numeric($_COOKIE['semestre'])) {
     setcookie("semestre", "1", strtotime('+360 days'));
+    header('Location: https://noteuniv.fr/');
 } else {
     $semestre = htmlspecialchars($_COOKIE['semestre']);
 }
@@ -152,10 +153,12 @@ include "assets/include/moy.php";
         <aside class="col-sm col-lg-3">
             <div class="row center-sm card">
                 <div class="col-sm-12">
-                    <div class="logos">
-                        <img src="assets/images/noteuniv_logo.svg" alt="Logo NoteUniv" class="img-fluid img-ico">
-                        <img src="assets/images/noteuniv_text.svg" alt="Texte NoteUniv" class="img-fluid img-txt">
-                    </div>
+                    <a href="./">
+                        <div class="logos">
+                            <img src="assets/images/noteuniv_logo.svg" alt="Logo NoteUniv" class="img-fluid img-ico">
+                            <img src="assets/images/noteuniv_text.svg" alt="Texte NoteUniv" class="img-fluid img-txt">
+                        </div>
+                    </a>
                     <p class="as-etu">Étudiant</p>
                     <p>N°<?= $id_etu; ?></p>
                     <p class="as-small">Je suis actuellement en :</p>
