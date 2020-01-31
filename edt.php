@@ -231,28 +231,27 @@ include "assets/include/moy.php";
                         var calendarEl = document.getElementById('calendar');
 
                         var calendar = new FullCalendar.Calendar(calendarEl, {
-                                plugins: ['dayGrid', 'timeGrid'], // an array of strings!
-                                defaultView: 'timeGridWeek',
-                                height: 'auto',
-                                footer: {
-                                    center: 'timeGridWeek,dayGridMonth',
-                                },
-                                locale: 'fr',
-                                buttonText: {
-                                    today: 'Aujourd\'hui',
-                                    month: 'Mois',
-                                    week: 'Semaine',
-                                    day: 'Jour'
-                                },
-                                allDaySlot: false,
-                                minTime: "08:30:00",
-                                maxTime: "18:30:00",
-                                nowIndicator: true,
-                                slotLabelInterval: "00:30",
-                                weekends: false,
-
+                            plugins: ['dayGrid', 'timeGrid'], // an array of strings!
+                            defaultView: 'timeGridWeek',
+                            height: 'auto',
+                            footer: {
+                                center: 'timeGridWeek,dayGridMonth',
+                            },
+                            locale: 'fr',
+                            buttonText: {
+                                today: 'Aujourd\'hui',
+                                month: 'Mois',
+                                week: 'Semaine',
+                                day: 'Jour'
+                            },
+                            allDaySlot: false,
+                            minTime: "08:30:00",
+                            maxTime: "18:30:00",
+                            nowIndicator: true,
+                            slotLabelInterval: "00:30",
+                            weekends: false,
+                            events: [
                                 <?php
-                                echo 'events: [';
                                 $events = $ical->sortEventsWithOrder($ical->events());
                                 foreach ($events as $event) {
                                     $title = $event->summary;
@@ -299,9 +298,7 @@ include "assets/include/moy.php";
                                     } else {
                                         $class = 'none';
                                     }
-                                ?>
-
-                                    {
+                                ?> {
 
                                         title: '<?php echo $title . '\n' . $location; ?>',
                                         start: '<?php echo $start; ?>',
@@ -309,14 +306,13 @@ include "assets/include/moy.php";
                                         textColor: 'black',
                                         classNames: '<?php echo $class; ?>',
                                     },
-
                                 <?php
                                 }
                                 ?>
                             ],
                         });
 
-                    calendar.render();
+                        calendar.render();
                     });
                 </script>
                 <div id="calendar"></div>

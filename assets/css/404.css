@@ -108,3 +108,10 @@ body {
         font-size: 112px;
     }
 }
+
+#canvas {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    z-index: -1;
+}
