@@ -1,8 +1,8 @@
 let context;
 
 window.onload = function () {
-    let WIDTH = window.innerWidth;
-    let HEIGHT = window.innerHeight;
+    const WIDTH = window.innerWidth;
+    const HEIGHT = window.innerHeight;
 
     let audio = document.getElementById("audio");
     audio.src = "assets/music/EROSYA_ANTHEM.mp3";
@@ -25,11 +25,11 @@ window.onload = function () {
     let bufferLength = analyser.frequencyBinCount;
     let dataArray = new Uint8Array(bufferLength);
     let barWidth = (WIDTH / bufferLength) * 2.5;
-    let barHeight;
+    let barHeight, x;
 
     function renderFrame() {
         requestAnimationFrame(renderFrame);
-        let x = 0;
+        x = 0;
         analyser.getByteFrequencyData(dataArray);
         ctx.fillStyle = "white";
         ctx.fillRect(0, 0, WIDTH, HEIGHT);
@@ -46,14 +46,13 @@ window.onload = function () {
     try {
         context.resume();
         audio.play();
-        renderFrame();
     } catch (error) {
         return;
     }
+    renderFrame();
 };
 
 document.addEventListener('keydown', function (e) {
-    audio.play();
     if (e.code === "Space") {
         e.preventDefault();
         let audio = document.getElementById("audio");
@@ -67,4 +66,5 @@ document.addEventListener('keydown', function (e) {
 
 document.addEventListener('click', function () {
     context.resume();
+    audio.play();
 }, false);

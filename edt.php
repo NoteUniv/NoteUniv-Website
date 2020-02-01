@@ -128,8 +128,8 @@ include "assets/include/moy.php";
     <link rel="stylesheet" href="assets/css/stylePanel.css" type="text/css">
     <link rel="stylesheet" href="assets/css/edt.css" type="text/css">
     <!-- CSS EDT  -->
-    <link href='assets/packages/core/main.css' rel='stylesheet' />
-    <link href='assets/packages/daygrid/main.css' rel='stylesheet' />
+    <link rel="stylesheet" href="assets/packages/core/main.css">
+    <link rel="stylesheet" href="assets/packages/daygrid/main.css">
     <link rel="stylesheet" href="assets/packages/timegrid/main.css">
     <!-- Cookie  -->
     <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="0df23692-fee1-4280-97ef-7c0506f2621d" data-blockingmode="auto" type="text/javascript"></script>
@@ -322,7 +322,7 @@ include "assets/include/moy.php";
     <footer>
         <div class="row center-xs">
             <div class="col-xs-12">
-                <p class="as-small">Made with ❤️ By <a href="https://erosya.fr/" target="_BLANK">Erosya</a> | <span class="tippy-note" data-tippy-content="Discord: Ynohtna#0001 / QuentiumYT#0207 | contact@anthony-adam.fr / support@quentium.fr">Nous contacter</span> | <a href="terms.html">Mentions légales</a></p>
+                <p class="as-small">Made with ❤️ by <a href="https://erosya.fr/" target="_BLANK">Erosya</a> | <span class="tippy-note" data-tippy-content="Discord: Ynohtna#0001 / QuentiumYT#0207 | contact@anthony-adam.fr / support@quentium.fr">Nous contacter</span> | <a href="terms.html">Mentions légales</a></p>
             </div>
         </div>
         <!-- SCRIPT EXT -->
