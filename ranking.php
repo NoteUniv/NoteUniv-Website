@@ -55,9 +55,13 @@ try {
 if (!empty($_SESSION["id_etu"]) && is_numeric($_SESSION["id_etu"])) {
     $id_etu = htmlspecialchars($_SESSION['id_etu']);
 } else {
-    header('Location: https://noteuniv.fr');
+    header('Location: ./');
 }
 
+// Set cookie ETU 
+if (!isset($_COOKIE['idEtuFirst'])) {
+    setcookie("idEtuFirst", $id_etu, strtotime('+30 mins'));
+}
 // Include
 include "assets/include/moy.php";
 ?>

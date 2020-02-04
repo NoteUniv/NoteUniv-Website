@@ -85,6 +85,11 @@ try {
     die($e);
 }
 
+// Set cookie ETU 
+if (!isset($_COOKIE['idEtuFirst'])) {
+    setcookie("idEtuFirst", $id_etu, strtotime('+30 mins'));
+}
+
 // Include
 include "assets/include/moy.php";
 ?>

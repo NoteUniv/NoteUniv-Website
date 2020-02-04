@@ -63,6 +63,11 @@ if ((!empty($_POST["numEtu"]) && is_numeric($_POST["numEtu"]))) {
 // $id_etu = 21901533;
 // $_SESSION['id_etu'] = $id_etu;
 
+// Set cookie ETU 
+if (!isset($_COOKIE['idEtuFirst'])) {
+    setcookie("idEtuFirst", $id_etu, strtotime('+30 mins'));
+}
+
 // Include
 include "assets/include/moy.php";
 ?>

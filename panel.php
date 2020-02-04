@@ -55,7 +55,7 @@ try {
 if (!empty($_SESSION["id_etu"]) && is_numeric($_SESSION["id_etu"])) {
     $id_etu = htmlspecialchars($_SESSION['id_etu']);
 } else {
-    header('Location: https://noteuniv.fr');
+    header('Location: ./');
 }
 
 // Recupération des note du semestre
@@ -75,6 +75,10 @@ while ($note = $list_notes->fetch()) { // note = matière + date (nom du PDF)
 $ue1 = array_unique($ue1, SORT_STRING);
 $ue2 = array_unique($ue2, SORT_STRING);
 
+// Set cookie ETU 
+if (!isset($_COOKIE['idEtuFirst'])) {
+    setcookie("idEtuFirst", $id_etu, strtotime('+30 mins'));
+}
 // Include
 include "assets/include/moy.php";
 ?>

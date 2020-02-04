@@ -89,8 +89,7 @@ try {
                 <div class="col-xs-12">
                     <img class="logo-txt" src="assets/images/noteuniv_text.svg" alt="NoteUniv Texte">
                 </div>
-                <h1 class="desc">Votre nouvel espace pour retrouver vos notes plus facilement et savoir si vous passez
-                    votre semestre !</h1>
+                <h1 class="desc">Votre nouvel espace pour retrouver vos notes plus facilement et savoir si vous passez votre semestre !</h1>
                 <div class="row center-xs start-lg">
                     <form class="login-form" id="sendID" action="last.php" method="POST">
                         <div id="inputAll" class="input out">
@@ -113,12 +112,11 @@ try {
                 </div>
             </article>
         </section>
-
         <div class="col-lg-6 end-xs hidden-xs hidden-sm hidden-md">
             <img class="img-etu" src="<?= $img ?>" alt="Image étudiants">
         </div>
     </div>
-    <script src="assets/js/index.js"></script>
+    <script src="assets/js/main.js"></script>
 </body>
 
 </html>
