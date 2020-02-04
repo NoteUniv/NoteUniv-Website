@@ -6,7 +6,7 @@ require_once "vendor/autoload.php";
 // Changement de semestre
 if (!isset($_COOKIE['semestre']) || !is_numeric($_COOKIE['semestre'])) {
     setcookie("semestre", "1", strtotime('+360 days'));
-    header('Location: https://noteuniv.fr/');
+    header('Location: ./');
 } else {
     $semestre = htmlspecialchars($_COOKIE['semestre']);
 }
@@ -56,7 +56,7 @@ try {
 if (!empty($_SESSION["id_etu"]) && is_numeric($_SESSION["id_etu"])) {
     $id_etu = htmlspecialchars($_SESSION['id_etu']);
 } else {
-    header('Location: https://noteuniv.fr');
+    header('Location: ./');
 }
 
 $sqlEtu = $bdd->query("SELECT tp, promo FROM data_etu WHERE id_etu = $id_etu");
@@ -104,7 +104,7 @@ include "assets/include/moy.php";
     <meta name="revisit-after" content="15 days">
     <meta name="author" content="Ynohtna, Quentium">
     <meta name="theme-color" content="#110133">
-    <title>NoteUniv - EDT</title>
+    <title>NoteUniv | EDT</title>
     <!-- FAVICON  -->
     <link rel="apple-touch-icon" sizes="57x57" href="assets/images/favicon/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="assets/images/favicon/apple-icon-60x60.png">
@@ -299,7 +299,6 @@ include "assets/include/moy.php";
                                         $class = 'none';
                                     }
                                 ?> {
-
                                         title: '<?php echo $title . '\n' . $location; ?>',
                                         start: '<?php echo $start; ?>',
                                         end: '<?php echo $end; ?>',

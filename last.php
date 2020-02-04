@@ -6,7 +6,7 @@ require "vendor/autoload.php";
 // Changement de semestre
 if (!isset($_COOKIE['semestre']) || !is_numeric($_COOKIE['semestre'])) {
     setcookie("semestre", "1", strtotime('+360 days'));
-    header('Location: https://noteuniv.fr/');
+    header('Location: ./');
 } else {
     $semestre = htmlspecialchars($_COOKIE['semestre']);
 }
@@ -58,7 +58,7 @@ if ((!empty($_POST["numEtu"]) && is_numeric($_POST["numEtu"]))) {
 } else if (!empty($_SESSION['id_etu']) && is_numeric($_SESSION['id_etu'])) {
     $id_etu = $_SESSION['id_etu'];
 } else {
-    header('Location: https://noteuniv.fr/');
+    header('Location: ./');
 }
 // $id_etu = 21901533;
 // $_SESSION['id_etu'] = $id_etu;
@@ -187,7 +187,7 @@ include "assets/include/moy.php";
                 $nb_notes = $bdd->query("SELECT COUNT(*) FROM global_s$semestre")->fetchColumn();
                 ?>
                 <h1 class="hidden-xs hidden-sm">Mes dernières notes (<?= $nb_notes ?> au total)</h1>
-                <h1 class="hidden-md hidden-lg hidden-xl">Mes dernière notes (<?= $nb_notes ?> au total)</h1>
+                <h1 class="hidden-md hidden-lg hidden-xl">Mes dernières notes (<?= $nb_notes ?> au total)</h1>
 
                 <!-- ANCHOR Bandeau de l'UE 1 uniquement PC/Tablette -->
                 <div class="row ue-tab hidden-xs">

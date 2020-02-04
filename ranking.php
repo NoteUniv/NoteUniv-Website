@@ -6,7 +6,7 @@ require "vendor/autoload.php";
 // Changement de semestre
 if (!isset($_COOKIE['semestre']) || !is_numeric($_COOKIE['semestre'])) {
     setcookie("semestre", "1", strtotime('+360 days'));
-    header('Location: https://noteuniv.fr/');
+    header('Location: ./');
 } else {
     $semestre = htmlspecialchars($_COOKIE['semestre']);
 }
