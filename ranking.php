@@ -62,6 +62,7 @@ if (!empty($_SESSION["id_etu"]) && is_numeric($_SESSION["id_etu"])) {
 if (!isset($_COOKIE['idEtuFirst'])) {
     setcookie("idEtuFirst", $id_etu, strtotime('+30 mins'));
 }
+
 // Include
 include "assets/include/moy.php";
 ?>
@@ -158,7 +159,7 @@ include "assets/include/moy.php";
                         </span>
                     </a>
                     <p class="as-small">Ma moyenne générale est :</p>
-                    <span class="btn btn-moy">
+                    <span class="btn btn-green">
                         <span class="tippy-note" data-tippy-content="<a href='ranking.php'>Besoin de voir ta grandeur ?</a>"><?= $moyenne ?> / 20</span>
                     </span>
                     <?php
@@ -196,7 +197,7 @@ include "assets/include/moy.php";
                         if ($ranking == 1) {
                         ?>
                             <form action="assets/include/ranking_post.php" method='POST' class="ranking-form">
-                                <label for="rank">Si le classement n'est pas éthique, si il est élitiste ou si vous ne voulez pas montrer votre puissance au monde, cliquez !</label>
+                                <label for="rank">Cliquez ici pour vous cacher du classement et et garder votre puissance secrète !</label>
                                 <br>
                                 <input type="checkbox" name="rank" id="rank" value="hide"><input type="submit" value="Je valide" class="btn-sub">
                             </form>
@@ -204,7 +205,7 @@ include "assets/include/moy.php";
                         } else {
                         ?>
                             <form action="assets/include/ranking_post.php" method='POST' class="ranking-form">
-                                <label for="rank">Fini de se cacher ? Allons afficher votre puissance au monde, cliquez !</label>
+                                <label for="rank">Cliquez ici pour vous afficher dans le classement et afficher votre puissance au monde !</label>
                                 <br>
                                 <input type="checkbox" name="rank" id="rank" value="show"><input type="submit" value="Je valide" class="btn-sub">
                             </form>

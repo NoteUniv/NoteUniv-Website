@@ -6,7 +6,6 @@
     font-style: normal;
 }
 
-
 * {
     padding: 0;
     border: 0;
@@ -31,16 +30,16 @@ a {
     height: auto;
 }
 
-.btn-moy {
+.btn-green {
     background-color: #2BE8C6;
 }
 
 .btn-orange {
-    background-color: orange;
+    background-color: #ffa500;
 }
 
 .btn-red {
-    background-color: red;
+    background-color: #fe4c6a;
 }
 
 .btn-etu {
@@ -52,15 +51,15 @@ a {
 }
 
 .orange {
-    color: orange;
+    color: #ffa500;
 }
 
 .grey {
-    color: grey;
+    color: #808080;
 }
 
 .red {
-    color: rgb(207, 56, 56);
+    color: #fe4c6a;
 }
 
 /* ANCHOR CARD-aside  */
@@ -171,19 +170,29 @@ a {
     margin-top: 5vh;
 }
 
-.card .btn-moy {
+.card .btn-green {
     color: #110133;
     font-size: 20px;
 }
 
-.card .btn-moy+p {
+.card .btn-orange {
+    color: #110133;
+    font-size: 20px;
+}
+
+.card .btn-red {
+    color: #110133;
+    font-size: 20px;
+}
+
+.card .btn-green+p {
     margin-top: 1vh;
     margin-bottom: 6vh;
     font-size: 15px;
 }
 
 @media screen and (max-height: 600px) {
-    .card .btn-moy+p {
+    .card .btn-green+p {
         margin-top: 1vh;
         margin-bottom: 3vh;
         font-size: 15px;
@@ -434,13 +443,13 @@ span#me {
 }
 
 .note .btn-etu,
-.btn-moy,
+.btn-green,
 .btn-orange,
 .btn-red {
     border-radius: 25px;
 }
 
-.note .btn-moy,
+.note .btn-green,
 .btn-orange,
 .btn-red {
     color: #110133;
@@ -462,7 +471,7 @@ span#me {
 /* ANCHOR RESUME mobile  */
 @media screen and (max-width: 574px) {
 
-    .btn-moy,
+    .btn-green,
     .btn-orange,
     .btn-red {
         margin-bottom: 10px;

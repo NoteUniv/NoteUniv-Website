@@ -72,13 +72,13 @@ use ICal\ICal;
 
 try {
     $ical = new ICal('ICal.ics', array(
-        'defaultSpan'                 => 2,     // Default value
+        'defaultSpan'                 => 2,
         'defaultTimeZone'             => 'UTC',
-        'defaultWeekStart'            => 'MO',  // Default value
-        'disableCharacterReplacement' => false, // Default value
-        'filterDaysAfter'             => null,  // Default value
-        'filterDaysBefore'            => null,  // Default value
-        'skipRecurrence'              => false, // Default value
+        'defaultWeekStart'            => 'MO',
+        'disableCharacterReplacement' => false,
+        'filterDaysAfter'             => null,
+        'filterDaysBefore'            => null,
+        'skipRecurrence'              => false,
     ));
     $ical->initUrl($linkIcal, $username = null, $password = null, $userAgent = null);
 } catch (\Exception $e) {
@@ -191,7 +191,7 @@ include "assets/include/moy.php";
                         </span>
                     </a>
                     <p class="as-small">Ma moyenne générale est :</p>
-                    <span class="btn btn-moy">
+                    <span class="btn btn-green">
                         <span class="tippy-note" data-tippy-content="<a href='ranking.php'>Besoin de voir ta grandeur ?</a>"><?= $moyenne ?> / 20</span>
                     </span>
                     <?php

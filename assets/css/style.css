@@ -30,11 +30,8 @@
     font-family: "Montserrat";
 }
 
-html {
-    height: 100%;
-}
-
 body {
+    height: 100vh;
     background-color: #110133;
     overflow: hidden;
 }

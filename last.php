@@ -60,8 +60,6 @@ if ((!empty($_POST["numEtu"]) && is_numeric($_POST["numEtu"]))) {
 } else {
     header('Location: ./');
 }
-// $id_etu = 21901533;
-// $_SESSION['id_etu'] = $id_etu;
 
 // Set cookie ETU 
 if (!isset($_COOKIE['idEtuFirst'])) {
@@ -164,19 +162,23 @@ include "assets/include/moy.php";
                         </span>
                     </a>
                     <p class="as-small">Ma moyenne générale est :</p>
-                    <span class="btn btn-moy">
-                        <span class="tippy-note" data-tippy-content="<a href='ranking.php'>Besoin de voir ta grandeur ?</a>"><?= $moyenne ?> / 20</span>
-                    </span>
                     <?php
                     if ($moyenne >= 15) {
-                        echo '<p class="green">Un Dieu !</p>';
+                        echo '<span class="btn btn-green">';
+                        $tmp = '<p class="green">Un Dieu !</p>';
                     } else if ($moyenne >= 13) {
-                        echo '<p class="green">Honnêtement ? OKLM gros !</p>';
+                        echo '<span class="btn btn-green">';
+                        $tmp = '<p class="green">Honnêtement ? OKLM gros !</p>';
                     } elseif ($moyenne >= 10) {
-                        echo '<p class="orange">ALLEEEZZZ ! Ça passe !</p>';
+                        echo '<span class="btn btn-orange">';
+                        $tmp = '<p class="orange">ALLEEEZZZ ! Ça passe !</p>';
                     } else {
-                        echo '<p class="red">Aïe, trql on se motive !</p>';
+                        echo '<span class="btn btn-red">';
+                        $tmp = '<p class="red">Aïe, trql on se motive !</p>';
                     }
+                    echo '<span class="tippy-note" data-tippy-content="<a href=\'ranking.php\'>Besoin de voir ta grandeur ?</a>">' . $moyenne . ' / 20</span>';
+                    echo '</span>';
+                    echo $tmp;
                     ?>
                     <a href="edt.php"><span class="btn btn-logout">Emploi du temps</span></a>
                     <a href="panel.php"><span class="btn btn-logout">Récapitulatif</span></a>

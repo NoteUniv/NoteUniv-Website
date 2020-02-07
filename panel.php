@@ -79,6 +79,7 @@ $ue2 = array_unique($ue2, SORT_STRING);
 if (!isset($_COOKIE['idEtuFirst'])) {
     setcookie("idEtuFirst", $id_etu, strtotime('+30 mins'));
 }
+
 // Include
 include "assets/include/moy.php";
 ?>
@@ -176,7 +177,7 @@ include "assets/include/moy.php";
                         </span>
                     </a>
                     <p class="as-small">Ma moyenne générale est :</p>
-                    <span class="btn btn-moy">
+                    <span class="btn btn-green">
                         <span class="tippy-note" data-tippy-content="<a href='ranking.php'>Besoin de voir ta grandeur ?</a>"><?= $moyenne ?> / 20</span>
                     </span>
                     <?php
@@ -707,14 +708,14 @@ include "assets/include/moy.php";
                         <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Points possédés :</span>
                             <?php echo $pointUe1; ?></p>
                     </div>
-                    <div class="col-sm-2 center-sm btn-moy">
+                    <div class="col-sm-2 center-sm btn-green">
                         <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Moyenne sur 20
                                 <br></span><?php echo $moyUe1; ?></p>
                     </div>
                     <?php
                     if ($moyUe1 >= 8) {
                     ?>
-                        <div class="col-sm-2 center-sm btn-moy mr-14">
+                        <div class="col-sm-2 center-sm btn-green mr-14">
                             <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Résultats <br></span> UE Validé</p>
                         </div>
                     <?php
@@ -750,14 +751,14 @@ include "assets/include/moy.php";
                         <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Points possédés :</span>
                             <?php echo $pointUe2; ?></p>
                     </div>
-                    <div class="col-sm-2 center-sm btn-moy">
+                    <div class="col-sm-2 center-sm btn-green">
                         <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Moyenne sur 20
                                 <br></span><?php echo $moyUe2; ?></p>
                     </div>
                     <?php
                     if ($moyUe2 >= 8) {
                     ?>
-                        <div class="col-sm-2 center-sm btn-moy mr-14">
+                        <div class="col-sm-2 center-sm btn-green mr-14">
                             <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Résultats <br></span> UE Validé</p>
                         </div>
                     <?php
@@ -793,14 +794,14 @@ include "assets/include/moy.php";
                         <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Points possédés :</span>
                             <?php echo ($pointUe1 + $pointUe2); ?></p>
                     </div>
-                    <div class="col-sm-2 center-sm btn-moy">
+                    <div class="col-sm-2 center-sm btn-green">
                         <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Moyenne sur 20
                                 <br></span><?php echo $moyenne; ?></p>
                     </div>
                     <?php
                     if ($moyenne >= 10 && $moyUe1 >= 8 && $moyUe2 >= 8) {
                     ?>
-                        <div class="col-sm-2 center-sm btn-moy mr-14">
+                        <div class="col-sm-2 center-sm btn-green mr-14">
                             <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Résultats <br></span> Semestre Validé
                             </p>
                         </div>
