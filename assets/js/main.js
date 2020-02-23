@@ -51,3 +51,15 @@ numEtuInput.addEventListener('input', () => {
     document.getElementById("showMessage").innerHTML = "";
     document.getElementById("showMessage").style.color = "";
 })
+
+numEtuInput.addEventListener('focus', () => {
+    if (window.innerWidth <= 760) {
+        document.getElementsByClassName("logo-txt")[0].style.display = "none";
+    }
+});
+
+numEtuInput.addEventListener('blur', () => {
+    if (window.innerWidth <= 760) {
+        document.getElementsByClassName("logo-txt")[0].style.display = "inline";
+    }
+});

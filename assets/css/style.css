@@ -30,10 +30,13 @@
     font-family: "Montserrat";
 }
 
+html {
+    overflow: hidden;
+}
+
 body {
     height: 100vh;
     background-color: #110133;
-    overflow: hidden;
 }
 
 .img-etu {
@@ -74,8 +77,12 @@ body {
 }
 
 .login-form {
+    display: -webkit-box;
     display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
     flex-direction: column;
+    -webkit-box-align: center;
     align-items: center;
 }
 
@@ -93,6 +100,9 @@ body {
     resize: none;
     background-color: transparent;
     font-size: 24px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
     user-select: none;
     outline: none;
     -moz-appearance: textfield;
@@ -115,11 +125,37 @@ body {
 }
 
 .out {
+    display: -webkit-box;
     display: flex;
+    -webkit-box-pack: justify;
     justify-content: space-between;
     margin: 8px 0;
     width: 25vw;
     background-color: white;
+}
+
+input::-webkit-input-placeholder {
+    color: #110133;
+    opacity: 0.5;
+    font-size: 24px;
+}
+
+input::-moz-placeholder {
+    color: #110133;
+    opacity: 0.5;
+    font-size: 24px;
+}
+
+input:-ms-input-placeholder {
+    color: #110133;
+    opacity: 0.5;
+    font-size: 24px;
+}
+
+input::-ms-input-placeholder {
+    color: #110133;
+    opacity: 0.5;
+    font-size: 24px;
 }
 
 input::placeholder {
@@ -133,6 +169,7 @@ input::placeholder {
     cursor: pointer;
     color: #110133;
     background-color: transparent;
+    -webkit-transition: opacity 0.2s;
     transition: opacity 0.2s;
     padding: 10px 20px;
 }
@@ -163,6 +200,22 @@ input::placeholder {
         font-size: 24px;
     }
 
+    input::-webkit-input-placeholder {
+        font-size: 18px;
+    }
+
+    input::-moz-placeholder {
+        font-size: 18px;
+    }
+
+    input:-ms-input-placeholder {
+        font-size: 18px;
+    }
+
+    input::-ms-input-placeholder {
+        font-size: 18px;
+    }
+
     input::placeholder {
         font-size: 18px;
     }
@@ -189,6 +242,12 @@ input::placeholder {
 
     p {
         padding: 20px;
+    }
+}
+
+@media screen and (max-width: 760px) {
+    html {
+        overflow-y: scroll;
     }
 }
 
