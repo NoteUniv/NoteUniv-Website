@@ -4,7 +4,7 @@ session_start();
 require_once "../../vendor/autoload.php";
 
 // Récupération des variables d'environnement
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv = Dotenv\Dotenv::createImmutable('../../' . __DIR__);
 $dotenv->load();
 $hostname = getenv('BDD_HOST');
 $dbname = getenv('BDD_NAME');
@@ -23,9 +23,9 @@ try {
 $id_etu = $_SESSION['id_etu'];
 
 if (!empty($_POST['rank']) && $_POST['rank'] === 'hide') {
-    $bdd->query('UPDATE data_etu SET ranking = 0, change_by = '.intval($_COOKIE['idEtuFirst']).' WHERE id_etu = ' . $id_etu);
+    $bdd->query('UPDATE data_etu SET ranking = 0, change_by = ' . intval($_COOKIE['idEtuFirst']) . ' WHERE id_etu = ' . $id_etu);
 } elseif (!empty($_POST['rank']) && $_POST['rank'] === 'show') {
-    $bdd->query('UPDATE data_etu SET ranking = 1, change_by = '.intval($_COOKIE['idEtuFirst']).' WHERE id_etu = ' . $id_etu);
+    $bdd->query('UPDATE data_etu SET ranking = 1, change_by = ' . intval($_COOKIE['idEtuFirst']) . ' WHERE id_etu = ' . $id_etu);
 }
 
 header('Location: ../../ranking.php');

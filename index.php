@@ -44,7 +44,6 @@ try {
     <meta name="msapplication-TileImage" content="assets/images/favicon/ms-icon-144x144.png">
     <meta name="theme-color" content="#110133">
     <!-- CSS EXT-->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
     <link rel="stylesheet" href="assets/css/flexboxgrid2.css" type="text/css">
     <!-- CSS PERSO-->
     <link rel="stylesheet" href="assets/css/style.css">
@@ -116,6 +115,7 @@ try {
             <img class="img-etu" src="<?= $img ?>" alt="Image étudiants">
         </div>
     </div>
+    <script src="https://kit.fontawesome.com/f33a91cd59.js" crossorigin="anonymous"></script>
     <script src="assets/js/main.js"></script>
 </body>
 

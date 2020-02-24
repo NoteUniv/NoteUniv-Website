@@ -4,7 +4,7 @@ session_start();
 require_once "../../vendor/autoload.php";
 
 // Récupération des variables d'environnement
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv = Dotenv\Dotenv::createImmutable('../../' . __DIR__);
 $dotenv->load();
 $hostname = getenv('BDD_HOST');
 $dbname = getenv('BDD_NAME');

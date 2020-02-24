@@ -150,7 +150,7 @@ include "assets/include/moy.php";
                         </div>
                     </a>
                     <p class="as-etu">Étudiant</p>
-                    <p>N°<?= $id_etu; ?></p>
+                    <p>N°<?= $id_etu ?></p>
                     <p class="as-small">Je suis actuellement en :</p>
                     <span class="btn btn-etu">
                         <span class="tippy-note" data-tippy-content="T'as bien fait, c'est les meilleurs ;)">MMI</span>
@@ -193,8 +193,8 @@ include "assets/include/moy.php";
                 <?php
                 $nb_notes = $bdd->query("SELECT COUNT(*) FROM global_s$semestre")->fetchColumn();
                 ?>
-                <h1 class="hidden-xs hidden-sm">Mes dernières notes (<?= $nb_notes ?> au total)</h1>
-                <h1 class="hidden-md hidden-lg hidden-xl">Mes dernières notes (<?= $nb_notes ?> au total)</h1>
+                <h1 class="hidden-xs hidden-sm">Mes dernières notes (<?php echo $nb_notes ?> au total)</h1>
+                <h1 class="hidden-md hidden-lg hidden-xl">Mes dernières notes (<?php echo $nb_notes ?> au total)</h1>
 
                 <!-- ANCHOR Bandeau de l'UE 1 uniquement PC/Tablette -->
                 <div class="row ue-tab hidden-xs">
@@ -307,12 +307,12 @@ include "assets/include/moy.php";
                     <div class="col-sm-4">
                         <div class="row start-xs center-sm">
                             <div class="col-xs-12 col-sm-5 first-sm">
-                                <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Coeff: </span>
+                                <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Coeff : </span>
                                     <?php echo $coeff; ?>
                                 </p>
                             </div>
                             <div class="col-xs-12 col-sm-7 first-xs">
-                                <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Nom du devoir: </span>
+                                <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Nom du devoir : </span>
                                     <?php if ($type == "Moyenne de notes (+M)") {
                                         echo "Moyenne des notes intermédiaires " . $epreuve;
                                     } else {

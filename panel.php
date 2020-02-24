@@ -58,23 +58,6 @@ if (!empty($_SESSION["id_etu"]) && is_numeric($_SESSION["id_etu"])) {
     header('Location: ./');
 }
 
-// Recupération des note du semestre
-$sql_all_notes = "SELECT note_date_c, note_code, note_semester FROM global_s$semestre WHERE type_note != 'Note intermédiaire que pour affichage' ORDER BY note_date_c";
-
-$list_notes = $bdd->query($sql_all_notes);
-$ue1 = []; // liste des note UE1
-$ue2 = []; // liste des note UE1
-while ($note = $list_notes->fetch()) { // note = matière + date (nom du PDF)
-    $matiere = $note['note_code'];
-    if (preg_match("/UE1$/", $note['note_semester'])) {
-        array_push($ue1, $matiere);
-    } else {
-        array_push($ue2, $matiere);
-    }
-}
-$ue1 = array_unique($ue1, SORT_STRING);
-$ue2 = array_unique($ue2, SORT_STRING);
-
 // Set cookie ETU 
 if (!isset($_COOKIE['idEtuFirst'])) {
     setcookie("idEtuFirst", $id_etu, strtotime('+30 mins'));
@@ -216,7 +199,6 @@ include "assets/include/moy.php";
                         <p><a href="#resultat">S1</a></p>
                     </div>
                 </div>
-
                 <!-- Affichage de UE1 uniquement pour mobile, car ils n'ont pas de bandeau  -->
                 <h2 class="hidden-sm hidden-md hidden-lg hidden-xl" id="ue1">UE 1</h2>
 
@@ -247,7 +229,7 @@ include "assets/include/moy.php";
                                 <p>Coef</p>
                             </div>
                             <div class="col-sm">
-                                <p>Points</p>
+                                <p>Moyenne</p>
                             </div>
                             <div class="col-sm">
                                 <p>Notes*</p>
@@ -256,9 +238,7 @@ include "assets/include/moy.php";
                     </div>
                 </div>
                 <?php
-                $pointUe1 = 0; // Point total de chaque étudiant pour l'UE1
-                $pointMinUe1 = 0; // Point Minimum à avoir pour l'UE1
-
+                $moyenneDesMatiere = [];
                 foreach ($ue1 as $key => $value) {
                     $sqlSem = "SELECT name_note, name_pdf, note_date_c, average, minimum, maximum, note_code, note_coeff, name_teacher, type_note, note_semester, note_total, median, variance, deviation, type_exam FROM global_s$semestre WHERE note_code = '$value' AND type_note != 'Note intermédiaire que pour affichage' ORDER BY note_date_c, id DESC";
                     $ue1Sql = $bdd->query($sqlSem);
@@ -273,8 +253,9 @@ include "assets/include/moy.php";
                             <div class="row center-sm note-par-matiere">
                                 <?php
                                 $i = 1; // nombre de note
-                                $point = 0; // point par matière
+                                $moyMatiere = []; // Moyenne de chaque matière
                                 $n = 0; // nombre de note compté dans la moyenne
+
                                 while ($infoNote = $ue1Sql->fetch()) {
 
                                     $name = $infoNote['name_note'];
@@ -295,8 +276,10 @@ include "assets/include/moy.php";
                                     $myNote = $bdd->query("SELECT note_etu FROM $infoNote[name_pdf] WHERE id_etu = $id_etu");
                                     $noteEtu = $myNote->fetch();
                                     if ($noteEtu[0] < 21) { // Si pas abs et pas note intermédiaire on le compte
-                                        $pts = $noteEtu[0] * $coeff; // point de la note = note * coeff
+                                        array_push($moyMatiere, $noteEtu[0]);
                                         $n++;
+                                        $coeffMatiere = $coeff;
+
                                 ?>
                                         <div class="col-sm col-xs-6">
                                             <a href="javascript:void(0);" data-template="<?php echo $matiere . $i ?>" class="tippy-note">
@@ -392,12 +375,9 @@ include "assets/include/moy.php";
                                         <!-- Fin intégration note modales  -->
                                     <?php
                                         $i++;
-                                    } else {
-                                        $pts = 0;
-                                    }
-                                    $point += $pts; // Ajout des points de la note dans les points de la matière
-
+                                    };
                                 }
+
                                 while ($i < 5) { // Si pas d'autre note on comble avec un "/" 
                                     ?>
                                     <div class="col-sm col-xs-6">
@@ -408,7 +388,6 @@ include "assets/include/moy.php";
                                 <?php
                                     $i++;
                                 }
-                                $pointMinUe1 += $n * $coeff * 10;
                                 ?>
                             </div>
                         </div>
@@ -419,11 +398,22 @@ include "assets/include/moy.php";
                             <div class="row center-xs">
                                 <div class="col-xs-4">
                                     <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Coef:</span>
-                                        <?php echo $coeff; ?></p>
+                                        <?php
+                                        echo $coeff; ?></p>
                                 </div>
                                 <div class="col-xs-4">
-                                    <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Points:
-                                        </span><?php echo $point; ?>
+                                    <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Moyenne:
+                                        </span>
+                                        <?php
+                                        $moyenneMat = round(array_sum($moyMatiere) / count($moyMatiere), 3);
+                                        if (count($moyMatiere) == 0) {
+                                            $moyenneMat = 0;
+                                            echo "/";
+                                            $coeffMatiere = 0;
+                                        } else {
+                                            echo $moyenneMat;
+                                        }
+                                        ?>
                                     </p>
                                 </div>
                                 <div class="col-xs-4">
@@ -434,9 +424,19 @@ include "assets/include/moy.php";
                         </div>
                     </article>
                 <?php
-                    $pointUe1 += $point;
+                    array_push($moyenneDesMatiere, ['moyMat' => $moyenneMat, 'coeff' => $coeffMatiere]);
                 }
+                $moyUe1 = 0;
+                $coeffUe1 = 0;
+                for ($i = 0; $i < count($moyenneDesMatiere); $i++) {
+                    $moyUe1 += $moyenneDesMatiere[$i]['moyMat'] * $moyenneDesMatiere[$i]['coeff'];
+                    $coeffUe1 += $moyenneDesMatiere[$i]['coeff'];
+                }
+                $moyUe1 /= $coeffUe1;
                 ?>
+
+
+
                 <!-- ANCHOR Bandeau de l'UE 2 uniquement pc/tablette-->
                 <div class="row ue-tab hidden-xs">
                     <div class="col-sm-2 ue-nbr">
@@ -464,7 +464,7 @@ include "assets/include/moy.php";
                                 <p>Coef</p>
                             </div>
                             <div class="col-sm">
-                                <p>Points</p>
+                                <p>Moyenne</p>
                             </div>
                             <div class="col-sm">
                                 <p>Notes*</p>
@@ -478,8 +478,7 @@ include "assets/include/moy.php";
 
                 <!-- ANCHOR Notes par matière 2 -->
                 <?php
-                $pointUe2 = 0; // Point total de chaque étudiant pour l'UE2
-                $pointMinUe2 = 0; // Point Minimum à avoir pour l'UE2
+                $moyenneDesMatiere = [];
                 foreach ($ue2 as $key => $value) {
                     $sqlSem = "SELECT name_note, name_pdf, note_date_c, average, minimum, maximum, note_code, note_coeff, name_teacher, type_note, note_semester, note_total, median, variance, deviation, type_exam FROM global_s$semestre WHERE note_code = '$value' AND type_note != 'Note intermédiaire que pour affichage' ORDER BY note_date_c, id DESC";
                     $ue1Sql = $bdd->query($sqlSem);
@@ -493,7 +492,7 @@ include "assets/include/moy.php";
                             <div class="row center-sm note-par-matiere">
                                 <?php
                                 $i = 1; // nombre de note
-                                $point = 0; // point par matière
+                                $moyMatiere = []; // Moyenne de chaque matière
                                 $n = 0; // nombre de note compté dans la moyenne
                                 while ($infoNote = $ue1Sql->fetch()) {
 
@@ -515,8 +514,9 @@ include "assets/include/moy.php";
                                     $myNote = $bdd->query("SELECT note_etu FROM $infoNote[name_pdf] WHERE id_etu = $id_etu");
                                     $noteEtu = $myNote->fetch();
                                     if ($noteEtu[0] < 21) { // Si pas abs et pas note intermédiaire on le compte
-                                        $pts = $noteEtu[0] * $coeff; // point de la note = note * coeff
+                                        array_push($moyMatiere, $noteEtu[0]);
                                         $n++;
+                                        $coeffMatiere = $coeff;
 
                                 ?>
                                         <div class="col-sm col-xs-6">
@@ -613,11 +613,7 @@ include "assets/include/moy.php";
                                         <!-- Fin intégration note modales  -->
                                     <?php
                                         $i++;
-                                    } else {
-                                        $pts = 0;
-                                    }
-                                    $point += $pts; // Ajout des points de la note dans les points de la matière
-
+                                    };
                                 }
                                 while ($i < 5) { // Si pas d'autre note on comble avec un "/" 
                                     ?>
@@ -629,7 +625,6 @@ include "assets/include/moy.php";
                                 <?php
                                     $i++;
                                 }
-                                $pointMinUe2 += $n * $coeff * 10;
                                 ?>
                             </div>
                         </div>
@@ -641,8 +636,18 @@ include "assets/include/moy.php";
                                         <?php echo $coeff; ?></p>
                                 </div>
                                 <div class="col-xs-4">
-                                    <p><span class="hidden-sm hidden-md hidden-lg hidden-xl ">Points:
-                                        </span><?php echo $point; ?>
+                                    <p><span class="hidden-sm hidden-md hidden-lg hidden-xl ">Moyenne:
+                                        </span><?php
+
+                                                $moyenneMat = round(array_sum($moyMatiere) / count($moyMatiere), 3);
+                                                if (count($moyMatiere) == 0) {
+                                                    $moyenneMat = 0;
+                                                    echo "/";
+                                                    $coeffMatiere = 0;
+                                                } else {
+                                                    echo $moyenneMat;
+                                                }
+                                                ?>
                                     </p>
                                 </div>
                                 <div class="col-xs-4">
@@ -653,8 +658,15 @@ include "assets/include/moy.php";
                         </div>
                     </article>
                 <?php
-                    $pointUe2 += $point;
+                    array_push($moyenneDesMatiere, ['moyMat' => $moyenneMat, 'coeff' => $coeffMatiere]);
                 }
+                $moyUe2 = 0;
+                $coeffUe2 = 0;
+                for ($i = 0; $i < count($moyenneDesMatiere); $i++) {
+                    $moyUe2 += $moyenneDesMatiere[$i]['moyMat'] * $moyenneDesMatiere[$i]['coeff'];
+                    $coeffUe2 += $moyenneDesMatiere[$i]['coeff'];
+                }
+                $moyUe2 /= $coeffUe2;
                 ?>
             </section>
 
@@ -665,12 +677,6 @@ include "assets/include/moy.php";
                 <div class="row resume-tab around-sm hidden-xs">
                     <div class="col-sm-1 center-sm">
                     </div>
-                    <div class="col-sm-2 center-sm">
-                        <p>Points à avoir</p>
-                    </div>
-                    <div class="col-sm-2 center-sm">
-                        <p>Points possédés</p>
-                    </div>
                     <div class="col-sm-2 center-sm btn-etu">
                         <p>Moyenne sur 20</p>
                     </div>
@@ -680,18 +686,6 @@ include "assets/include/moy.php";
                 </div>
                 <!-- Affichage  uniquement sur mobile car pas de bandeau  -->
                 <h1 class="hidden-sm hidden-md hidden-lg hidden-xl" id="resultat">Résultats</h1>
-                <?php
-                $coeffUe1 = $pointMinUe1 / 10;
-                $coeffUe2 = $pointMinUe2 / 10;
-                if ($coeffUe1 == 0) {
-                    $coeffUe1 = 1;
-                }
-                if ($coeffUe2 == 0) {
-                    $coeffUe2 = 1;
-                }
-                $moyUe1 = round($pointUe1 / $coeffUe1, 2);
-                $moyUe2 = round($pointUe2 / $coeffUe2, 2);
-                ?>
                 <!-- ANCHOR Resumer UE1 -->
                 <!-- Sur pc/tablette on affiche pas les span, car les informations sont contenu dans le bandeau, contrairement au téléphone -->
                 <article class="row all-note around-sm sem">
@@ -699,18 +693,10 @@ include "assets/include/moy.php";
                         <h2 class="hidden-sm hidden-md hidden-lg hidden-xl">UE1</h2>
                         <p><span class="hidden-xs">UE1</span></p>
                     </div>
-                    <div class="col-sm-2 center-sm">
-                        <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Total de points à avoir :</span>
-                            <?php echo $pointMinUe1; ?>
-                        </p>
-                    </div>
-                    <div class="col-sm-2 center-sm">
-                        <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Points possédés :</span>
-                            <?php echo $pointUe1; ?></p>
-                    </div>
                     <div class="col-sm-2 center-sm btn-green">
                         <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Moyenne sur 20
-                                <br></span><?php echo $moyUe1; ?></p>
+                                <br></span><?php echo round($moyUe1, 3); ?></p>
+
                     </div>
                     <?php
                     if ($moyUe1 >= 8) {
@@ -742,18 +728,9 @@ include "assets/include/moy.php";
                         <h2 class="hidden-sm hidden-md hidden-lg hidden-xl">UE2</h2>
                         <p><span class="hidden-xs">UE2</span></p>
                     </div>
-                    <div class="col-sm-2 center-sm">
-                        <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Total de points à avoir :</span>
-                            <?php echo $pointMinUe2; ?>
-                        </p>
-                    </div>
-                    <div class="col-sm-2 center-sm">
-                        <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Points possédés :</span>
-                            <?php echo $pointUe2; ?></p>
-                    </div>
                     <div class="col-sm-2 center-sm btn-green">
                         <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Moyenne sur 20
-                                <br></span><?php echo $moyUe2; ?></p>
+                                <br></span><?php echo round($moyUe2, 3); ?></p>
                     </div>
                     <?php
                     if ($moyUe2 >= 8) {
@@ -784,15 +761,6 @@ include "assets/include/moy.php";
                     <div class="col-sm-1">
                         <h2 class="hidden-sm hidden-md hidden-lg hidden-xl">Semestre <?php echo $semestre; ?></h2>
                         <p><span class="hidden-xs">S<?php echo $semestre; ?></span></p>
-                    </div>
-                    <div class="col-sm-2 center-sm">
-                        <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Total de points à avoir :</span>
-                            <?php echo ($pointMinUe1 + $pointMinUe2); ?>
-                        </p>
-                    </div>
-                    <div class="col-sm-2 center-sm">
-                        <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Points possédés :</span>
-                            <?php echo ($pointUe1 + $pointUe2); ?></p>
                     </div>
                     <div class="col-sm-2 center-sm btn-green">
                         <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Moyenne sur 20
