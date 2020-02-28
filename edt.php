@@ -35,7 +35,7 @@ if (isset($_GET['change'])) {
 }
 
 // Récupération des variables d'environnement
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv = Dotenv\Dotenv::createImmutable($_SERVER['DOCUMENT_ROOT']);
 $dotenv->load();
 $hostname = getenv('BDD_HOST');
 $dbname = getenv('BDD_NAME');
@@ -67,6 +67,7 @@ $promo = $data[1];
 $json_edt_url = file_get_contents("assets/js/edt_url.json");
 $edt_url = json_decode($json_edt_url, true);
 $linkIcal = $edt_url[$promo]['TP' . $tp];
+// $linkIcal = 'https://monemploidutemps.unistra.fr/api/calendar/7272529f-a08d-4425-b0ff-8033714a0b7e/export';
 
 use ICal\ICal;
 

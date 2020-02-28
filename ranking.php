@@ -35,7 +35,7 @@ if (isset($_GET['change'])) {
 }
 
 // Récupération des variables d'environnement
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv = Dotenv\Dotenv::createImmutable($_SERVER['DOCUMENT_ROOT']);
 $dotenv->load();
 $hostname = getenv('BDD_HOST');
 $dbname = getenv('BDD_NAME');
