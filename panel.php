@@ -5,7 +5,7 @@ require "vendor/autoload.php";
 
 // Changement de semestre
 if (!isset($_COOKIE['semestre']) || !is_numeric($_COOKIE['semestre'])) {
-    setcookie("semestre", "1", strtotime('+360 days'));
+    setcookie("semestre", "2", strtotime('+360 days'));
     header('Location: ./');
 } else {
     $semestre = htmlspecialchars($_COOKIE['semestre']);
@@ -102,7 +102,7 @@ include "assets/include/moy.php";
     <meta name="msapplication-TileImage" content="assets/images/favicon/ms-icon-144x144.png">
     <meta name="theme-color" content="#110133">
     <!-- CSS EXT-->
-    <link rel="stylesheet" href="assets/css/flexboxgrid2.css" type="text/css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flexboxgrid2" type="text/css">
     <!-- CSS PERSO-->
     <link rel="stylesheet" href="assets/css/stylePanel.css" type="text/css">
     <!-- Cookie  -->
@@ -257,7 +257,6 @@ include "assets/include/moy.php";
                                 $n = 0; // nombre de note compté dans la moyenne
 
                                 while ($infoNote = $ue1Sql->fetch()) {
-
                                     $name = $infoNote['name_note'];
                                     $pdf = $infoNote['name_pdf'];
                                     $noteMoyenne = round($infoNote['average'], 2);
@@ -279,14 +278,12 @@ include "assets/include/moy.php";
                                         array_push($moyMatiere, $noteEtu[0]);
                                         $n++;
                                         $coeffMatiere = $coeff;
-
                                 ?>
                                         <div class="col-sm col-xs-6">
                                             <a href="javascript:void(0);" data-template="<?php echo $matiere . $i ?>" class="tippy-note">
-                                                <p> <span class="hidden-sm hidden-md hidden-lg hidden-xl">Note
-                                                        <?php echo $i; ?><br></span>
+                                                <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Note <?php echo $i; ?><br></span>
                                                     <?php
-                                                    if ($noteEtu[0] > 21) { // si pas abs
+                                                    if ($noteEtu[0] > 21) { // si abs
                                                         echo '<span class="orange tippy-note" data-tippy-content="Hum, mais que c\'est il passé Billy ?">ABS</span>';
                                                     } else {
                                                         if ($noteEtu[0] < 10) {
@@ -303,7 +300,7 @@ include "assets/include/moy.php";
                                                 </p>
                                             </a>
                                         </div>
-                                        <!-- ANCHOR INTEGRATION DES NOTES DANS MODALES UE1-->
+                                        <!-- ANCHOR INTEGRATION DES NOTES DANS MODALES UE1 -->
                                         <div class="popup">
                                             <!-- Les Id des div sont lié au data-template du <a> des notes. Au clic, le contenu de la div est mis en popup  -->
                                             <div id="<?php echo $matiere . $i; ?>">
@@ -541,7 +538,7 @@ include "assets/include/moy.php";
                                                 </p>
                                             </a>
                                         </div>
-                                        <!-- ANCHOR INTEGRATION DES NOTES DANS MODALES UE1-->
+                                        <!-- ANCHOR INTEGRATION DES NOTES DANS MODALES UE2 -->
                                         <div class="popup">
                                             <!-- Les Id des div sont lié au data-template du <a> des notes. Au clic, le contenu de la div est mis en popup  -->
                                             <div id="<?php echo $matiere . $i; ?>">
@@ -803,8 +800,8 @@ include "assets/include/moy.php";
             </div>
         </div>
         <!-- SCRIPT EXT -->
-        <script src="assets/js/popper.min.js"></script>
-        <script src="assets/js/tippy-bundle.iife.min.js"></script>
+        <script src="https://unpkg.com/@popperjs/core"></script>
+        <script src="https://unpkg.com/tippy.js"></script>
         <!-- SCRIPT PERSO -->
         <script src="assets/js/app.js"></script>
     </footer>

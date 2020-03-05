@@ -52,7 +52,7 @@ window.onload = function () {
     renderFrame();
 };
 
-document.addEventListener('keydown', function (e) {
+document.addEventListener("keydown", function (e) {
     if (e.code === "Space") {
         e.preventDefault();
         let audio = document.getElementById("audio");
@@ -64,7 +64,7 @@ document.addEventListener('keydown', function (e) {
     }
 }, false);
 
-document.addEventListener('click', function () {
+document.addEventListener("click", function () {
     context.resume();
     audio.play();
 }, false);

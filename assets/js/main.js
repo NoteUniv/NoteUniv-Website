@@ -11,7 +11,7 @@ if (NumEtu !== null) {
  * Submit the form to the checkNumEtu file
  * If response is authorized : It will submit the form
  * If the num is not valid : show an error message
- * It will also set the value of the input into the localStorage key 'NumEtu'
+ * It will also set the value of the input into the localStorage key "NumEtu"
  */
 function submitForm() {
     const num = numEtuInput.value;
@@ -36,7 +36,7 @@ function submitForm() {
 }
 
 // If enter on the whole document -> call the submitForm() function
-document.addEventListener('keydown', function (e) {
+document.addEventListener("keydown", function (e) {
     if (e.key === "Enter") {
         e.preventDefault();
         submitForm();
@@ -44,7 +44,7 @@ document.addEventListener('keydown', function (e) {
 }, false);
 
 // If we type after an error it will clear the style of the input for clarity
-numEtuInput.addEventListener('input', () => {
+numEtuInput.addEventListener("input", () => {
     if (!error) return;
     error = false;
     document.getElementById("inputAll").style.backgroundColor = "#FFFFFF";
@@ -52,13 +52,13 @@ numEtuInput.addEventListener('input', () => {
     document.getElementById("showMessage").style.color = "";
 })
 
-numEtuInput.addEventListener('focus', () => {
+numEtuInput.addEventListener("focus", () => {
     if (window.innerWidth <= 760) {
         document.getElementsByClassName("logo-txt")[0].style.display = "none";
     }
 });
 
-numEtuInput.addEventListener('blur', () => {
+numEtuInput.addEventListener("blur", () => {
     if (window.innerWidth <= 760) {
         document.getElementsByClassName("logo-txt")[0].style.display = "inline";
     }

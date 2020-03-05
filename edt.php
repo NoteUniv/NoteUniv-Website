@@ -5,7 +5,7 @@ require_once "vendor/autoload.php";
 
 // Changement de semestre
 if (!isset($_COOKIE['semestre']) || !is_numeric($_COOKIE['semestre'])) {
-    setcookie("semestre", "1", strtotime('+360 days'));
+    setcookie("semestre", "2", strtotime('+360 days'));
     header('Location: ./');
 } else {
     $semestre = htmlspecialchars($_COOKIE['semestre']);
@@ -51,7 +51,6 @@ try {
     echo "Connection failed: " . $e->getMessage();
 }
 
-
 // Récupération Numéro Étudiant du formulaire
 if (!empty($_SESSION["id_etu"]) && is_numeric($_SESSION["id_etu"])) {
     $id_etu = htmlspecialchars($_SESSION['id_etu']);
@@ -67,7 +66,6 @@ $promo = $data[1];
 $json_edt_url = file_get_contents("assets/js/edt_url.json");
 $edt_url = json_decode($json_edt_url, true);
 $linkIcal = $edt_url[$promo]['TP' . $tp];
-// $linkIcal = 'https://monemploidutemps.unistra.fr/api/calendar/7272529f-a08d-4425-b0ff-8033714a0b7e/export';
 
 use ICal\ICal;
 
@@ -129,14 +127,14 @@ include "assets/include/moy.php";
     <meta name="msapplication-TileColor" content="#110133">
     <meta name="msapplication-TileImage" content="assets/images/favicon/ms-icon-144x144.png">
     <!-- CSS EXT-->
-    <link rel="stylesheet" href="assets/css/flexboxgrid2.css" type="text/css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flexboxgrid2" type="text/css">
+    <!-- CSS EDT  -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/core/main.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid/main.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid/main.min.css">
     <!-- CSS PERSO-->
     <link rel="stylesheet" href="assets/css/stylePanel.css" type="text/css">
     <link rel="stylesheet" href="assets/css/edt.css" type="text/css">
-    <!-- CSS EDT  -->
-    <link rel="stylesheet" href="assets/packages/core/main.css">
-    <link rel="stylesheet" href="assets/packages/daygrid/main.css">
-    <link rel="stylesheet" href="assets/packages/timegrid/main.css">
     <!-- Cookie  -->
     <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="0df23692-fee1-4280-97ef-7c0506f2621d" data-blockingmode="auto" type="text/javascript"></script>
     <!-- Matomo -->
@@ -331,11 +329,11 @@ include "assets/include/moy.php";
             </div>
         </div>
         <!-- SCRIPT EXT -->
-        <script src='assets/packages/core/main.js'></script>
-        <script src='assets/packages/daygrid/main.js'></script>
-        <script src='assets/packages/timegrid/main.js'></script>
-        <script src="assets/js/popper.min.js"></script>
-        <script src="assets/js/tippy-bundle.iife.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid"></script>
+        <script src="https://unpkg.com/@popperjs/core"></script>
+        <script src="https://unpkg.com/tippy.js"></script>
         <!-- SCRIPT PERSO -->
         <script src="assets/js/app.js"></script>
     </footer>

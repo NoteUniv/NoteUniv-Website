@@ -1,12 +1,12 @@
 <?php
 try {
     if (strpos($_SERVER['HTTP_ACCEPT'], 'image/webp') !== false) {
-        $img = "assets/images/background_image.webp";
+        $img = 'assets/images/background_image.webp';
     } else {
-        $img = "assets/images/background_image.png";
+        $img = 'assets/images/background_image.png';
     }
 } catch (Exception $e) {
-    $img = "assets/images/background_image.png";
+    $img = 'assets/images/background_image.png';
 }
 ?>
 <!DOCTYPE html>
@@ -44,7 +44,7 @@ try {
     <meta name="msapplication-TileImage" content="assets/images/favicon/ms-icon-144x144.png">
     <meta name="theme-color" content="#110133">
     <!-- CSS EXT-->
-    <link rel="stylesheet" href="assets/css/flexboxgrid2.css" type="text/css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flexboxgrid2" type="text/css">
     <!-- CSS PERSO-->
     <link rel="stylesheet" href="assets/css/style.css">
     <!-- Cookie  -->

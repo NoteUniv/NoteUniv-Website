@@ -1,4 +1,6 @@
 <?php
+$fp = fopen('err_log.txt', 'a');
+
 $sql_all_notes = "SELECT note_date_c, note_code, note_semester FROM global_s$semestre WHERE type_note != 'Note intermédiaire que pour affichage' ORDER BY note_date_c";
 
 $list_notes = $bdd->query($sql_all_notes);
@@ -33,7 +35,12 @@ foreach ($ue1 as $key => $value) {
             $coeffMatiere = $coeff;
         }
     }
-    $moyenneMat = round(array_sum($moyMatiere) / count($moyMatiere), 3);
+    try {
+        $moyenneMat = round(array_sum($moyMatiere) / count($moyMatiere), 3);
+    } catch (Exception $e) {
+        $moyenneMat = 1;
+        fwrite($fp, array_sum($moyMatiere) . "\n");
+    }
     if (count($moyMatiere) == 0) {
         $moyenneMat = 0;
         $coeffMatiere = 0;
@@ -47,7 +54,12 @@ for ($i = 0; $i < count($moyenneDesMatieres); $i++) {
     $moyUe1 += $moyenneDesMatieres[$i]['moyMat'] * $moyenneDesMatieres[$i]['coeff'];
     $coeffUe1 += $moyenneDesMatieres[$i]['coeff'];
 }
-$moyUe1 /= $coeffUe1;
+try {
+    $moyUe1 /= $coeffUe1;
+} catch (Exception $e) {
+    $moyUe1 = 10;
+    fwrite($fp, array_sum($coeffUe1) . "\n");
+}
 
 // UE 2
 $moyenneDesMatieres = [];
@@ -79,11 +91,17 @@ for ($i = 0; $i < count($moyenneDesMatieres); $i++) {
     $moyUe2 += $moyenneDesMatieres[$i]['moyMat'] * $moyenneDesMatieres[$i]['coeff'];
     $coeffUe2 += $moyenneDesMatieres[$i]['coeff'];
 }
-$moyUe2 /= $coeffUe2;
-
+try {
+    $moyUe2 /= $coeffUe2;
+} catch (Exception $e) {
+    $moyUe2 = 10;
+    fwrite($fp, array_sum($coeffUe2) . "\n");
+}
 // Moyenne finale
 $totalCoeff = $coeffUe1 + $coeffUe2;
 if ($totalCoeff == 0) {
     $totalCoeff = 1;
 }
 $moyenne = round((($moyUe1 * $coeffUe1) + ($moyUe2 * $coeffUe2)) / ($totalCoeff), 3);
+
+fclose($fp);

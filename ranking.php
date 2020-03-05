@@ -5,7 +5,7 @@ require "vendor/autoload.php";
 
 // Changement de semestre
 if (!isset($_COOKIE['semestre']) || !is_numeric($_COOKIE['semestre'])) {
-    setcookie("semestre", "1", strtotime('+360 days'));
+    setcookie("semestre", "2", strtotime('+360 days'));
     header('Location: ./');
 } else {
     $semestre = htmlspecialchars($_COOKIE['semestre']);
@@ -101,7 +101,7 @@ include "assets/include/moy.php";
     <meta name="msapplication-TileImage" content="assets/images/favicon/ms-icon-144x144.png">
     <meta name="theme-color" content="#110133">
     <!-- CSS EXT-->
-    <link rel="stylesheet" href="assets/css/flexboxgrid2.css" type="text/css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flexboxgrid2" type="text/css">
     <!-- CSS PERSO-->
     <link rel="stylesheet" href="assets/css/stylePanel.css" type="text/css">
     <!-- Cookie  -->
@@ -335,8 +335,8 @@ include "assets/include/moy.php";
             </div>
         </div>
         <!-- SCRIPT EXT -->
-        <script src="assets/js/popper.min.js"></script>
-        <script src="assets/js/tippy-bundle.iife.min.js"></script>
+        <script src="https://unpkg.com/@popperjs/core"></script>
+        <script src="https://unpkg.com/tippy.js"></script>
         <!-- SCRIPT PERSO -->
         <script src="assets/js/app.js"></script>
     </footer>

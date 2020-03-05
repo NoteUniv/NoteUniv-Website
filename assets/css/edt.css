@@ -140,20 +140,6 @@ footer form .btn-sub:hover {
     background-size: .65em auto, 100%;
 }
 
-@media screen and (max-width: 991px) {
-    .custom-select {
-        left: 43%;
-    }
-}
-
-@media screen and (max-width: 700px) {
-    .custom-select {
-        position: relative;
-        left: 0;
-        margin-bottom: 30px;
-    }
-}
-
 .custom-select::-ms-expand {
     display: none;
 }
@@ -172,4 +158,18 @@ footer form .btn-sub:hover {
 
 .select-css option {
     font-weight: normal;
+}
+
+@media screen and (max-width: 991px) {
+    .custom-select {
+        left: 43%;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .custom-select {
+        position: relative;
+        left: 0;
+        margin-bottom: 30px;
+    }
 }
