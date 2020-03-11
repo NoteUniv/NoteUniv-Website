@@ -9,7 +9,7 @@
 
 # ✨ NoteUniv: Website
 
-> #### NoteUniv Website is the whole website for this project and it retrieves data from the database created by Python.
+> #### NoteUniv Website is the repository website of this project and it retrieves data from the database created by NoteUniv Python repository.
 
 <p align="center"><img src="https://quentium.fr/+img/github/NoteUniv-Website.png"></p>
 
@@ -56,13 +56,13 @@ Please make sure to test your suggestions before commiting.
 
 **Quentin L. & Anthony A.**
 
--   Website NoteUniv: [noteuniv.fr](https://noteuniv.fr)
--   Website Quentium: [quentium.fr](https://quentium.fr)
--   Website Erosya: [erosya.fr](https://erosya.fr)
--   Github Quentium: [QuentiumYT](https://github.com/QuentiumYT)
--   Github Ynohtna: [QuentiumYT](https://github.com/YnothnaFr)
--   Twitter Quentium: [@QuentiumYT](https://twitter.com/QuentiumYT)
--   Twitter Quentium: [@QuentiumYT](https://twitter.com/YnohtnaErosya)
+-   Website NoteUniv: [noteuniv.fr](https://noteuniv.fr/)
+-   Website Quentium: [quentium.fr](https://quentium.fr/)
+-   Website Erosya: [erosya.fr](https://erosya.fr/)
+-   Github Quentium: [QuentiumYT](https://github.com/QuentiumYT/)
+-   Github Ynohtna: [YnohtnaFr](https://github.com/YnohtnaFr/)
+-   Twitter Quentium: [@QuentiumYT](https://twitter.com/QuentiumYT/)
+-   Twitter Quentium: [@YnohtnaErosya](https://twitter.com/YnohtnaErosya/)
 
 Please ✰ this repository if this project helped you!
 
