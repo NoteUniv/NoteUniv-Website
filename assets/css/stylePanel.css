@@ -262,7 +262,7 @@ span#me {
 }
 
 /* ANCHOR Tippy theme popup */
-.tippy-box {
+.tippy-box[data-theme~='note'] {
     background-color: #110133;
     color: #fff;
     border-radius: 30px;
@@ -271,11 +271,12 @@ span#me {
     text-align: left;
 }
 
-.tippy-box.noteSpan-theme {
+.tippy-box[data-theme~='noteSpan'] {
     background-color: #110133;
     color: #fff;
     border-radius: 30px;
-    padding: 10px;
+    padding: 10px 0px;
+    font-size: 13px;
 }
 
 .tippy-box a {
@@ -419,13 +420,13 @@ footer a {
 }
 
 @media screen and (max-width: 1604px) {
-    .tippy-box {
+    .tippy-box[data-theme~='note'] {
         width: 35vw;
     }
 }
 
 @media screen and (max-width: 1375px) {
-    .tippy-box {
+    .tippy-box[data-theme~='note'] {
         width: 40vw;
     }
 }
@@ -437,7 +438,7 @@ footer a {
 }
 
 @media screen and (max-width: 1193px) {
-    .tippy-box {
+    .tippy-box[data-theme~='note'] {
         width: 45vw;
     }
 }
@@ -449,7 +450,7 @@ footer a {
 }
 
 @media screen and (max-width: 1067px) {
-    .tippy-box {
+    .tippy-box[data-theme~='note'] {
         width: 50vw;
     }
 }
@@ -459,7 +460,7 @@ footer a {
         padding-bottom: 50px;
     }
 
-    .tippy-box {
+    .tippy-box[data-theme~='note'] {
         width: 100vw;
     }
 }

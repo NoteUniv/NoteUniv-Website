@@ -17,9 +17,9 @@ tippy("a.tippy-note", {
 tippy("span.tippy-note", {
     placement: "top",
     arrow: true,
-    maxWidth: 1000,
+    minWidth: 1000,
     theme: "noteSpan",
     allowHTML: true,
     interactive: true,
-    flipOnUpdate: true,
+    flipOnUpdate: true
 });

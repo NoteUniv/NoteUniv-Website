@@ -402,12 +402,12 @@ include "assets/include/moy.php";
                                     <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Moyenne:
                                         </span>
                                         <?php
-                                        $moyenneMat = round(array_sum($moyMatiere) / count($moyMatiere), 3);
                                         if (count($moyMatiere) == 0) {
                                             $moyenneMat = 0;
                                             echo "/";
                                             $coeffMatiere = 0;
                                         } else {
+                                            $moyenneMat = round(array_sum($moyMatiere) / count($moyMatiere), 3);
                                             echo $moyenneMat;
                                         }
                                         ?>
