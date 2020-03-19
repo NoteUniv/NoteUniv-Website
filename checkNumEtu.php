@@ -3,7 +3,7 @@
 require "vendor/autoload.php";
 
 // Recupération des variables d'environnement
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv = Dotenv\Dotenv::createImmutable($_SERVER['DOCUMENT_ROOT']);
 $dotenv->load();
 $hostname = getenv('BDD_HOST');
 $dbname = getenv('BDD_NAME');
@@ -26,7 +26,7 @@ while ($id_etu_exist = $list_num_etu->fetch()) {
     if ($id_etu_sent == $id_etu_exist[0]) {
         echo $id_etu_sent . " authorized";
         if (isset($_COOKIE['semestre']) || !is_numeric($_COOKIE['semestre'])) {
-            setcookie("semestre", "2", strtotime('+360 days'));
+            setcookie("semestre", "1", strtotime('+360 days'));
         }
     }
 }
@@ -37,7 +37,7 @@ while ($id_etu_exist = $list_num_etu->fetch()) {
     if ($id_etu_sent == $id_etu_exist[0]) {
         echo $id_etu_sent . " authorized";
         if (isset($_COOKIE['semestre']) || !is_numeric($_COOKIE['semestre'])) {
-            setcookie("semestre", "4", strtotime('+360 days'));
+            setcookie("semestre", "3", strtotime('+360 days'));
         }
     }
 }
