@@ -49,10 +49,11 @@ if (count($moyenneDesMatieres)) {
         $moyUe1 += $moyenneDesMatieres[$i]['moyMat'] * $moyenneDesMatieres[$i]['coeff'];
         $coeffUe1 += $moyenneDesMatieres[$i]['coeff'];
     }
+    $moyUe1 /= $coeffUe1;
 } else {
     $coeffUe1 = 1;
+    $moyUe1 = 1;
 }
-$moyUe1 /= $coeffUe1;
 
 // UE 2
 $moyenneDesMatieres = [];
@@ -70,10 +71,11 @@ foreach ($ue2 as $key => $value) {
             $coeffMatiere = $coeff;
         }
     }
-    $moyenneMat = round(array_sum($moyMatiere) / count($moyMatiere), 3);
     if (count($moyMatiere) == 0) {
         $moyenneMat = 0;
         $coeffMatiere = 0;
+    } else {
+        $moyenneMat = round(array_sum($moyMatiere) / count($moyMatiere), 3);
     }
     array_push($moyenneDesMatieres, ['moyMat' => $moyenneMat, 'coeff' => $coeffMatiere]);
 }
@@ -85,10 +87,11 @@ if (count($moyenneDesMatieres)) {
         $moyUe2 += $moyenneDesMatieres[$i]['moyMat'] * $moyenneDesMatieres[$i]['coeff'];
         $coeffUe2 += $moyenneDesMatieres[$i]['coeff'];
     }
+    $moyUe2 /= $coeffUe2;
 } else {
     $coeffUe2 = 1;
+    $moyUe2 = 1;
 }
-$moyUe2 /= $coeffUe2;
 
 // Moyenne finale
 $totalCoeff = $coeffUe1 + $coeffUe2;

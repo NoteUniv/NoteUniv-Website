@@ -18,6 +18,7 @@ try {
     $bdd->exec('SET NAMES utf8');
 } catch (PDOException $e) {
     echo "Connection failed: " . $e->getMessage();
+    header('Location: ../../ranking.php');
 }
 
 $id_etu = $_SESSION['id_etu'];

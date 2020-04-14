@@ -226,7 +226,7 @@ include "assets/include/moy.php";
                     <div class="col-sm-4">
                         <div class="row center-sm">
                             <div class="col-sm">
-                                <p>Coef</p>
+                                <p>Coeff</p>
                             </div>
                             <div class="col-sm">
                                 <p>Moyenne</p>
@@ -327,23 +327,23 @@ include "assets/include/moy.php";
                                                     <div class="row center-xs">
                                                         <div class="col-sm-3 col-xs-6">
                                                             <div class="btn-etu">
-                                                                <p> <span class="b">Moyenne</span> <br><?php echo $noteMoyenne; ?>
+                                                                <p> <span class="b">Moyenne</span><br><?php echo $noteMoyenne; ?>
                                                                 </p>
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-3 col-xs-6">
                                                             <div class="btn-etu">
-                                                                <p> <span class="b">Médiane</span> <br><?php echo $median; ?></p>
+                                                                <p> <span class="b">Médiane</span><br><?php echo $median; ?></p>
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-3 col-xs-6">
                                                             <div class="btn-etu">
-                                                                <p> <span class="b">Min</span> <br><?php echo $minimum; ?></p>
+                                                                <p> <span class="b">Min</span><br><?php echo $minimum; ?></p>
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-3 col-xs-6">
                                                             <div class="btn-etu">
-                                                                <p> <span class="b">Max</span> <br><?php echo $maximum; ?></p>
+                                                                <p> <span class="b">Max</span><br><?php echo $maximum; ?></p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -356,12 +356,12 @@ include "assets/include/moy.php";
                                                         </div>
                                                         <div class="col-sm-3 col-xs-6">
                                                             <div class="btn-etu">
-                                                                <p> <span class="b">Variance</span> <br><?php echo $variance; ?></p>
+                                                                <p> <span class="b">Variance</span><br><?php echo $variance; ?></p>
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-3 col-xs-6">
                                                             <div class="btn-etu">
-                                                                <p> <span class="b">Ecart type</span> <br><?php echo $deviation; ?>
+                                                                <p> <span class="b">Ecart type</span><br><?php echo $deviation; ?>
                                                                 </p>
                                                             </div>
                                                         </div>
@@ -394,13 +394,12 @@ include "assets/include/moy.php";
                         <div class="col-sm-4">
                             <div class="row center-xs">
                                 <div class="col-xs-4">
-                                    <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Coef:</span>
+                                    <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Coeff :</span>
                                         <?php
                                         echo $coeff; ?></p>
                                 </div>
                                 <div class="col-xs-4">
-                                    <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Moyenne:
-                                        </span>
+                                    <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Moyenne :</span>
                                         <?php
                                         if (count($moyMatiere) == 0) {
                                             $moyenneMat = 0;
@@ -429,10 +428,12 @@ include "assets/include/moy.php";
                     $moyUe1 += $moyenneDesMatiere[$i]['moyMat'] * $moyenneDesMatiere[$i]['coeff'];
                     $coeffUe1 += $moyenneDesMatiere[$i]['coeff'];
                 }
-                $moyUe1 /= $coeffUe1;
+                if ($coeffUe1 === 0) {
+                    $moyUe1 = 1;
+                } else {
+                    $moyUe1 /= $coeffUe1;
+                }
                 ?>
-
-
 
                 <!-- ANCHOR Bandeau de l'UE 2 uniquement pc/tablette-->
                 <div class="row ue-tab hidden-xs">
@@ -458,7 +459,7 @@ include "assets/include/moy.php";
                     <div class="col-sm-4">
                         <div class="row center-sm">
                             <div class="col-sm">
-                                <p>Coef</p>
+                                <p>Coeff</p>
                             </div>
                             <div class="col-sm">
                                 <p>Moyenne</p>
@@ -492,7 +493,6 @@ include "assets/include/moy.php";
                                 $moyMatiere = []; // Moyenne de chaque matière
                                 $n = 0; // nombre de note compté dans la moyenne
                                 while ($infoNote = $ue1Sql->fetch()) {
-
                                     $name = $infoNote['name_note'];
                                     $pdf = $infoNote['name_pdf'];
                                     $noteMoyenne = round($infoNote['average'], 2);
@@ -518,8 +518,7 @@ include "assets/include/moy.php";
                                 ?>
                                         <div class="col-sm col-xs-6">
                                             <a href="javascript:void(0);" data-template="<?php echo $matiere . $i ?>" class="tippy-note">
-                                                <p> <span class="hidden-sm hidden-md hidden-lg hidden-xl">Note
-                                                        <?php echo $i; ?><br></span>
+                                                <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Note <?php echo $i; ?><br></span>
                                                     <?php
                                                     if ($noteEtu[0] > 21) { // si pas abs
                                                         echo '<span class="orange tippy-note" data-tippy-content="Hum, mais que c\'est il passé Billy ?">ABS</span>';
@@ -565,41 +564,41 @@ include "assets/include/moy.php";
                                                     <div class="row center-xs">
                                                         <div class="col-sm-3 col-xs-6">
                                                             <div class="btn-etu">
-                                                                <p> <span class="b">Moyenne</span> <br><?php echo $noteMoyenne; ?>
+                                                                <p> <span class="b">Moyenne</span><br><?php echo $noteMoyenne; ?>
                                                                 </p>
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-3 col-xs-6">
                                                             <div class="btn-etu">
-                                                                <p> <span class="b">Mediane</span> <br><?php echo $median; ?></p>
+                                                                <p> <span class="b">Mediane</span><br><?php echo $median; ?></p>
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-3 col-xs-6">
                                                             <div class="btn-etu">
-                                                                <p> <span class="b">Min</span> <br><?php echo $minimum; ?></p>
+                                                                <p> <span class="b">Min</span><br><?php echo $minimum; ?></p>
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-3 col-xs-6">
                                                             <div class="btn-etu">
-                                                                <p> <span class="b">Max</span> <br><?php echo $maximum; ?></p>
+                                                                <p> <span class="b">Max</span><br><?php echo $maximum; ?></p>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="row center-xs separation-note">
                                                         <div class="col-sm-6 col-xs-12">
                                                             <div class="btn-etu">
-                                                                <p> <span class="b">Total Notes</span> <br><?php echo $totalNote; ?>
+                                                                <p> <span class="b">Total Notes</span><br><?php echo $totalNote; ?>
                                                                 </p>
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-3 col-xs-6">
                                                             <div class="btn-etu">
-                                                                <p> <span class="b">Variance</span> <br><?php echo $variance; ?></p>
+                                                                <p> <span class="b">Variance</span><span><?php echo $variance; ?></p>
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-3 col-xs-6">
                                                             <div class="btn-etu">
-                                                                <p> <span class="b">Ecart type</span> <br><?php echo $deviation; ?>
+                                                                <p> <span class="b">Ecart type</span><br><?php echo $deviation; ?>
                                                                 </p>
                                                             </div>
                                                         </div>
@@ -615,9 +614,7 @@ include "assets/include/moy.php";
                                 while ($i < 5) { // Si pas d'autre note on comble avec un "/" 
                                     ?>
                                     <div class="col-sm col-xs-6">
-                                        <p> <span class="hidden-sm hidden-md hidden-lg hidden-xl">Note
-                                                <?php echo $i; ?><br></span>
-                                            / </p>
+                                        <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Note<?php echo $i; ?><br></span> / </p>
                                     </div>
                                 <?php
                                     $i++;
@@ -629,22 +626,21 @@ include "assets/include/moy.php";
                         <div class="col-sm-4">
                             <div class="row center-xs">
                                 <div class="col-xs-4">
-                                    <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Coef:</span>
+                                    <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Coeff :</span>
                                         <?php echo $coeff; ?></p>
                                 </div>
                                 <div class="col-xs-4">
-                                    <p><span class="hidden-sm hidden-md hidden-lg hidden-xl ">Moyenne:
-                                        </span><?php
-
-                                                $moyenneMat = round(array_sum($moyMatiere) / count($moyMatiere), 3);
-                                                if (count($moyMatiere) == 0) {
-                                                    $moyenneMat = 0;
-                                                    echo "/";
-                                                    $coeffMatiere = 0;
-                                                } else {
-                                                    echo $moyenneMat;
-                                                }
-                                                ?>
+                                    <p><span class="hidden-sm hidden-md hidden-lg hidden-xl ">Moyenne :</span>
+                                        <?php
+                                        if (count($moyMatiere) == 0) {
+                                            $moyenneMat = 0;
+                                            $coeffMatiere = 0;
+                                            echo "/";
+                                        } else {
+                                            $moyenneMat = round(array_sum($moyMatiere) / count($moyMatiere), 3);
+                                            echo $moyenneMat;
+                                        }
+                                        ?>
                                     </p>
                                 </div>
                                 <div class="col-xs-4">
@@ -663,7 +659,11 @@ include "assets/include/moy.php";
                     $moyUe2 += $moyenneDesMatiere[$i]['moyMat'] * $moyenneDesMatiere[$i]['coeff'];
                     $coeffUe2 += $moyenneDesMatiere[$i]['coeff'];
                 }
-                $moyUe2 /= $coeffUe2;
+                if ($coeffUe2 === 0) {
+                    $moyUe2 = 1;
+                } else {
+                    $moyUe2 /= $coeffUe2;
+                }
                 ?>
             </section>
 

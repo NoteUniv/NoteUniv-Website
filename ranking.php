@@ -275,7 +275,7 @@ include "assets/include/moy.php";
                                 <p> <span class="hidden-sm hidden-md hidden-lg hidden-xl">Moyenne<br><br></span>
                                     <?php
                                     if ($ranking == 1) { // ok pour classement
-                                        if ($moy[1] == $moyenne && $moy[0] == $id_etu) {
+                                        if ($moy[0] == $id_etu) {
                                             echo '<span id="me" class="green">' . $moy[1] . '</span>';
                                         } else {
                                             echo $moy[1];

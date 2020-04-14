@@ -1,5 +1,5 @@
 /* ANCHOR Global */
-@import url("https://fonts.googleapis.com/css?family=Montserrat:600,600i&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Montserrat:600&display=swap");
 
 * {
     padding: 0;
@@ -276,6 +276,7 @@ span#me {
     color: #fff;
     border-radius: 30px;
     padding: 10px 0px;
+    width: 210px;
     font-size: 13px;
 }
 
