@@ -160,19 +160,23 @@ include "assets/include/moy.php";
                         </span>
                     </a>
                     <p class="as-small">Ma moyenne générale est :</p>
-                    <span class="btn btn-green">
-                        <span class="tippy-note" data-tippy-content="<a href='ranking.php'>Besoin de voir ta grandeur ?</a>"><?= $moyenne ?> / 20</span>
-                    </span>
                     <?php
                     if ($moyenne >= 15) {
-                        echo '<p class="green">Un Dieu !</p>';
+                        echo '<span class="btn btn-green">';
+                        $tmp = '<p class="green">Un Dieu !</p>';
                     } else if ($moyenne >= 13) {
-                        echo '<p class="green">Honnêtement ? OKLM gros !</p>';
+                        echo '<span class="btn btn-green">';
+                        $tmp = '<p class="green">Honnêtement ? OKLM gros !</p>';
                     } elseif ($moyenne >= 10) {
-                        echo '<p class="orange">ALLEEEZZZ ! Ça passe !</p>';
+                        echo '<span class="btn btn-orange">';
+                        $tmp = '<p class="orange">ALLEEEZZZ ! Ça passe !</p>';
                     } else {
-                        echo '<p class="red">Aïe, trql on se motive !</p>';
+                        echo '<span class="btn btn-red">';
+                        $tmp = '<p class="red">Aïe, trql on se motive !</p>';
                     }
+                    echo '<span class="tippy-note" data-tippy-content="<a href=\'ranking.php\'>Besoin de voir ta grandeur ?</a>">' . $moyenne . ' / 20</span>';
+                    echo '</span>';
+                    echo $tmp;
                     ?>
                     <a href="edt.php"><span class="btn btn-logout">Emploi du temps</span></a>
                     <a href="last.php"><span class="btn btn-logout">Dernières notes</span></a>
@@ -705,13 +709,13 @@ include "assets/include/moy.php";
                     } elseif ($moyUe1 < 8) {
                     ?>
                         <div class="col-sm-2 center-sm btn-red mr-14">
-                            <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Résultats <br></span>UE Echoué</p>
+                            <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Résultats <br></span>UE Échoué</p>
                         </div>
                     <?php
                     } else {
                     ?>
                         <div class="col-sm-2 center-sm btn-orange mr-14">
-                            <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Résultats <br></span>UE Echoué</p>
+                            <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Résultats <br></span>UE Échoué</p>
                         </div>
                     <?php
                     }
@@ -739,13 +743,13 @@ include "assets/include/moy.php";
                     } elseif ($moyUe2 < 8) {
                     ?>
                         <div class="col-sm-2 center-sm btn-red mr-14">
-                            <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Résultats <br></span>UE Echoué</p>
+                            <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Résultats <br></span>UE Échoué</p>
                         </div>
                     <?php
                     } else {
                     ?>
                         <div class="col-sm-2 center-sm btn-orange mr-14">
-                            <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Résultats <br></span>UE Echoué</p>
+                            <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Résultats <br></span>UE Échoué</p>
                         </div>
                     <?php
                     }
@@ -774,15 +778,13 @@ include "assets/include/moy.php";
                     } elseif ($moyenne >= 10 && ($moyUe1 < 8 || $moyUe2 < 8)) {
                     ?>
                         <div class="col-sm-2 center-sm btn-red mr-14">
-                            <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Résultats <br></span>Semestre Echoué
-                            </p>
+                            <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Résultats <br></span>Semestre Échoué</p>
                         </div>
                     <?php
                     } else {
                     ?>
                         <div class="col-sm-2 center-sm btn-red mr-14">
-                            <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Résultats <br></span>Semestre Echoué
-                            </p>
+                            <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Résultats <br></span>Semestre Échoué</p>
                         </div>
                     <?php
                     }

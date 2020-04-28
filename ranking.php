@@ -159,19 +159,23 @@ include "assets/include/moy.php";
                         </span>
                     </a>
                     <p class="as-small">Ma moyenne générale est :</p>
-                    <span class="btn btn-green">
-                        <span class="tippy-note" data-tippy-content="<a href='ranking.php'>Besoin de voir ta grandeur ?</a>"><?= $moyenne ?> / 20</span>
-                    </span>
                     <?php
                     if ($moyenne >= 15) {
-                        echo '<p class="green">Un Dieu !</p>';
+                        echo '<span class="btn btn-green">';
+                        $tmp = '<p class="green">Un Dieu !</p>';
                     } else if ($moyenne >= 13) {
-                        echo '<p class="green">Honnêtement ? OKLM gros !</p>';
+                        echo '<span class="btn btn-green">';
+                        $tmp = '<p class="green">Honnêtement ? OKLM gros !</p>';
                     } elseif ($moyenne >= 10) {
-                        echo '<p class="orange">ALLEEEZZZ ! Ça passe !</p>';
+                        echo '<span class="btn btn-orange">';
+                        $tmp = '<p class="orange">ALLEEEZZZ ! Ça passe !</p>';
                     } else {
-                        echo '<p class="red">Aïe, trql on se motive !</p>';
+                        echo '<span class="btn btn-red">';
+                        $tmp = '<p class="red">Aïe, trql on se motive !</p>';
                     }
+                    echo '<span class="tippy-note" data-tippy-content="<a href=\'ranking.php\'>Besoin de voir ta grandeur ?</a>">' . $moyenne . ' / 20</span>';
+                    echo '</span>';
+                    echo $tmp;
                     ?>
                     <a href="last.php"><span class="btn btn-logout">Dernières notes</span></a>
                     <a href="panel.php"><span class="btn btn-logout">Récapitulatif</span></a>
@@ -242,10 +246,10 @@ include "assets/include/moy.php";
                 $i = 1;
                 while ($moy = $sqlMoy->fetch()) {
                     $sqlEtu = $bdd->query('SELECT ranking FROM data_etu WHERE id_etu = ' . $moy[0]);
-                    $ranking = $sqlEtu->fetch();
-                    $ranking = $ranking[0];
+                    $is_ranking = $sqlEtu->fetch();
+                    $ranking = $is_ranking[0];
                     if ($ranking == 1) { // ok pour classement
-                        echo '<article class="row all-note ">';
+                        echo '<article class="row all-note">';
                     } else {
                         echo '<article class="row all-note hidden-xs hidden-sm hidden-md hidden-lg hidden-xl">';
                     }
@@ -260,7 +264,7 @@ include "assets/include/moy.php";
                                 } else {
                                     echo '<span class="green">' . $i . '</span>';
                                 }
-                            } elseif ($moy[1] == $moyenne && $moy[0] == $id_etu) {
+                            } elseif ($moy[0] == $id_etu) {
                                 echo '<span class="green">' . $i . '</span>';
                             } else {
                                 echo $i;
@@ -272,7 +276,7 @@ include "assets/include/moy.php";
                     <div class="col-sm-6 last-xs initial-order-sm">
                         <div class="row center-sm note-par-matiere">
                             <div class="col-sm col-xs">
-                                <p> <span class="hidden-sm hidden-md hidden-lg hidden-xl">Moyenne<br><br></span>
+                                <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Moyenne<br><br></span>
                                     <?php
                                     if ($ranking == 1) { // ok pour classement
                                         if ($moy[0] == $id_etu) {
@@ -283,8 +287,8 @@ include "assets/include/moy.php";
                                     } else {
                                         echo 'Bien tenté !';
                                     }
-
-                                    ?> </p>
+                                    ?>
+                                </p>
                             </div>
                             <div class="col-sm col-xs">
                                 <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Étudiant<br><br></span>
@@ -294,8 +298,6 @@ include "assets/include/moy.php";
                                     } else {
                                         echo 'Bien tenté !';
                                     }
-
-                                    // echo "Supprimé temporairement";
                                     ?>
                                 </p>
                             </div>

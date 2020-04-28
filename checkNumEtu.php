@@ -25,9 +25,7 @@ $list_num_etu = $bdd->query($num_etu);
 while ($id_etu_exist = $list_num_etu->fetch()) {
     if ($id_etu_sent == $id_etu_exist[0]) {
         echo $id_etu_sent . " authorized";
-        if (isset($_COOKIE['semestre']) || !is_numeric($_COOKIE['semestre'])) {
-            setcookie("semestre", "1", strtotime('+360 days'));
-        }
+        setcookie("semestre", "1", strtotime('+360 days'));
     }
 }
 
@@ -36,8 +34,6 @@ $list_num_etu = $bdd->query($num_etu);
 while ($id_etu_exist = $list_num_etu->fetch()) {
     if ($id_etu_sent == $id_etu_exist[0]) {
         echo $id_etu_sent . " authorized";
-        if (isset($_COOKIE['semestre']) || !is_numeric($_COOKIE['semestre'])) {
-            setcookie("semestre", "3", strtotime('+360 days'));
-        }
+        setcookie("semestre", "3", strtotime('+360 days'));
     }
 }
