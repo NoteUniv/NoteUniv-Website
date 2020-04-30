@@ -51,8 +51,8 @@ if (count($moyenneDesMatieres)) {
     }
     $moyUe1 /= $coeffUe1;
 } else {
-    $coeffUe1 = 1;
-    $moyUe1 = 1;
+    $coeffUe1 = 0;
+    $moyUe1 = 0;
 }
 
 // UE 2
@@ -89,8 +89,8 @@ if (count($moyenneDesMatieres)) {
     }
     $moyUe2 /= $coeffUe2;
 } else {
-    $coeffUe2 = 1;
-    $moyUe2 = 1;
+    $coeffUe2 = 0;
+    $moyUe2 = 0;
 }
 
 // Moyenne finale
@@ -98,4 +98,5 @@ $totalCoeff = $coeffUe1 + $coeffUe2;
 if ($totalCoeff == 0) {
     $totalCoeff = 1;
 }
+
 $moyenne = round((($moyUe1 * $coeffUe1) + ($moyUe2 * $coeffUe2)) / ($totalCoeff), 3);
