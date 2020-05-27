@@ -1,11 +1,10 @@
 <?php
 session_start();
 // Dépendances
-require "vendor/autoload.php";
+include_once("vendor/autoload.php");
 
 // Changement de semestre
 if (!isset($_COOKIE['semestre']) || !is_numeric($_COOKIE['semestre'])) {
-    setcookie("semestre", "2", strtotime('+360 days'));
     header('Location: ./');
 } else {
     $semestre = htmlspecialchars($_COOKIE['semestre']);

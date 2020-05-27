@@ -24,8 +24,8 @@ $num_etu = "SELECT id_etu FROM data_etu WHERE promo = 'mmi1'";
 $list_num_etu = $bdd->query($num_etu);
 while ($id_etu_exist = $list_num_etu->fetch()) {
     if ($id_etu_sent == $id_etu_exist[0]) {
+        setcookie("semestre", "2", strtotime('+360 days'));
         echo $id_etu_sent . " authorized";
-        setcookie("semestre", "1", strtotime('+360 days'));
     }
 }
 
@@ -33,7 +33,7 @@ $num_etu = "SELECT id_etu FROM data_etu WHERE promo = 'mmi2'";
 $list_num_etu = $bdd->query($num_etu);
 while ($id_etu_exist = $list_num_etu->fetch()) {
     if ($id_etu_sent == $id_etu_exist[0]) {
+        setcookie("semestre", "4", strtotime('+360 days'));
         echo $id_etu_sent . " authorized";
-        setcookie("semestre", "3", strtotime('+360 days'));
     }
 }
