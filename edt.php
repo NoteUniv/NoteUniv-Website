@@ -69,7 +69,7 @@ $linkIcal = $edt_url[$promo]['TP' . $tp];
 use ICal\ICal;
 
 try {
-    $ical = new ICal('ICal.ics', array(
+    $ical = new ICal('ADECal.ics', array(
         'defaultSpan'                 => 2,
         'defaultTimeZone'             => 'UTC',
         'defaultWeekStart'            => 'MO',
@@ -98,7 +98,7 @@ include "assets/include/moy.php";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="title" content="Noteuniv, IUT Haguenau">
+    <meta name="title" content="NoteUniv, IUT Haguenau">
     <meta name="description" content="Retrouvez plus facilement vos notes de l'IUT de Haguenau grâce à NoteUniv !">
     <meta name="keywords" content="noteuniv, haguenau, note iut haguenau, emploi du temps mmi, note mmi, noteuniv mmi">
     <meta name="robots" content="index, follow">
@@ -138,28 +138,27 @@ include "assets/include/moy.php";
     <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="0df23692-fee1-4280-97ef-7c0506f2621d" data-blockingmode="auto" type="text/javascript"></script>
     <!-- Matomo -->
     <script type="text/javascript">
-        var _paq = window._paq || [];
+        var _paq = window._paq = window._paq || [];
         /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
         _paq.push(["setDocumentTitle", document.domain + "/" + document.title]);
         _paq.push(["setCookieDomain", "*.noteuniv.fr"]);
         _paq.push(['trackPageView']);
         _paq.push(['enableLinkTracking']);
         (function() {
-            var u = "//dev.noteuniv.fr/piwik/";
+            var u = "//stats.noteuniv.fr/";
             _paq.push(['setTrackerUrl', u + 'matomo.php']);
-            _paq.push(['setSiteId', '2']);
+            _paq.push(['setSiteId', '1']);
             var d = document,
                 g = d.createElement('script'),
                 s = d.getElementsByTagName('script')[0];
             g.type = 'text/javascript';
             g.async = true;
-            g.defer = true;
             g.src = u + 'matomo.js';
             s.parentNode.insertBefore(g, s);
         })();
     </script>
     <noscript>
-        <p><img src="//dev.noteuniv.fr/piwik/matomo.php?idsite=2&amp;rec=1" style="border:0;" alt="" /></p>
+        <p><img src="//stats.noteuniv.fr/matomo.php?idsite=1&amp;rec=1" style="border:0;" alt="" /></p>
     </noscript>
     <!-- End Matomo Code -->
 </head>
@@ -231,18 +230,18 @@ include "assets/include/moy.php";
                         }
                         ?>
                     </select>
-                    <!-- <input type="submit" value="Changer de TP !" class="btn-sub"> -->
                 </form>
                 <script>
                     document.addEventListener('DOMContentLoaded', function() {
-                        var calendarEl = document.getElementById('calendar');
+                        let calendarEl = document.getElementById('calendar');
 
-                        var calendar = new FullCalendar.Calendar(calendarEl, {
-                            plugins: ['dayGrid', 'timeGrid'], // an array of strings!
-                            defaultView: 'timeGridWeek',
+                        let calendar = new FullCalendar.Calendar(calendarEl, {
+                            initialView: 'timeGridWeek',
                             height: 'auto',
-                            footer: {
-                                center: 'timeGridWeek,dayGridMonth',
+                            headerToolbar: {
+                                left: 'prev,next,today',
+                                center: 'title',
+                                right: 'timeGridDay,timeGridWeek,dayGridMonth'
                             },
                             locale: 'fr',
                             buttonText: {
@@ -252,8 +251,8 @@ include "assets/include/moy.php";
                                 day: 'Jour'
                             },
                             allDaySlot: false,
-                            minTime: "08:30:00",
-                            maxTime: "18:30:00",
+                            slotMinTime: "08:30",
+                            slotMaxTime: "18:30",
                             nowIndicator: true,
                             slotLabelInterval: "00:30",
                             weekends: false,
@@ -328,7 +327,7 @@ include "assets/include/moy.php";
     <footer>
         <div class="row center-xs">
             <div class="col-xs-12">
-                <p class="as-small">Made with ❤️ by <a href="https://erosya.fr/" target="_BLANK">Erosya</a> | <span class="tippy-note" data-tippy-content="Discord: Ynohtna#0001 / QuentiumYT#0207 | contact@anthony-adam.fr / support@quentium.fr">Nous contacter</span> | <a href="terms.html">Mentions légales</a></p>
+                <p class="as-small">Made with ❤️ by <a href="https://erosya.fr" target="_BLANK">Erosya</a> | <span class="tippy-note" data-tippy-content="Discord: Ynohtna#0001 / QuentiumYT#0207 | contact@anthony-adam.fr / support@quentium.fr">Nous contacter</span> | <a href="terms.html">Mentions légales</a></p>
             </div>
         </div>
         <!-- SCRIPT EXT -->

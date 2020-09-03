@@ -16,7 +16,7 @@ try {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="title" content="Noteuniv, IUT Haguenau">
+    <meta name="title" content="NoteUniv, IUT Haguenau">
     <meta name="description" content="Retrouvez plus facilement vos notes de l'IUT de Haguenau grâce à NoteUniv !">
     <meta name="keywords" content="noteuniv, haguenau, note iut haguenau, emploi du temps mmi, note mmi, noteuniv mmi">
     <meta name="robots" content="index, follow">
@@ -51,28 +51,27 @@ try {
     <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="0df23692-fee1-4280-97ef-7c0506f2621d" data-blockingmode="auto" type="text/javascript"></script>
     <!-- Matomo -->
     <script type="text/javascript">
-        var _paq = window._paq || [];
+        var _paq = window._paq = window._paq || [];
         /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
         _paq.push(["setDocumentTitle", document.domain + "/" + document.title]);
         _paq.push(["setCookieDomain", "*.noteuniv.fr"]);
         _paq.push(['trackPageView']);
         _paq.push(['enableLinkTracking']);
         (function() {
-            var u = "//dev.noteuniv.fr/piwik/";
+            var u = "//stats.noteuniv.fr/";
             _paq.push(['setTrackerUrl', u + 'matomo.php']);
-            _paq.push(['setSiteId', '2']);
+            _paq.push(['setSiteId', '1']);
             var d = document,
                 g = d.createElement('script'),
                 s = d.getElementsByTagName('script')[0];
             g.type = 'text/javascript';
             g.async = true;
-            g.defer = true;
             g.src = u + 'matomo.js';
             s.parentNode.insertBefore(g, s);
         })();
     </script>
     <noscript>
-        <p><img src="//dev.noteuniv.fr/piwik/matomo.php?idsite=2&amp;rec=1" style="border:0;" alt="" /></p>
+        <p><img src="//stats.noteuniv.fr/matomo.php?idsite=1&amp;rec=1" style="border:0;" alt="" /></p>
     </noscript>
     <!-- End Matomo Code -->
 </head>
@@ -88,7 +87,7 @@ try {
                 <div class="col-xs-12">
                     <img class="logo-txt" src="assets/images/noteuniv_text.svg" alt="NoteUniv Texte">
                 </div>
-                <h1 class="desc">Votre nouvel espace pour retrouver vos notes plus facilement et savoir si vous passez votre semestre !</h1>
+                <h1 class="desc">MAINTENANCE JUSQU'A LA MISE EN PLACE DU SERVICE!</h1>
                 <div class="row center-xs start-lg">
                     <form class="login-form" id="sendID" action="last.php" method="POST">
                         <div id="inputAll" class="input out">
@@ -101,13 +100,9 @@ try {
                     </form>
                     <div class="row hidden-xs hidden-lg hidden-xl">
                         <div class="col-xs-6">
-                            <p class="sponso">Ce service est proposé par <a href="https://erosya.fr/">Erosya</a> pour tous les MMI1 de l'IUT de Haguenau.</p>
-                        </div>
-                        <div class="col-xs-6">
                             <img class="img-etu hidden-lg hidden-xl" src="<?= $img ?>" alt="Image étudiants">
                         </div>
                     </div>
-                    <p class="sponso hidden-sm hidden-md">Ce service est proposé par <a href="https://erosya.fr/">Erosya</a> pour tous les MMI de l'IUT de Haguenau.</p>
                 </div>
             </article>
         </section>
