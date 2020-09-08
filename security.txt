@@ -1,0 +1,3 @@
+Contact: mailto:contact@anthony.fr
+Contact: support@quentium.fr
+Preferred-Languages: fr, en

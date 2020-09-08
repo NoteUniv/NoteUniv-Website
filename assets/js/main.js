@@ -2,7 +2,7 @@ const numEtuInput = document.getElementById("numEtu");
 const NumEtu = localStorage.getItem("NumEtu");
 let error = false;
 
-// Defaut numEtu value is the value in localStorage
+// Default numEtu value is the value in localStorage
 if (NumEtu !== null) {
     numEtuInput.value = NumEtu;
 }

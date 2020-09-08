@@ -89,7 +89,7 @@ try {
                 </div>
                 <h1 class="desc">MAINTENANCE JUSQU'A LA MISE EN PLACE DU SERVICE!</h1>
                 <div class="row center-xs start-lg">
-                    <form class="login-form" id="sendID" action="last.php" method="POST">
+                    <form class="login-form" id="sendID" action="edt.php" method="POST">
                         <div id="inputAll" class="input out">
                             <input id="numEtu" name="numEtu" type="number" class="input" required placeholder="Numéro étudiant">
                             <span id="submitForm" onclick="submitForm()">

@@ -51,8 +51,11 @@ try {
 }
 
 // Récupération Numéro Étudiant du formulaire
-if (!empty($_SESSION["id_etu"]) && is_numeric($_SESSION["id_etu"])) {
-    $id_etu = htmlspecialchars($_SESSION['id_etu']);
+if ((!empty($_POST["numEtu"]) && is_numeric($_POST["numEtu"]))) {
+    $id_etu = htmlspecialchars($_POST["numEtu"]);
+    $_SESSION['id_etu'] = $id_etu;
+} else if (!empty($_SESSION['id_etu']) && is_numeric($_SESSION['id_etu'])) {
+    $id_etu = $_SESSION['id_etu'];
 } else {
     header('Location: ./');
 }
@@ -265,8 +268,8 @@ include "assets/include/moy.php";
                                     $start = $dtstart->format('c');
                                     $dtend = $ical->iCalDateToDateTime($event->dtend_array[3]);
                                     $end = $dtend->format('c');
-                                    $location = $event->location;
-                                    $descri = $event->description;
+                                    $location = str_replace(['salle non définie', ','], ['', ''], $event->location);
+                                    $teacher = explode("\n", $event->description)[1];
                                     $title = str_replace('_', ' ', $title);
                                     $location = str_replace('_', ' ', $location);
                                     if (preg_match('/^WEB?/', $title)) {
@@ -305,7 +308,9 @@ include "assets/include/moy.php";
                                         $class = 'none';
                                     }
                                 ?> {
-                                        title: '<?php echo $title . '\n' . $location; ?>',
+                                        subject: '<?php echo $title; ?>',
+                                        location: '<?php echo $location; ?>',
+                                        teacher: '<?php echo $teacher; ?>',
                                         start: '<?php echo $start; ?>',
                                         end: '<?php echo $end; ?>',
                                         textColor: 'black',
@@ -315,6 +320,12 @@ include "assets/include/moy.php";
                                 }
                                 ?>
                             ],
+                            eventDidMount: function(info) {
+                                var elTitle = info.el.querySelector('.fc-event-title');
+                                elTitle.innerHTML = '<span style="font-size: 16px;">' + info.event.extendedProps.subject + '</span>';
+                                elTitle.innerHTML += '<br/>' + info.event.extendedProps.location;
+                                elTitle.innerHTML += '<br/><i>' + info.event.extendedProps.teacher + '</i>';
+                            }
                         });
 
                         calendar.render();
