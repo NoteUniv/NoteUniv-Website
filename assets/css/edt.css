@@ -133,3 +133,14 @@
     color: #222222;
     outline: none;
 }
+
+@media only screen and (max-width: 767px) {
+    .fc-header-toolbar {
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    .fc-toolbar-chunk {
+        margin-top: 20px;
+    }
+}
