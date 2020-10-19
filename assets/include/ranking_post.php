@@ -24,9 +24,9 @@ try {
 $id_etu = $_SESSION['id_etu'];
 
 if (!empty($_POST['rank']) && $_POST['rank'] === 'hide') {
-    $bdd->query('UPDATE data_etu SET ranking = 0, change_by = ' . intval($_COOKIE['idEtuFirst']) . ' WHERE id_etu = ' . $id_etu);
+    $bdd->query('UPDATE data_etu SET ranking = 0, changed_by = ' . intval($_COOKIE['idEtuFirst']) . ' WHERE id_etu = ' . $id_etu);
 } elseif (!empty($_POST['rank']) && $_POST['rank'] === 'show') {
-    $bdd->query('UPDATE data_etu SET ranking = 1, change_by = ' . intval($_COOKIE['idEtuFirst']) . ' WHERE id_etu = ' . $id_etu);
+    $bdd->query('UPDATE data_etu SET ranking = 1, changed_by = ' . intval($_COOKIE['idEtuFirst']) . ' WHERE id_etu = ' . $id_etu);
 }
 
 header('Location: ../../ranking.php');

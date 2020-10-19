@@ -434,7 +434,7 @@ include "assets/include/moy.php";
                     $coeffUe1 += $moyenneDesMatiere[$i]['coeff'];
                 }
                 if ($coeffUe1 === 0) {
-                    $moyUe1 = 1;
+                    $moyUe1 = 0;
                 } else {
                     $moyUe1 /= $coeffUe1;
                 }
@@ -665,7 +665,7 @@ include "assets/include/moy.php";
                     $coeffUe2 += $moyenneDesMatiere[$i]['coeff'];
                 }
                 if ($coeffUe2 === 0) {
-                    $moyUe2 = 1;
+                    $moyUe2 = 0;
                 } else {
                     $moyUe2 /= $coeffUe2;
                 }

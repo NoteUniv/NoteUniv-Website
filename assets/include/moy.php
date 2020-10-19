@@ -1,6 +1,5 @@
 <?php
 $sqlCheck = "SELECT count(*) FROM information_schema.TABLES WHERE (TABLE_SCHEMA = 'noteuniv_website') AND (TABLE_NAME = 'global_s$semestre')";
-
 $doesExists = $bdd->query($sqlCheck);
 $notExists = $doesExists->fetch()[0] === "0";
 
@@ -58,9 +57,6 @@ if ($notExists === true) {
             $coeffUe1 += $moyenneDesMatieres[$i]['coeff'];
         }
         $moyUe1 /= $coeffUe1;
-    } else {
-        $coeffUe1 = 0;
-        $moyUe1 = 0;
     }
 
     // UE 2
@@ -96,9 +92,6 @@ if ($notExists === true) {
             $coeffUe2 += $moyenneDesMatieres[$i]['coeff'];
         }
         $moyUe2 /= $coeffUe2;
-    } else {
-        $coeffUe2 = 0;
-        $moyUe2 = 0;
     }
 
     // Moyenne finale
