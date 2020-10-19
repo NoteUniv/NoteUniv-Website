@@ -87,7 +87,7 @@ try {
                 <div class="col-xs-12">
                     <img class="logo-txt" src="assets/images/noteuniv_text.svg" alt="NoteUniv Texte">
                 </div>
-                <h1 class="desc">MAINTENANCE JUSQU'A LA MISE EN PLACE DU SERVICE!</h1>
+                <h1 class="desc">Votre nouvel espace pour retrouver vos notes plus facilement et savoir si vous passez votre semestre !</h1>
                 <div class="row center-xs start-lg">
                     <form class="login-form" id="sendID" action="edt.php" method="POST">
                         <div id="inputAll" class="input out">
@@ -100,9 +100,13 @@ try {
                     </form>
                     <div class="row hidden-xs hidden-lg hidden-xl">
                         <div class="col-xs-6">
+                            <p class="sponso">Ce service est proposé par <a href="https://erosya.fr">Erosya</a> pour tous les MMI de l'IUT de Haguenau.</p>
+                        </div>
+                        <div class="col-xs-6">
                             <img class="img-etu hidden-lg hidden-xl" src="<?= $img ?>" alt="Image étudiants">
                         </div>
                     </div>
+                    <p class="sponso hidden-sm hidden-md">Ce service est proposé par <a href="https://erosya.fr">Erosya</a> pour tous les MMI de l'IUT de Haguenau.</p>
                 </div>
             </article>
         </section>

@@ -25,6 +25,11 @@ function submitForm() {
                 document.getElementById("showMessage").innerHTML = "<i class='fas fa-check'></i> Ce numéro existe !";
                 document.getElementById("showMessage").style.color = "#2BE8C6";
                 document.getElementById("sendID").submit();
+            } else if (message == num + " disabled") {
+                error = true;
+                document.getElementById("inputAll").style.backgroundColor = "#FE4C6A";
+                document.getElementById("showMessage").innerHTML = "<i class='fas fa-times'></i> Ce numéro est désactivé !";
+                document.getElementById("showMessage").style.color = "#ED820E";
             } else {
                 error = true;
                 document.getElementById("inputAll").style.backgroundColor = "#FE4C6A";

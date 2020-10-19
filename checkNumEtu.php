@@ -15,26 +15,26 @@ try {
     $bdd = new PDO("mysql:host=$hostname;dbname=$dbname", $username, $password);
     $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
-    echo "Connection failed: " . $e->getMessage();
+    echo 'Connection failed: ' . $e->getMessage();
     exit();
 }
 
 $id_etu_sent = $_GET["num_etu"];
 
-$num_etu = "SELECT id_etu FROM data_etu WHERE promo = 'mmi1'";
-$list_num_etu = $bdd->query($num_etu);
-while ($id_etu_exist = $list_num_etu->fetch()) {
-    if ($id_etu_sent == $id_etu_exist[0]) {
-        setcookie("semestre", "1", strtotime('+360 days'));
-        echo $id_etu_sent . " authorized";
-    }
-}
+$num_etu = "SELECT promo, enabled FROM data_etu where id_etu = $id_etu_sent";
+$data_etu = $bdd->query($num_etu);
+$data_etu = $data_etu->fetch();
 
-$num_etu = "SELECT id_etu FROM data_etu WHERE promo = 'mmi2'";
-$list_num_etu = $bdd->query($num_etu);
-while ($id_etu_exist = $list_num_etu->fetch()) {
-    if ($id_etu_sent == $id_etu_exist[0]) {
-        setcookie("semestre", "3", strtotime('+360 days'));
-        echo $id_etu_sent . " authorized";
+// If the student allowed NoteUniv to display his marks
+if ($data_etu['enabled']) {
+    // Set cookie semester
+    if ($data_etu['promo'] === 'MMI1') {
+        setcookie('semestre', 1, strtotime('+360 days'));
+    } else {
+        setcookie('semestre', 3, strtotime('+360 days'));
     }
+    echo $id_etu_sent . ' authorized';
+    // Else return an error
+} else {
+    echo $id_etu_sent . ' disabled';
 }
