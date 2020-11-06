@@ -87,9 +87,9 @@ try {
                 <div class="col-xs-12">
                     <img class="logo-txt" src="assets/images/noteuniv_text.svg" alt="NoteUniv Texte">
                 </div>
-                <h1 class="desc">Votre nouvel espace pour retrouver vos notes plus facilement et savoir si vous passez votre semestre !</h1>
-                <div class="row center-xs start-lg">
-                    <form class="login-form" id="sendID" action="edt.php" method="POST">
+                <h1 class="desc col-md-10">Votre nouvel espace pour retrouver vos notes plus facilement et savoir si vous passez votre semestre !</h1>
+                <div class="row center-xs start-lg start-md">
+                    <form class="login-form center-md col-md-12" id="sendID" action="edt.php" method="POST">
                         <div id="inputAll" class="input out">
                             <input id="numEtu" name="numEtu" type="number" class="input" required placeholder="Numéro étudiant">
                             <span id="submitForm" onclick="submitForm()">
@@ -98,6 +98,7 @@ try {
                         </div>
                         <p id="showMessage"></p>
                     </form>
+                    <i class="col-lg-12 col-md-6 center-md">Si votre numéro est désactivé, veuillez nous contacter si vous souhaitez l'activer</i>
                     <div class="row hidden-xs hidden-lg hidden-xl">
                         <div class="col-xs-6">
                             <p class="sponso">Ce service est proposé par <a href="https://erosya.fr">Erosya</a> pour tous les MMI de l'IUT de Haguenau.</p>
