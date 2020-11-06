@@ -25,16 +25,18 @@ $num_etu = "SELECT promo, enabled FROM data_etu where id_etu = $id_etu_sent";
 $data_etu = $bdd->query($num_etu);
 $data_etu = $data_etu->fetch();
 
-// If the student allowed NoteUniv to display his marks
-if ($data_etu['enabled']) {
-    // Set cookie semester
-    if ($data_etu['promo'] === 'MMI1') {
-        setcookie('semestre', 1, strtotime('+360 days'));
+if ($data_etu) {
+    // If the student allowed NoteUniv to display his marks
+    if ($data_etu['enabled']) {
+        // Set cookie semester
+        if ($data_etu['promo'] === 'MMI1') {
+            setcookie('semestre', 1, strtotime('+360 days'));
+        } else {
+            setcookie('semestre', 3, strtotime('+360 days'));
+        }
+        echo $id_etu_sent . ' authorized';
+        // Else return an error
     } else {
-        setcookie('semestre', 3, strtotime('+360 days'));
+        echo $id_etu_sent . ' disabled';
     }
-    echo $id_etu_sent . ' authorized';
-    // Else return an error
-} else {
-    echo $id_etu_sent . ' disabled';
 }
