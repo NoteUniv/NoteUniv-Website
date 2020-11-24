@@ -31,7 +31,19 @@ html {
 
 body {
     height: 100vh;
+    color: white;
     background-color: #110133;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover,
+a:link,
+a:visited,
+a:active {
+    color: blue;
 }
 
 .img-etu {
@@ -56,7 +68,6 @@ body {
 }
 
 .desc {
-    color: white;
     font-size: 30px;
     margin-top: 50px;
     margin-bottom: 50px;
@@ -166,14 +177,8 @@ input::placeholder {
 }
 
 .sponso {
-    color: white;
     margin-top: 5vh;
     font-size: 13px;
-}
-
-.sponso a {
-    color: white;
-    text-decoration: none;
 }
 
 #showMessage {
