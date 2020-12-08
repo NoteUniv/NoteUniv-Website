@@ -89,7 +89,7 @@ try {
                 </div>
                 <h1 class="desc col-md-10">Votre nouvel espace pour retrouver vos notes plus facilement et savoir si vous passez votre semestre !</h1>
                 <div class="row center-xs start-lg start-md">
-                    <form class="login-form center-md col-md-12" id="sendID" action="edt.php" method="POST">
+                    <form class="login-form center-md col-md-12" id="sendID" action="last.php" method="POST">
                         <div id="inputAll" class="input out">
                             <input id="numEtu" name="numEtu" type="number" class="input" required placeholder="Numéro étudiant">
                             <span id="submitForm" onclick="submitForm()">
