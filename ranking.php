@@ -243,13 +243,19 @@ include "assets/include/moy.php";
 
                 <!-- ANCHOR Notes -->
                 <?php
-                $sqlRank = "SELECT id_etu, moy_etu FROM ranking_s$semestre ORDER BY moy_etu DESC";
-                $sqlMoy = $bdd->query($sqlRank);
+                $sqlAllEtu = 'SELECT id_etu, ranking FROM data_etu WHERE promo="MMI' . ceil($semestre / 2) . '"';
+                $sqlAllEtu = $bdd->query($sqlAllEtu);
                 $i = 1;
-                while ($moy = $sqlMoy->fetch()) {
-                    $sqlEtu = $bdd->query('SELECT ranking FROM data_etu WHERE id_etu = ' . $moy[0]);
-                    $is_ranking = $sqlEtu->fetch();
-                    $ranking = $is_ranking[0];
+                $etuMoy = [];
+                $dataEtu = $sqlAllEtu->fetchAll(PDO::FETCH_ASSOC | PDO::FETCH_UNIQUE);
+                foreach (array_keys($dataEtu) as $idEtu) {
+                    $etuMoy[$idEtu] = calcAverage($idEtu);
+                }
+                // Sort by values in reverse mode
+                arsort($etuMoy);
+                foreach ($etuMoy as $idEtu => $moyEtu) {
+                    // var_dump($dataEtu[$idEtu]);
+                    $ranking = $dataEtu[$idEtu]['ranking'];
                     if ($ranking == 1) { // ok pour classement
                         echo '<article class="row all-note">';
                     } else {
@@ -266,7 +272,7 @@ include "assets/include/moy.php";
                                 } else {
                                     echo '<span class="green">' . $i . '</span>';
                                 }
-                            } elseif ($moy[0] == $id_etu) {
+                            } elseif ($idEtu == $id_etu) {
                                 echo '<span class="green">' . $i . '</span>';
                             } else {
                                 echo $i;
@@ -281,10 +287,10 @@ include "assets/include/moy.php";
                                 <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Moyenne<br><br></span>
                                     <?php
                                     if ($ranking == 1) { // ok pour classement
-                                        if ($moy[0] == $id_etu) {
-                                            echo '<span id="me" class="green">' . $moy[1] . '</span>';
+                                        if ($idEtu == $id_etu) {
+                                            echo '<span id="me" class="green">' . $moyEtu . '</span>';
                                         } else {
-                                            echo $moy[1];
+                                            echo $moyEtu;
                                         }
                                     } else {
                                         echo 'Bien tenté !';
@@ -296,7 +302,7 @@ include "assets/include/moy.php";
                                 <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Étudiant<br><br></span>
                                     <?php
                                     if ($ranking == 1) { // ok pour classement
-                                        echo $moy[0];
+                                        echo $idEtu;
                                     } else {
                                         echo 'Bien tenté !';
                                     }
@@ -308,19 +314,19 @@ include "assets/include/moy.php";
                     <?php
                     switch ($i) {
                         case '1':
-                            print('<div class="col-sm-4 center-sm last-xs"><p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Récompense : </span>La grosse tête</p></div>');
+                            echo '<div class="col-sm-4 center-sm last-xs"><p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Récompense : </span>La grosse tête</p></div>';
                             break;
                         case '2':
-                            print('<div class="col-sm-4 center-sm last-xs"><p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Récompense : </span>Le respect</p></div>');
+                            echo '<div class="col-sm-4 center-sm last-xs"><p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Récompense : </span>Le respect</p></div>';
                             break;
                         case '3':
-                            print('<div class="col-sm-4 center-sm last-xs"><p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Récompense : </span>L\'envie de faire mieux</p></div>');
+                            echo '<div class="col-sm-4 center-sm last-xs"><p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Récompense : </span>L&apos;envie de mieux faire</p></div>';
                             break;
                         case '4':
-                            print('<div class="col-sm-4 center-sm last-xs"><p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Récompense : </span><span class="tippy-note" data-tippy-content="CHEH">LE SEUM</span></p></div>');
+                            echo '<div class="col-sm-4 center-sm last-xs"><p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Récompense : </span><span class="tippy-note" data-tippy-content="CHEH">LE SEUM</span></p></div>';
                             break;
                         default:
-                            print('<div class="col-sm-4 center-sm last-xs"><p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Récompense : </span>Aucune</p></div>');
+                            echo '<div class="col-sm-4 center-sm last-xs"><p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Récompense : </span>Aucune</p></div>';
                             break;
                     }
                     ?>
