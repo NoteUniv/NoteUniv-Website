@@ -257,12 +257,14 @@ include "assets/include/moy.php";
                     <div class="col-sm-2 matiere first-xs">
                         <p class='titre-mobile'>
                             <?php
-                            if (preg_match("/AV1?/", $matiere)) { // Ester eggs
+                            if (preg_match("/AV\d?/", $matiere)) { // Easter egg
                             ?>
                                 <span class="tippy-note" data-tippy-content="<a href='https://youtu.be/CobknKR0t6k' target='_BLANK' class='green'>Tu veux voir un vrai truc en AV ? Clique !</a>"><?php echo $matiere ?></span>
                             <?php
                             } else if ($type !== "Note unique" && $type !== "Moyenne de notes (+M)") {
                                 echo '<span class="grey">' . $matiere . '*</span>';
+                            } else if ($noteEtu[0] == 100) {
+                                echo '<span class="red">' . $matiere . '</span>';
                             } else {
                                 echo $matiere;
                             }
