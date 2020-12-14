@@ -239,9 +239,9 @@ include "assets/include/moy.php";
                     $minimum = $note['minimum'];
                     $maximum = $note['maximum'];
                     $coeff = $note['note_coeff'];
-                    $matiere = $note['note_code'];
+                    $subject = $note['note_code'];
                     $type = $note['type_note'];
-                    $epreuve = $note['type_exam'];
+                    $exam = $note['type_exam'];
                     $sqlNote = "SELECT note_etu FROM $note[name_pdf] WHERE id_etu = $id_etu";
                     $myNote = $bdd->query($sqlNote);
                     $noteEtu = $myNote->fetch();
@@ -257,16 +257,16 @@ include "assets/include/moy.php";
                     <div class="col-sm-2 matiere first-xs">
                         <p class='titre-mobile'>
                             <?php
-                            if (preg_match("/AV\d?/", $matiere)) { // Easter egg
+                            if (preg_match("/AV\d?/", $subject)) { // Easter egg
                             ?>
-                                <span class="tippy-note" data-tippy-content="<a href='https://youtu.be/CobknKR0t6k' target='_BLANK' class='green'>Tu veux voir un vrai truc en AV ? Clique !</a>"><?php echo $matiere ?></span>
+                                <span class="tippy-note" data-tippy-content="<a href='https://youtu.be/CobknKR0t6k' target='_BLANK' class='green'>Tu veux voir un vrai truc en AV ? Clique !</a>"><?php echo $subject ?></span>
                             <?php
                             } else if ($type !== "Note unique" && $type !== "Moyenne de notes (+M)") {
-                                echo '<span class="grey">' . $matiere . '*</span>';
+                                echo '<span class="grey">' . $subject . '*</span>';
                             } else if ($noteEtu[0] == 100) {
-                                echo '<span class="red">' . $matiere . '</span>';
+                                echo '<span class="red">' . $subject . '</span>';
                             } else {
-                                echo $matiere;
+                                echo $subject;
                             }
                             ?>
                         </p>
@@ -315,7 +315,7 @@ include "assets/include/moy.php";
                             <div class="col-xs-12 col-sm-7 first-xs">
                                 <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Nom du devoir : </span>
                                     <?php if ($type == "Moyenne de notes (+M)") {
-                                        echo "Moyenne des notes intermédiaires " . $epreuve;
+                                        echo "Moyenne des notes intermédiaires " . $exam;
                                     } else {
                                         echo $name;
                                     } ?></p>

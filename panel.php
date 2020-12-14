@@ -201,7 +201,7 @@ include "assets/include/moy.php";
                         <p><a href="#ue2">UE2</a></p>
                     </div>
                     <div class="col-xs-3">
-                        <p><a href="#resultat">S1</a></p>
+                        <p><a href="#result">S1</a></p>
                     </div>
                 </div>
                 <!-- Affichage de UE1 uniquement pour mobile, car ils n'ont pas de bandeau  -->
@@ -243,8 +243,8 @@ include "assets/include/moy.php";
                     </div>
                 </div>
                 <?php
-                $moyenneDesMatiere = [];
-                foreach ($ue1 as $key => $value) {
+                $averageSubjects = [];
+                foreach ($ue1Unique as $key => $value) {
                     $sqlSem = "SELECT name_note, name_pdf, note_date_c, average, minimum, maximum, note_code, note_coeff, name_teacher, type_note, note_semester, note_total, median, variance, deviation, type_exam FROM global_s$semestre WHERE note_code = '$value' AND type_note != 'Note intermédiaire que pour affichage' ORDER BY note_date_c, id DESC";
                     $ue1Sql = $bdd->query($sqlSem);
                 ?>
@@ -258,7 +258,7 @@ include "assets/include/moy.php";
                             <div class="row center-sm note-par-matiere">
                                 <?php
                                 $i = 1; // nombre de note
-                                $moyMatiere = []; // Moyenne de chaque matière
+                                $avgSubject = []; // Moyenne de chaque matière
                                 $n = 0; // nombre de note compté dans la moyenne
 
                                 while ($infoNote = $ue1Sql->fetch()) {
@@ -275,21 +275,21 @@ include "assets/include/moy.php";
                                     $median = $infoNote['median'];
                                     $variance = round($infoNote['variance'], 2);
                                     $deviation = round($infoNote['deviation'], 2);
-                                    $matiere = $infoNote['note_code'];
-                                    $typeEpreuve = $infoNote['type_exam'];
+                                    $subject = $infoNote['note_code'];
+                                    $typeExam = $infoNote['type_exam'];
                                     $myNote = $bdd->query("SELECT note_etu FROM $infoNote[name_pdf] WHERE id_etu = $id_etu");
                                     $noteEtu = $myNote->fetch();
                                     if ($noteEtu[0] < 21) { // Si pas abs et pas note intermédiaire on le compte
-                                        array_push($moyMatiere, $noteEtu[0]);
+                                        array_push($avgSubject, $noteEtu[0]);
                                         $n++;
-                                        $coeffMatiere = $coeff;
+                                        $coeffSubject = $coeff;
                                 ?>
                                         <div class="col-sm col-xs-6">
-                                            <a href="javascript:void(0);" data-template="<?php echo $matiere . $i ?>" class="tippy-note">
+                                            <a href="javascript:void(0);" data-template="<?php echo $subject . $i ?>" class="tippy-note">
                                                 <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Note <?php echo $i; ?><br></span>
                                                     <?php
                                                     if ($noteEtu[0] > 21) { // si abs
-                                                        echo '<span class="orange tippy-note" data-tippy-content="Hum, mais que c\'est il passé Billy ?">ABS</span>';
+                                                        echo '<span class="orange tippy-note" data-tippy-content="Hum, mais que s&apos;est il passé Billy ?">ABS</span>';
                                                     } else {
                                                         if ($noteEtu[0] < 10) {
                                                             echo '<span class="red">' . $noteEtu[0] . '</span>';
@@ -308,12 +308,12 @@ include "assets/include/moy.php";
                                         <!-- ANCHOR INTEGRATION DES NOTES DANS MODALES UE1 -->
                                         <div class="popup">
                                             <!-- Les Id des div sont lié au data-template du <a> des notes. Au clic, le contenu de la div est mis en popup  -->
-                                            <div id="<?php echo $matiere . $i; ?>">
+                                            <div id="<?php echo $subject . $i; ?>">
                                                 <div class="user-note">
                                                     <h2 class="note-header">Détails de la note</h2>
                                                     <p class="b">Nom du devoir / Module :</p>
                                                     <p><?php if ($type == "Moyenne de notes (+M)") {
-                                                            echo "Moyenne des notes intermédiaires " . $typeEpreuve;
+                                                            echo "Moyenne des notes intermédiaires " . $typeExam;
                                                         } else {
                                                             echo $name;
                                                         } ?></p>
@@ -324,7 +324,7 @@ include "assets/include/moy.php";
                                                     <p class="b">Type de note :</p>
                                                     <p><?php echo $type; ?></p>
                                                     <p class="b">Type d'épreuve : </p>
-                                                    <p><?php echo $typeEpreuve; ?></p>
+                                                    <p><?php echo $typeExam; ?></p>
                                                     <h2 class="note-header">Et ma promo alors ?</h2>
                                                 </div>
 
@@ -366,7 +366,7 @@ include "assets/include/moy.php";
                                                         </div>
                                                         <div class="col-sm-3 col-xs-6">
                                                             <div class="btn-etu">
-                                                                <p> <span class="b">Ecart type</span><br><?php echo $deviation; ?>
+                                                                <p> <span class="b">Écart type</span><br><?php echo $deviation; ?>
                                                                 </p>
                                                             </div>
                                                         </div>
@@ -394,8 +394,6 @@ include "assets/include/moy.php";
                             </div>
                         </div>
 
-
-
                         <div class="col-sm-4">
                             <div class="row center-xs">
                                 <div class="col-xs-4">
@@ -406,12 +404,12 @@ include "assets/include/moy.php";
                                 <div class="col-xs-4">
                                     <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Moyenne :</span>
                                         <?php
-                                        if (count($moyMatiere) == 0) {
+                                        if (count($avgSubject) == 0) {
                                             $moyenneMat = 0;
                                             echo "/";
-                                            $coeffMatiere = 0;
+                                            $coeffSubject = 0;
                                         } else {
-                                            $moyenneMat = round(array_sum($moyMatiere) / count($moyMatiere), 3);
+                                            $moyenneMat = round(array_sum($avgSubject) / count($avgSubject), 3);
                                             echo $moyenneMat;
                                         }
                                         ?>
@@ -425,13 +423,13 @@ include "assets/include/moy.php";
                         </div>
                     </article>
                 <?php
-                    array_push($moyenneDesMatiere, ['moyMat' => $moyenneMat, 'coeff' => $coeffMatiere]);
+                    array_push($averageSubjects, ['moyMat' => $moyenneMat, 'coeff' => $coeffSubject]);
                 }
                 $moyUe1 = 0;
                 $coeffUe1 = 0;
-                for ($i = 0; $i < count($moyenneDesMatiere); $i++) {
-                    $moyUe1 += $moyenneDesMatiere[$i]['moyMat'] * $moyenneDesMatiere[$i]['coeff'];
-                    $coeffUe1 += $moyenneDesMatiere[$i]['coeff'];
+                for ($i = 0; $i < count($averageSubjects); $i++) {
+                    $moyUe1 += $averageSubjects[$i]['moyMat'] * $averageSubjects[$i]['coeff'];
+                    $coeffUe1 += $averageSubjects[$i]['coeff'];
                 }
                 if ($coeffUe1 === 0) {
                     $moyUe1 = 0;
@@ -481,8 +479,8 @@ include "assets/include/moy.php";
 
                 <!-- ANCHOR Notes par matière 2 -->
                 <?php
-                $moyenneDesMatiere = [];
-                foreach ($ue2 as $key => $value) {
+                $averageSubjects = [];
+                foreach ($ue2Unique as $key => $value) {
                     $sqlSem = "SELECT name_note, name_pdf, note_date_c, average, minimum, maximum, note_code, note_coeff, name_teacher, type_note, note_semester, note_total, median, variance, deviation, type_exam FROM global_s$semestre WHERE note_code = '$value' AND type_note != 'Note intermédiaire que pour affichage' ORDER BY note_date_c, id DESC";
                     $ue1Sql = $bdd->query($sqlSem);
                 ?>
@@ -495,7 +493,7 @@ include "assets/include/moy.php";
                             <div class="row center-sm note-par-matiere">
                                 <?php
                                 $i = 1; // nombre de note
-                                $moyMatiere = []; // Moyenne de chaque matière
+                                $avgSubject = []; // Moyenne de chaque matière
                                 $n = 0; // nombre de note compté dans la moyenne
                                 while ($infoNote = $ue1Sql->fetch()) {
                                     $name = $infoNote['name_note'];
@@ -511,22 +509,22 @@ include "assets/include/moy.php";
                                     $median = $infoNote['median'];
                                     $variance = round($infoNote['variance'], 2);
                                     $deviation = round($infoNote['deviation'], 2);
-                                    $matiere = $infoNote['note_code'];
-                                    $typeEpreuve = $infoNote['type_exam'];
+                                    $subject = $infoNote['note_code'];
+                                    $typeExam = $infoNote['type_exam'];
                                     $myNote = $bdd->query("SELECT note_etu FROM $infoNote[name_pdf] WHERE id_etu = $id_etu");
                                     $noteEtu = $myNote->fetch();
                                     if ($noteEtu[0] < 21) { // Si pas abs et pas note intermédiaire on le compte
-                                        array_push($moyMatiere, $noteEtu[0]);
+                                        array_push($avgSubject, $noteEtu[0]);
                                         $n++;
-                                        $coeffMatiere = $coeff;
+                                        $coeffSubject = $coeff;
 
                                 ?>
                                         <div class="col-sm col-xs-6">
-                                            <a href="javascript:void(0);" data-template="<?php echo $matiere . $i ?>" class="tippy-note">
+                                            <a href="javascript:void(0);" data-template="<?php echo $subject . $i ?>" class="tippy-note">
                                                 <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Note <?php echo $i; ?><br></span>
                                                     <?php
                                                     if ($noteEtu[0] > 21) { // si pas abs
-                                                        echo '<span class="orange tippy-note" data-tippy-content="Hum, mais que c\'est il passé Billy ?">ABS</span>';
+                                                        echo '<span class="orange tippy-note" data-tippy-content="Hum, mais que s&apos;est il passé Billy ?">ABS</span>';
                                                     } else {
                                                         if ($noteEtu[0] < 10) {
                                                             echo '<span class="red">' . $noteEtu[0] . '</span>';
@@ -545,12 +543,12 @@ include "assets/include/moy.php";
                                         <!-- ANCHOR INTEGRATION DES NOTES DANS MODALES UE2 -->
                                         <div class="popup">
                                             <!-- Les Id des div sont lié au data-template du <a> des notes. Au clic, le contenu de la div est mis en popup  -->
-                                            <div id="<?php echo $matiere . $i; ?>">
+                                            <div id="<?php echo $subject . $i; ?>">
                                                 <div class="user-note">
                                                     <h2 class="note-header">Détails de la note</h2>
                                                     <p class="b">Nom du devoir / Module :</p>
                                                     <p><?php if ($type == "Moyenne de notes (+M)") {
-                                                            echo "Moyenne des notes intérmédiaires " . $typeEpreuve;
+                                                            echo "Moyenne des notes intermédiaires " . $typeExam;
                                                         } else {
                                                             echo $name;
                                                         } ?></p>
@@ -561,7 +559,7 @@ include "assets/include/moy.php";
                                                     <p class="b">Type de note :</p>
                                                     <p><?php echo $type; ?></p>
                                                     <p class="b">Type d'épreuve : </p>
-                                                    <p><?php echo $typeEpreuve; ?></p>
+                                                    <p><?php echo $typeExam; ?></p>
                                                     <h2 class="note-header">Et ma promo alors ?</h2>
                                                 </div>
 
@@ -575,7 +573,7 @@ include "assets/include/moy.php";
                                                         </div>
                                                         <div class="col-sm-3 col-xs-6">
                                                             <div class="btn-etu">
-                                                                <p> <span class="b">Mediane</span><br><?php echo $median; ?></p>
+                                                                <p> <span class="b">Médiane</span><br><?php echo $median; ?></p>
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-3 col-xs-6">
@@ -603,7 +601,7 @@ include "assets/include/moy.php";
                                                         </div>
                                                         <div class="col-sm-3 col-xs-6">
                                                             <div class="btn-etu">
-                                                                <p> <span class="b">Ecart type</span><br><?php echo $deviation; ?>
+                                                                <p> <span class="b">Écart type</span><br><?php echo $deviation; ?>
                                                                 </p>
                                                             </div>
                                                         </div>
@@ -637,12 +635,12 @@ include "assets/include/moy.php";
                                 <div class="col-xs-4">
                                     <p><span class="hidden-sm hidden-md hidden-lg hidden-xl ">Moyenne :</span>
                                         <?php
-                                        if (count($moyMatiere) == 0) {
+                                        if (count($avgSubject) == 0) {
                                             $moyenneMat = 0;
-                                            $coeffMatiere = 0;
+                                            $coeffSubject = 0;
                                             echo "/";
                                         } else {
-                                            $moyenneMat = round(array_sum($moyMatiere) / count($moyMatiere), 3);
+                                            $moyenneMat = round(array_sum($avgSubject) / count($avgSubject), 3);
                                             echo $moyenneMat;
                                         }
                                         ?>
@@ -656,13 +654,13 @@ include "assets/include/moy.php";
                         </div>
                     </article>
                 <?php
-                    array_push($moyenneDesMatiere, ['moyMat' => $moyenneMat, 'coeff' => $coeffMatiere]);
+                    array_push($averageSubjects, ['moyMat' => $moyenneMat, 'coeff' => $coeffSubject]);
                 }
                 $moyUe2 = 0;
                 $coeffUe2 = 0;
-                for ($i = 0; $i < count($moyenneDesMatiere); $i++) {
-                    $moyUe2 += $moyenneDesMatiere[$i]['moyMat'] * $moyenneDesMatiere[$i]['coeff'];
-                    $coeffUe2 += $moyenneDesMatiere[$i]['coeff'];
+                for ($i = 0; $i < count($averageSubjects); $i++) {
+                    $moyUe2 += $averageSubjects[$i]['moyMat'] * $averageSubjects[$i]['coeff'];
+                    $coeffUe2 += $averageSubjects[$i]['coeff'];
                 }
                 if ($coeffUe2 === 0) {
                     $moyUe2 = 0;
@@ -674,7 +672,6 @@ include "assets/include/moy.php";
 
             <!-- ANCHOR RESUMER  -->
             <section class="note">
-
                 <!-- ANCHOR Bandeau resume, uniquement PC/Tablette -->
                 <div class="row resume-tab around-sm hidden-xs">
                     <div class="col-sm-1 center-sm">
@@ -687,7 +684,7 @@ include "assets/include/moy.php";
                     </div>
                 </div>
                 <!-- Affichage  uniquement sur mobile car pas de bandeau  -->
-                <h1 class="hidden-sm hidden-md hidden-lg hidden-xl" id="resultat">Résultats</h1>
+                <h1 class="hidden-sm hidden-md hidden-lg hidden-xl" id="result">Résultats</h1>
                 <!-- ANCHOR Resumer UE1 -->
                 <!-- Sur pc/tablette on affiche pas les span, car les informations sont contenu dans le bandeau, contrairement au téléphone -->
                 <article class="row all-note around-sm sem">
