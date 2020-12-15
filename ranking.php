@@ -244,26 +244,27 @@ include "assets/include/moy.php";
 
                 <!-- ANCHOR Notes -->
                 <?php
-                $sqlAllEtu = 'SELECT id_etu, ranking FROM data_etu WHERE promo="MMI' . ceil($semestre / 2) . '"';
+                // Using table with pre-calculated average for optimization
+                $sqlAllEtu = "SELECT id_etu, moy_etu, ranking FROM ranking_s$semestre NATURAL JOIN data_etu";
                 $sqlAllEtu = $bdd->query($sqlAllEtu);
+                $dataEtu = $sqlAllEtu->fetchAll(PDO::FETCH_ASSOC);
+
+                // Sort multi dimensional array using the spaceship operator
+                usort($dataEtu, function ($a, $b) {
+                    return $a['moy_etu'] <=> $b['moy_etu'];
+                });
                 $i = 1;
-                $etuMoy = [];
-                $dataEtu = $sqlAllEtu->fetchAll(PDO::FETCH_ASSOC | PDO::FETCH_UNIQUE);
-                foreach (array_keys($dataEtu) as $idEtu) {
-                    $etuMoy[$idEtu] = calcAverage($idEtu);
-                }
-                // Sort by values in reverse mode
-                arsort($etuMoy);
-                foreach ($etuMoy as $idEtu => $moyEtu) {
-                    // var_dump($dataEtu[$idEtu]);
-                    $ranking = $dataEtu[$idEtu]['ranking'];
+                // Reverse the array for best first
+                foreach (array_reverse($dataEtu) as $dataEtu) {
+                    $idEtu = $dataEtu['id_etu'];
+                    $moyEtu = $dataEtu['moy_etu'];
+                    $ranking = $dataEtu['ranking'];
                     if ($ranking == 1) { // ok pour classement
                         echo '<article class="row all-note">';
                     } else {
                         echo '<article class="row all-note hidden-xs hidden-sm hidden-md hidden-lg hidden-xl">';
                     }
                 ?>
-
                     <div class="col-sm-2 matiere first-xs">
                         <p class='titre-mobile'>
                             <?php
