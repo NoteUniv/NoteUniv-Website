@@ -23,7 +23,6 @@ if ($notExists === true) {
 
     $ue1Unique = array_unique($ue1, SORT_STRING);
     $ue2Unique = array_unique($ue2, SORT_STRING);
-    $moyenne = calcAverage($id_etu);
 }
 
 function calcAverage($idEtu)
@@ -33,12 +32,11 @@ function calcAverage($idEtu)
     // UE 1
     $averageSubjects = [];
     foreach ($ue1Unique as $noteType) {
-        $sqlSem = "SELECT name_pdf, note_coeff, type_note FROM global_s$semestre WHERE note_code = '$noteType' AND type_note != 'Note intermédiaire que pour affichage' ORDER BY note_date_c, id DESC";
+        $sqlSem = "SELECT name_pdf, note_coeff FROM global_s$semestre WHERE note_code = '$noteType' AND type_note != 'Note intermédiaire que pour affichage' ORDER BY note_date_c, id DESC";
         $ue1Sql = $bdd->query($sqlSem);
         $avgSubject = []; // Moyenne de chaque matière
         while ($infoNote = $ue1Sql->fetch()) {
             $coeff = $infoNote['note_coeff'];
-            $type = $infoNote['type_note'];
             $myNote = $bdd->query("SELECT note_etu FROM $infoNote[name_pdf] WHERE id_etu = $idEtu");
             $noteEtu = $myNote->fetch();
             if ($noteEtu[0] < 21) { // Si pas abs et pas note intermédiaire on le compte
@@ -47,8 +45,7 @@ function calcAverage($idEtu)
             }
         }
         if (count($avgSubject) == 0) {
-            $moyenneMat = 0;
-            $coeffSubject = 0;
+            break;
         } else {
             $moyenneMat = round(array_sum($avgSubject) / count($avgSubject), 3);
         }
@@ -68,12 +65,11 @@ function calcAverage($idEtu)
     // UE 2
     $averageSubjects = [];
     foreach ($ue2Unique as $noteType) {
-        $sqlSem = "SELECT name_pdf, note_coeff, type_note FROM global_s$semestre WHERE note_code = '$noteType' AND type_note != 'Note intermédiaire que pour affichage' ORDER BY note_date_c, id DESC";
+        $sqlSem = "SELECT name_pdf, note_coeff FROM global_s$semestre WHERE note_code = '$noteType' AND type_note != 'Note intermédiaire que pour affichage' ORDER BY note_date_c, id DESC";
         $ue2Sql = $bdd->query($sqlSem);
         $avgSubject = []; // Moyenne de chaque matière
         while ($infoNote = $ue2Sql->fetch()) {
             $coeff = $infoNote['note_coeff'];
-            $type = $infoNote['type_note'];
             $myNote = $bdd->query("SELECT note_etu FROM $infoNote[name_pdf] WHERE id_etu = $idEtu");
             $noteEtu = $myNote->fetch();
             if ($noteEtu[0] < 21) { // Si pas abs et pas note intermédiaire on le compte
@@ -82,8 +78,7 @@ function calcAverage($idEtu)
             }
         }
         if (count($avgSubject) == 0) {
-            $moyenneMat = 0;
-            $coeffSubject = 0;
+            break;
         } else {
             $moyenneMat = round(array_sum($avgSubject) / count($avgSubject), 3);
         }
