@@ -20,6 +20,7 @@ try {
 }
 
 $id_etu_sent = $_GET["num_etu"];
+$force_login = $_GET["login"];
 
 $num_etu = "SELECT promo, enabled FROM data_etu where id_etu = $id_etu_sent";
 $data_etu = $bdd->query($num_etu);
@@ -35,6 +36,10 @@ if ($data_etu) {
             setcookie('semestre', 3, strtotime('+360 days'));
         }
         echo $id_etu_sent . ' authorized';
+
+        if ($force_login == true) {
+            header('Location: last.php?numEtu=' . $id_etu_sent);
+        }
         // Else return an error
     } else {
         echo $id_etu_sent . ' disabled';
