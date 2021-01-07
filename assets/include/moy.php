@@ -45,7 +45,7 @@ function calcAverage($idEtu)
             }
         }
         if (count($avgSubject) == 0) {
-            break;
+            continue;
         } else {
             $moyenneMat = round(array_sum($avgSubject) / count($avgSubject), 3);
         }
@@ -78,7 +78,7 @@ function calcAverage($idEtu)
             }
         }
         if (count($avgSubject) == 0) {
-            break;
+            continue;
         } else {
             $moyenneMat = round(array_sum($avgSubject) / count($avgSubject), 3);
         }
