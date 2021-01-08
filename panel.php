@@ -202,7 +202,7 @@ include "assets/include/moy.php";
                         <p><a href="#ue2">UE2</a></p>
                     </div>
                     <div class="col-xs-3">
-                        <p><a href="#result">S1</a></p>
+                        <p><a href="#result">S<?php echo $semestre; ?></a></p>
                     </div>
                 </div>
                 <!-- Affichage de UE1 uniquement pour mobile, car ils n'ont pas de bandeau  -->
@@ -671,7 +671,7 @@ include "assets/include/moy.php";
                 ?>
             </section>
 
-            <!-- ANCHOR RESUMER  -->
+            <!-- ANCHOR Resumé  -->
             <section class="note">
                 <!-- ANCHOR Bandeau resume, uniquement PC/Tablette -->
                 <div class="row resume-tab around-sm hidden-xs">
@@ -686,7 +686,7 @@ include "assets/include/moy.php";
                 </div>
                 <!-- Affichage  uniquement sur mobile car pas de bandeau  -->
                 <h1 class="hidden-sm hidden-md hidden-lg hidden-xl" id="result">Résultats</h1>
-                <!-- ANCHOR Resumer UE1 -->
+                <!-- ANCHOR Resumé UE1 -->
                 <!-- Sur pc/tablette on affiche pas les span, car les informations sont contenu dans le bandeau, contrairement au téléphone -->
                 <article class="row all-note around-sm sem">
                     <div class="col-sm-1">
@@ -721,7 +721,7 @@ include "assets/include/moy.php";
                     ?>
 
                 </article>
-                <!-- ANCHOR Resumer UE2 -->
+                <!-- ANCHOR Resumé UE2 -->
                 <!-- Sur pc/tablette on affiche pas les span, car les informations sont contenu dans le bandeau, contrairement au téléphone -->
                 <article class="row all-note around-sm sem">
                     <div class="col-sm-1">
@@ -755,7 +755,7 @@ include "assets/include/moy.php";
                     ?>
 
                 </article>
-                <!-- ANCHOR Resumer S1 -->
+                <!-- ANCHOR Resumé Semestre -->
                 <!-- Sur pc/tablette on affiche pas les span, car les informations sont contenu dans le bandeau, contrairement au téléphone -->
                 <article class="row all-note around-sm sem">
                     <div class="col-sm-1">
