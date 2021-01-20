@@ -281,7 +281,7 @@ include "assets/include/moy.php";
                             <div class="col-sm col-xs-6">
                                 <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Note<br><br></span>
                                     <?php
-                                    if ($noteEtu[0] > 21) { // 100 = abs
+                                    if ($noteEtu[0] == 100) { // 100 = abs
                                         echo '<span class="orange">ABS</span>';
                                     } else {
                                         if ($noteEtu[0] < 10) {

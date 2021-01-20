@@ -289,7 +289,7 @@ include "assets/include/moy.php";
                                             <a href="javascript:void(0);" data-template="<?php echo $subject . $i ?>" class="tippy-note">
                                                 <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Note <?php echo $i; ?><br></span>
                                                     <?php
-                                                    if ($noteEtu[0] > 21) { // si abs
+                                                    if ($noteEtu[0] == 100) { // si abs
                                                         echo '<span class="orange tippy-note" data-tippy-content="Hum, mais que s&apos;est il passé Billy ?">ABS</span>';
                                                     } else {
                                                         if ($noteEtu[0] < 10) {
@@ -524,7 +524,7 @@ include "assets/include/moy.php";
                                             <a href="javascript:void(0);" data-template="<?php echo $subject . $i ?>" class="tippy-note">
                                                 <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Note <?php echo $i; ?><br></span>
                                                     <?php
-                                                    if ($noteEtu[0] > 21) { // si pas abs
+                                                    if ($noteEtu[0] == 100) { // si abs
                                                         echo '<span class="orange tippy-note" data-tippy-content="Hum, mais que s&apos;est il passé Billy ?">ABS</span>';
                                                     } else {
                                                         if ($noteEtu[0] < 10) {
