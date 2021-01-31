@@ -31,6 +31,7 @@ a {
     background-repeat: no-repeat, repeat;
     background-position: center bottom, left top;
     background-size: 30vw, auto;
+    background-attachment: fixed;
     padding-top: 60px;
 }
 
@@ -69,4 +70,15 @@ h3 {
     color: #110133;
     background-color: white;
     border-radius: 20px;
+}
+
+@media only screen and (max-width:1280px) {
+    .main {
+        background-size: 20vw, auto;
+    }
+
+    h1 {
+        padding: 44px;
+        font-size: 36px;
+    }
 }
