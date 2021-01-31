@@ -1,0 +1,72 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap");
+
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    box-sizing: border-box;
+    font-family: "Montserrat";
+    font-weight: 600;
+}
+
+body {
+    height: 100vh;
+    color: white;
+    background-color: #110133;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+}
+
+.row {
+    margin: 0;
+    padding: 0;
+}
+
+.main {
+    height: 100vh;
+    background-image: url("../images/app.svg"), url("../images/meteor.svg");
+    background-repeat: no-repeat, repeat;
+    background-position: center bottom, left top;
+    background-size: 30vw, auto;
+    padding-top: 60px;
+}
+
+.logo-txt {
+    margin: 0 60px;
+}
+
+h1 {
+    padding: 64px;
+    font-size: 36px;
+}
+
+h2 {
+    padding: 44px;
+}
+
+h3 {
+    padding-bottom: 24px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 20px;
+    border-radius: 26px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.btn-green {
+    background-color: #2BE8C6;
+}
+
+.features,
+.changelog {
+    padding: 20px;
+    color: #110133;
+    background-color: white;
+    border-radius: 20px;
+}
