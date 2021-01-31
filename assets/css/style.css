@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Montserrat:Montserrat:500,500i,600,600i,700,700i&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:Montserrat:600,600i&display=swap");
 
 @keyframes autofill {
     to {
@@ -55,15 +55,11 @@ a:active {
 
 .logo-img {
     margin-top: 50px;
-    width: 100%;
-    height: auto;
     max-width: 150px;
 }
 
 .logo-txt {
     margin-top: 50px;
-    width: 100%;
-    height: auto;
     max-width: 350px;
 }
 
