@@ -68,39 +68,37 @@
 <body>
     <div class="row">
         <div class="col-lg-1 hidden-xs hidden-sm hidden-md"></div>
-        <section class="col-xs-12 col-lg-5">
-            <article class="row center-xs start-lg">
-                <div class="col-xs-12">
-                    <img class="logo-img" src="assets/images/noteuniv_logo.svg" alt="NoteUniv Logo">
-                </div>
-                <div class="col-xs-12">
-                    <img class="logo-txt" src="assets/images/noteuniv_text.svg" alt="NoteUniv Texte">
-                </div>
-                <h1 class="desc col-md-10">Votre nouvel espace pour retrouver vos notes plus facilement et savoir si vous passez votre semestre !</h1>
-                <div class="row center-xs start-lg start-md">
-                    <form class="login-form center-md col-md-12" id="sendID" action="last.php" method="POST">
-                        <div id="inputAll" class="input out">
-                            <input id="numEtu" name="numEtu" type="number" class="input" required placeholder="Numéro étudiant">
-                            <span id="submitForm" onclick="submitForm()">
-                                <i class="fas fa-arrow-right"></i>
-                            </span>
-                        </div>
-                        <p id="showMessage"></p>
-                    </form>
-                    <i class="col-lg-12 col-md-6 center-md">Si votre numéro est désactivé, veuillez nous contacter si vous souhaitez l'activer</i>
-                    <div class="row hidden-xs hidden-lg hidden-xl">
-                        <div class="col-xs-6">
-                            <p class="sponso">Ce service est proposé par <a href="https://erosya.fr">Erosya</a> pour tous les MMI de l'IUT de Haguenau.</p>
-                        </div>
-                        <div class="col-xs-6">
-                            <source srcset="assets/images/background_image.webp" alt="Image étudiants" type="image/webp">
-                            <source srcset="assets/images/background_image.png" alt="Image étudiants" type="image/png">
-                            <img class="img-etu hidden-lg hidden-xl" src="assets/images/background_image.png" alt="Image étudiants">
-                        </div>
+        <section class="start-lg center-xs col-lg-5">
+            <div>
+                <img class="logo-img" src="assets/images/noteuniv_logo.svg" alt="NoteUniv Logo">
+            </div>
+            <div>
+                <img class="logo-txt" src="assets/images/noteuniv_text.svg" alt="NoteUniv Texte">
+            </div>
+            <h1 class="desc col-md-10">Votre nouvel espace pour retrouver vos notes plus facilement et savoir si vous passez votre semestre !</h1>
+            <div class="row center-xs start-lg start-md">
+                <form class="login-form center-md col-md-12" id="sendID" action="last.php" method="POST">
+                    <div id="inputAll" class="input out">
+                        <input id="numEtu" name="numEtu" type="number" class="input" required placeholder="Numéro étudiant">
+                        <span id="submitForm" onclick="submitForm()">
+                            <i class="fas fa-arrow-right"></i>
+                        </span>
                     </div>
-                    <p class="sponso hidden-sm hidden-md">Ce service est proposé par <a href="https://erosya.fr">Erosya</a> pour tous les MMI de l'IUT de Haguenau.</p>
+                    <p id="showMessage"></p>
+                </form>
+                <i class="col-lg-12 col-md-6 center-md">Si votre numéro est désactivé, veuillez nous contacter si vous souhaitez l'activer</i>
+                <div class="row hidden-xs hidden-lg hidden-xl">
+                    <div class="col-xs-6">
+                        <p class="sponso">Ce service est proposé par <a href="https://erosya.fr">Erosya</a> pour tous les MMI de l'IUT de Haguenau.</p>
+                    </div>
+                    <div class="col-xs-6">
+                        <source srcset="assets/images/background_image.webp" alt="Image étudiants" type="image/webp">
+                        <source srcset="assets/images/background_image.png" alt="Image étudiants" type="image/png">
+                        <img class="img-etu hidden-lg hidden-xl" src="assets/images/background_image.png" alt="Image étudiants">
+                    </div>
                 </div>
-            </article>
+                <p class="sponso hidden-sm hidden-md">Ce service est proposé par <a href="https://erosya.fr">Erosya</a> pour tous les MMI de l'IUT de Haguenau.</p>
+            </div>
         </section>
         <div class="col-lg-6 end-xs hidden-xs hidden-sm hidden-md">
             <picture>
