@@ -335,8 +335,6 @@ include "assets/include/moy.php";
             </section>
         </div>
     </div>
-
-    </div>
     <footer>
         <div class="row center-xs">
             <div class="col-xs-12">
