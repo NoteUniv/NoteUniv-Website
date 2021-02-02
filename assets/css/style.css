@@ -69,6 +69,10 @@ a:active {
     margin-bottom: 50px;
 }
 
+.desc.small {
+    font-size: 24px;
+}
+
 .login-form {
     display: -webkit-box;
     display: flex;
@@ -127,30 +131,10 @@ a:active {
     background-color: white;
 }
 
-input::-webkit-input-placeholder {
-    color: #110133;
-    opacity: 0.5;
-    font-size: 24px;
-}
-
-input::-moz-placeholder {
-    color: #110133;
-    opacity: 0.5;
-    font-size: 24px;
-}
-
-input:-ms-input-placeholder {
-    color: #110133;
-    opacity: 0.5;
-    font-size: 24px;
-}
-
-input::-ms-input-placeholder {
-    color: #110133;
-    opacity: 0.5;
-    font-size: 24px;
-}
-
+input::-webkit-input-placeholder,
+input::-moz-placeholder,
+input:-ms-input-placeholder,
+input::-ms-input-placeholder,
 input::placeholder {
     color: #110133;
     opacity: 0.5;
@@ -187,22 +171,10 @@ input::placeholder {
         font-size: 24px;
     }
 
-    input::-webkit-input-placeholder {
-        font-size: 18px;
-    }
-
-    input::-moz-placeholder {
-        font-size: 18px;
-    }
-
-    input:-ms-input-placeholder {
-        font-size: 18px;
-    }
-
-    input::-ms-input-placeholder {
-        font-size: 18px;
-    }
-
+    input::-webkit-input-placeholder,
+    input::-moz-placeholder,
+    input:-ms-input-placeholder,
+    input::-ms-input-placeholder,
     input::placeholder {
         font-size: 18px;
     }
@@ -220,7 +192,7 @@ input::placeholder {
 
 @media screen and (max-width: 991px) {
     form {
-        margin-bottom: 100px;
+        margin-bottom: 10px;
     }
 
     .img-etu {
