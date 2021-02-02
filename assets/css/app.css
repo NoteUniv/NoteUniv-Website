@@ -35,8 +35,8 @@ a {
     padding-top: 60px;
 }
 
-.logo-txt {
-    margin: 0 60px;
+.logos img {
+    margin: 10px 40px;
 }
 
 h1 {
@@ -54,6 +54,7 @@ h3 {
 
 .btn {
     display: inline-block;
+    margin: 0 20px;
     padding: 20px;
     border-radius: 26px;
     font-size: 16px;
@@ -64,12 +65,26 @@ h3 {
     background-color: #2BE8C6;
 }
 
+.btn-gray {
+    background-color: #b6b6b6;
+}
+
 .features,
 .changelog {
     padding: 20px;
+    margin: 20px;
     color: #110133;
     background-color: white;
     border-radius: 20px;
+}
+
+.features {
+    line-height: 28px;
+}
+
+input[type="checkbox"] {
+    transform: scale(1.6);
+    margin-right: 4px;
 }
 
 @media only screen and (max-width:1280px) {

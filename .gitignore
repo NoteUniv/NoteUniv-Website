@@ -38,4 +38,5 @@ venv.bak/
 .vscode
 
 +extra/
+scripts/
 vendor/
