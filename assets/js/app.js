@@ -23,3 +23,13 @@ tippy("span.tippy-note", {
     interactive: true,
     flipOnUpdate: true
 });
+
+tippy("i.tippy-note", {
+    placement: "bottom",
+    arrow: true,
+    minWidth: 200,
+    theme: "noteSpan",
+    allowHTML: true,
+    interactive: true,
+    flipOnUpdate: true
+});
