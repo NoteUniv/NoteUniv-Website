@@ -54,9 +54,6 @@ try {
 if (!empty($_POST["numEtu"]) && is_numeric($_POST["numEtu"])) {
     $id_etu = htmlspecialchars($_POST["numEtu"]);
     $_SESSION['id_etu'] = $id_etu;
-} else if (!empty($_GET["numEtu"]) && is_numeric($_GET["numEtu"])) {
-    $id_etu = htmlspecialchars($_GET["numEtu"]);
-    $_SESSION['id_etu'] = $id_etu;
 } else if (!empty($_SESSION['id_etu']) && is_numeric($_SESSION['id_etu'])) {
     $id_etu = $_SESSION['id_etu'];
 } else {

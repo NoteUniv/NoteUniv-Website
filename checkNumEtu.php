@@ -1,4 +1,5 @@
 <?php
+session_start();
 // Dépendances
 require "vendor/autoload.php";
 
@@ -38,7 +39,8 @@ if ($data_etu) {
         echo $id_etu_sent . ' authorized';
 
         if ($force_login == true) {
-            header('Location: last.php?numEtu=' . $id_etu_sent);
+            $_SESSION['id_etu'] = $id_etu_sent;
+            header('Location: last.php');
         }
         // Else return an error
     } else {
