@@ -26,13 +26,13 @@
 }
 
 html {
-    overflow: hidden;
+    background-color: #110133;
 }
 
 body {
     height: 100vh;
     color: white;
-    background-color: #110133;
+    overflow-x: hidden;
 }
 
 a {
@@ -201,12 +201,6 @@ input::placeholder {
 
     p {
         padding: 20px;
-    }
-}
-
-@media screen and (max-width: 760px) {
-    html {
-        overflow-y: scroll;
     }
 }
 
