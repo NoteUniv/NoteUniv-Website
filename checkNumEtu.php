@@ -22,7 +22,7 @@ try {
 
 $id_etu_sent = $_GET["num_etu"];
 $force_login = $_GET["login"];
-$semester = 1; // First half or second half (1 or 0)
+$semester = 0; // First half or second half (1 or 0)
 
 $num_etu = "SELECT promo, enabled FROM data_etu where id_etu = $id_etu_sent";
 $data_etu = $bdd->query($num_etu);
