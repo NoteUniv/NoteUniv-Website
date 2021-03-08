@@ -22,6 +22,7 @@ try {
 
 $id_etu_sent = $_GET["num_etu"];
 $force_login = $_GET["login"];
+$semester = 1; // First half or second half (1 or 0)
 
 $num_etu = "SELECT promo, enabled FROM data_etu where id_etu = $id_etu_sent";
 $data_etu = $bdd->query($num_etu);
@@ -32,9 +33,9 @@ if ($data_etu) {
     if ($data_etu['enabled']) {
         // Set cookie semester
         if ($data_etu['promo'] === 'MMI1') {
-            setcookie('semestre', 1, strtotime('+360 days'));
+            setcookie('semestre', 1 * 2 - $semester, strtotime('+360 days'));
         } else {
-            setcookie('semestre', 3, strtotime('+360 days'));
+            setcookie('semestre', 2 * 2 - $semester, strtotime('+360 days'));
         }
         echo $id_etu_sent . ' authorized';
 
