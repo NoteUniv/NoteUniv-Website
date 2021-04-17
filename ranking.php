@@ -159,6 +159,9 @@ include "assets/include/moy.php";
                     <p class="as-small">Ma moyenne générale est :</p>
                     <?php
                     $moyenne = calcAverage($id_etu);
+                    if ($id_etu === "1") {
+                        echo '<p class="red">Toutes les notes sont aléatoires pour la démo !</p>';
+                    }
                     if ($moyenne >= 15) {
                         echo '<span class="btn btn-green">';
                         $tmp = '<p class="green">Un Dieu !</p>';

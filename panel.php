@@ -160,6 +160,9 @@ include "assets/include/moy.php";
                     <p class="as-small">Ma moyenne générale est :</p>
                     <?php
                     $moyenne = calcAverage($id_etu);
+                    if ($id_etu === "1") {
+                        echo '<p class="red">Toutes les notes sont aléatoires pour la démo !</p>';
+                    }
                     if ($moyenne >= 15) {
                         echo '<span class="btn btn-green">';
                         $tmp = '<p class="green">Un Dieu !</p>';
@@ -280,6 +283,9 @@ include "assets/include/moy.php";
                                     $typeExam = $infoNote['type_exam'];
                                     $myNote = $bdd->query("SELECT note_etu FROM $infoNote[name_pdf] WHERE id_etu = $id_etu");
                                     $noteEtu = $myNote->fetch();
+                                    if ($id_etu === "1") {
+                                        $noteEtu[0] = random_int(10, 20);
+                                    }
                                     if ($noteEtu[0] < 21) { // Si pas abs et pas note intermédiaire on le compte
                                         array_push($avgSubject, $noteEtu[0]);
                                         $n++;
@@ -514,6 +520,9 @@ include "assets/include/moy.php";
                                     $typeExam = $infoNote['type_exam'];
                                     $myNote = $bdd->query("SELECT note_etu FROM $infoNote[name_pdf] WHERE id_etu = $id_etu");
                                     $noteEtu = $myNote->fetch();
+                                    if ($id_etu === "1") {
+                                        $noteEtu[0] = random_int(10, 20);
+                                    }
                                     if ($noteEtu[0] < 21) { // Si pas abs et pas note intermédiaire on le compte
                                         array_push($avgSubject, $noteEtu[0]);
                                         $n++;

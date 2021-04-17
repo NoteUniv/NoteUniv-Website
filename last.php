@@ -162,6 +162,9 @@ include "assets/include/moy.php";
                     <p class="as-small">Ma moyenne générale est :</p>
                     <?php
                     $moyenne = calcAverage($id_etu);
+                    if ($id_etu === "1") {
+                        echo '<p class="red">Toutes les notes sont aléatoires pour la démo !</p>';
+                    }
                     if ($moyenne >= 15) {
                         echo '<span class="btn btn-green">';
                         $tmp = '<p class="green">Un Dieu !</p>';
@@ -246,6 +249,9 @@ include "assets/include/moy.php";
                     $sqlNote = "SELECT note_etu FROM $note[name_pdf] WHERE id_etu = $id_etu";
                     $myNote = $bdd->query($sqlNote);
                     $noteEtu = $myNote->fetch();
+                    if ($id_etu === "1") {
+                        $noteEtu[0] = random_int(10, 20);
+                    }
                 ?>
 
                     <?php

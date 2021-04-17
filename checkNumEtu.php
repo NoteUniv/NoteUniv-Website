@@ -20,8 +20,9 @@ try {
     exit();
 }
 
-$id_etu_sent = $_GET["num_etu"];
-$force_login = $_GET["login"];
+$id_etu_sent = $_GET["num_etu"] ?? 1;
+$force_login = isset($_GET["login"]) ? $_GET["login"] : false;
+// Force change semester
 $semester = 0; // First half or second half (1 or 0)
 
 $num_etu = "SELECT promo, enabled FROM data_etu where id_etu = $id_etu_sent";
