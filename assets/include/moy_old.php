@@ -33,7 +33,7 @@ if ($notExists === true) {
         while ($infoNote = $ue1Sql->fetch()) {
             $coeff = $infoNote['note_coeff'];
             $type = $infoNote['type_note'];
-            $myNote = $bdd->query("SELECT note_etu FROM $infoNote[name_pdf] WHERE id_etu = $id_etu");
+            $myNote = $bdd->query("SELECT note_etu FROM `$infoNote[name_pdf]` WHERE id_etu = $id_etu");
             $noteEtu = $myNote->fetch();
             if ($noteEtu[0] < 21) { // Si pas abs et pas note intermédiaire on le compte
                 array_push($moyMatiere, $noteEtu[0]);
@@ -68,7 +68,7 @@ if ($notExists === true) {
         while ($infoNote = $ue2Sql->fetch()) {
             $coeff = $infoNote['note_coeff'];
             $type = $infoNote['type_note'];
-            $myNote = $bdd->query("SELECT note_etu FROM $infoNote[name_pdf] WHERE id_etu = $id_etu");
+            $myNote = $bdd->query("SELECT note_etu FROM `$infoNote[name_pdf]` WHERE id_etu = $id_etu");
             $noteEtu = $myNote->fetch();
             if ($noteEtu[0] < 21) { // Si pas abs et pas note intermédiaire on le compte
                 array_push($moyMatiere, $noteEtu[0]);

@@ -41,7 +41,7 @@ function calcAverage($idEtu)
         $avgSubject = []; // Moyenne de chaque matière
         while ($infoNote = $ue1Sql->fetch()) {
             $coeff = $infoNote['note_coeff'];
-            $myNote = $bdd->query("SELECT note_etu FROM $infoNote[name_pdf] WHERE id_etu = $idEtu");
+            $myNote = $bdd->query("SELECT note_etu FROM `$infoNote[name_pdf]` WHERE id_etu = $idEtu");
             $noteEtu = $myNote->fetch();
             if ($noteEtu[0] < 21) { // Si pas abs et pas note intermédiaire on le compte
                 array_push($avgSubject, $noteEtu[0]);
@@ -74,7 +74,7 @@ function calcAverage($idEtu)
         $avgSubject = []; // Moyenne de chaque matière
         while ($infoNote = $ue2Sql->fetch()) {
             $coeff = $infoNote['note_coeff'];
-            $myNote = $bdd->query("SELECT note_etu FROM $infoNote[name_pdf] WHERE id_etu = $idEtu");
+            $myNote = $bdd->query("SELECT note_etu FROM `$infoNote[name_pdf]` WHERE id_etu = $idEtu");
             $noteEtu = $myNote->fetch();
             if ($noteEtu[0] < 21) { // Si pas abs et pas note intermédiaire on le compte
                 array_push($avgSubject, $noteEtu[0]);

@@ -246,7 +246,7 @@ include "assets/include/moy.php";
                     $subject = $note['note_code'];
                     $type = $note['type_note'];
                     $exam = $note['type_exam'];
-                    $sqlNote = "SELECT note_etu FROM $note[name_pdf] WHERE id_etu = $id_etu";
+                    $sqlNote = "SELECT note_etu FROM `$note[name_pdf]` WHERE id_etu = $id_etu";
                     $myNote = $bdd->query($sqlNote);
                     $noteEtu = $myNote->fetch();
                     if ($id_etu === "1") {

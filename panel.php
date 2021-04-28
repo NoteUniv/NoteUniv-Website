@@ -281,7 +281,7 @@ include "assets/include/moy.php";
                                     $deviation = round($infoNote['deviation'], 2);
                                     $subject = $infoNote['note_code'];
                                     $typeExam = $infoNote['type_exam'];
-                                    $myNote = $bdd->query("SELECT note_etu FROM $infoNote[name_pdf] WHERE id_etu = $id_etu");
+                                    $myNote = $bdd->query("SELECT note_etu FROM `$infoNote[name_pdf]` WHERE id_etu = $id_etu");
                                     $noteEtu = $myNote->fetch();
                                     if ($id_etu === "1") {
                                         $noteEtu[0] = random_int(10, 20);
@@ -518,7 +518,7 @@ include "assets/include/moy.php";
                                     $deviation = round($infoNote['deviation'], 2);
                                     $subject = $infoNote['note_code'];
                                     $typeExam = $infoNote['type_exam'];
-                                    $myNote = $bdd->query("SELECT note_etu FROM $infoNote[name_pdf] WHERE id_etu = $id_etu");
+                                    $myNote = $bdd->query("SELECT note_etu FROM `$infoNote[name_pdf]` WHERE id_etu = $id_etu");
                                     $noteEtu = $myNote->fetch();
                                     if ($id_etu === "1") {
                                         $noteEtu[0] = random_int(10, 20);
