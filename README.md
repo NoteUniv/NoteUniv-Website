@@ -19,7 +19,7 @@ Use the student demo ID 1 on the [website](https://noteuniv.fr) to see what's av
 
 ### Requirements
 
--   PHP >= 5.4
+-   PHP >= 7.3
 -   Have [Composer](https://getcomposer.org/download/) installed
 -   Git
 
@@ -73,4 +73,4 @@ Please ✰ this repository if this project helped you!
 
 ---
 
-_Made with_ ❤ _by Ynohtna_ & QuentiumYT
+_Made with_ ❤ _by Ynohtna\_ & QuentiumYT_
