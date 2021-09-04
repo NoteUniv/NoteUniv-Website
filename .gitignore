@@ -38,5 +38,6 @@ venv.bak/
 .vscode
 
 +extra/
-scripts/
+
+scripts/api.php
 vendor/
