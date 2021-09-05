@@ -5,3 +5,14 @@ Options -Indexes
 
 RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
 RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
+
+<IfModule mod_headers.c>
+  Header Set Access-Control-Allow-Origin "*"
+  Header Set Access-Control-Allow-Headers "origin, x-requested-with, content-type"
+  Header Set Access-Control-Allow-Methods "PUT, GET, POST, DELETE, OPTIONS"
+  Header Set Access-Control-Allow-Credentials "true"
+  Header Set Set-Cookie: "ACookieAvailableCrossSite; SameSite=None; Secure"
+  Header Edit Set-Cookie ^(.*)$ $1;HttpOnly;Secure
+  Header Always Set X-XSS-Protection "1; mode=block"
+  Header Always Set X-Content-Type-Options "nosniff"
+</IfModule>
