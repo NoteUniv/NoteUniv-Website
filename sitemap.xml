@@ -4,6 +4,12 @@
             http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
     <url>
         <loc>https://noteuniv.fr/</loc>
-        <lastmod>2020-09-08T20:52:06+00:00</lastmod>
+        <lastmod>2021-04-18T10:34:17+00:00</lastmod>
+        <priority>1.00</priority>
+    </url>
+    <url>
+        <loc>https://noteuniv.fr/app/</loc>
+        <lastmod>2021-02-02T11:14:47+00:00</lastmod>
+        <priority>0.80</priority>
     </url>
 </urlset>
