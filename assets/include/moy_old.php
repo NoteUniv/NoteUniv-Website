@@ -1,12 +1,12 @@
 <?php
-$sqlCheck = "SELECT count(*) FROM information_schema.TABLES WHERE (TABLE_SCHEMA = 'noteuniv_website') AND (TABLE_NAME = 'global_s$semestre')";
+$sqlCheck = "SELECT count(*) FROM information_schema.TABLES WHERE (TABLE_SCHEMA = 'noteuniv_website') AND (TABLE_NAME = 'global_$semestre')";
 $doesExists = $bdd->query($sqlCheck);
 $notExists = $doesExists->fetch()[0] === "0";
 
 if ($notExists === true) {
     $moyenne = 20;
 } else {
-    $sqlAllNotes = "SELECT note_date_c, note_code, note_semester FROM global_s$semestre WHERE type_note != 'Note intermédiaire que pour affichage' ORDER BY note_date_c";
+    $sqlAllNotes = "SELECT note_date_c, note_code, note_semester FROM global_$semestre WHERE type_note != 'Note intermédiaire que pour affichage' ORDER BY note_date_c";
 
     $listNotes = $bdd->query($sqlAllNotes);
     $ue1 = []; // liste des note UE1
@@ -27,7 +27,7 @@ if ($notExists === true) {
     // UE 1
     $moyenneDesMatieres = [];
     foreach ($ue1 as $key => $value) {
-        $sqlSem = "SELECT name_note, name_pdf, note_date_c, average, minimum, maximum, note_code, note_coeff, name_teacher, type_note, note_semester, note_total, median, variance, deviation, type_exam FROM global_s$semestre WHERE note_code = '$value' AND type_note != 'Note intermédiaire que pour affichage' ORDER BY note_date_c, id DESC";
+        $sqlSem = "SELECT name_note, name_pdf, note_date_c, average, minimum, maximum, note_code, note_coeff, name_teacher, type_note, note_semester, note_total, median, variance, deviation, type_exam FROM global_$semestre WHERE note_code = '$value' AND type_note != 'Note intermédiaire que pour affichage' ORDER BY note_date_c, id DESC";
         $ue1Sql = $bdd->query($sqlSem);
         $moyMatiere = []; // Moyenne de chaque matière
         while ($infoNote = $ue1Sql->fetch()) {
@@ -62,7 +62,7 @@ if ($notExists === true) {
     // UE 2
     $moyenneDesMatieres = [];
     foreach ($ue2 as $key => $value) {
-        $sqlSem = "SELECT name_note, name_pdf, note_date_c, average, minimum, maximum, note_code, note_coeff, name_teacher, type_note, note_semester, note_total, median, variance, deviation, type_exam FROM global_s$semestre WHERE note_code = '$value' AND type_note != 'Note intermédiaire que pour affichage' ORDER BY note_date_c, id DESC";
+        $sqlSem = "SELECT name_note, name_pdf, note_date_c, average, minimum, maximum, note_code, note_coeff, name_teacher, type_note, note_semester, note_total, median, variance, deviation, type_exam FROM global_$semestre WHERE note_code = '$value' AND type_note != 'Note intermédiaire que pour affichage' ORDER BY note_date_c, id DESC";
         $ue2Sql = $bdd->query($sqlSem);
         $moyMatiere = []; // Moyenne de chaque matière
         while ($infoNote = $ue2Sql->fetch()) {

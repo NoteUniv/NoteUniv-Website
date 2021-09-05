@@ -4,7 +4,7 @@ session_start();
 include_once("vendor/autoload.php");
 
 // Changement de semestre
-if (!isset($_COOKIE['semestre']) || !is_numeric($_COOKIE['semestre'])) {
+if (!isset($_COOKIE['semestre'])) {
     header('Location: ./');
 } else {
     $semestre = htmlspecialchars($_COOKIE['semestre']);
@@ -12,20 +12,20 @@ if (!isset($_COOKIE['semestre']) || !is_numeric($_COOKIE['semestre'])) {
 
 if (isset($_GET['change'])) {
     // MMI-1 Accès uniquement au S1/S2
-    if ($semestre == 1) {
-        setcookie("semestre", "2", strtotime('+360 days'));
-        $semestre = 2;
-    } elseif ($semestre == 2) {
-        setcookie("semestre", "1", strtotime('+360 days'));
-        $semestre = 1;
+    if ($semestre == 's1') {
+        setcookie("semestre", "s2", strtotime('+360 days'));
+        $semestre = 's2';
+    } elseif ($semestre == 's2') {
+        setcookie("semestre", "s1", strtotime('+360 days'));
+        $semestre = 's1';
     }
     // MMI-2 Accès uniquement au S3/S4
-    if ($semestre == 3) {
-        setcookie("semestre", "4", strtotime('+360 days'));
-        $semestre = 4;
-    } elseif ($semestre == 4) {
-        setcookie("semestre", "3", strtotime('+360 days'));
-        $semestre = 3;
+    if ($semestre == 's3') {
+        setcookie("semestre", "s4", strtotime('+360 days'));
+        $semestre = 's4';
+    } elseif ($semestre == 's4') {
+        setcookie("semestre", "s3", strtotime('+360 days'));
+        $semestre = 's3';
     }
     // Modification de l'URL si paramètre GET
     echo '<script>
@@ -57,7 +57,7 @@ if (!empty($_SESSION["id_etu"]) && is_numeric($_SESSION["id_etu"])) {
     header('Location: ./');
 }
 
-// Set cookie ETU 
+// Set cookie ETU
 if (!isset($_COOKIE['idEtuFirst'])) {
     setcookie("idEtuFirst", $id_etu, strtotime('+30 mins'));
 }
@@ -146,17 +146,19 @@ include "assets/include/moy.php";
                         </div>
                     </a>
                     <p class="as-etu">Étudiant</p>
-                    <p>N°<?= $id_etu; ?></p>
+                    <p>N°<?= $id_etu ?></p>
                     <p class="as-small">Je suis actuellement en :</p>
                     <span class="btn btn-etu">
-                        <span class="tippy-note" data-tippy-content="T'as bien fait, c'est les meilleurs ;)">MMI</span>
+                        <span class="tippy-note" data-tippy-content="T'as bien fait, c'est les meilleurs ;)"><?= $_COOKIE['promo'] ?></span>
                     </span>
                     <br>
-                    <a href="?change=true">
-                        <span class="btn btn-etu">
-                            <span class="tippy-note" data-tippy-content="Changement de semestre">SEMESTRE <?= $semestre ?></span>
-                        </span>
-                    </a>
+                    <?php if ($_COOKIE['promo'] === 'MMI') { ?>
+                        <a href="?change=true">
+                            <span class="btn btn-etu">
+                                <span class="tippy-note" data-tippy-content="Changement de semestre">SEMESTRE <?= $semestre ?></span>
+                            </span>
+                        </a>
+                    <?php } ?>
                     <p class="as-small">Ma moyenne générale est :</p>
                     <?php
                     $moyenne = calcAverage($id_etu);
@@ -205,7 +207,7 @@ include "assets/include/moy.php";
                         <p><a href="#ue2">UE2</a></p>
                     </div>
                     <div class="col-xs-3">
-                        <p><a href="#result">S<?php echo $semestre; ?></a></p>
+                        <p><a href="#result"><?= strtoupper($semestre) ?></a></p>
                     </div>
                 </div>
                 <!-- Affichage de UE1 uniquement pour mobile, car ils n'ont pas de bandeau  -->
@@ -249,7 +251,7 @@ include "assets/include/moy.php";
                 <?php
                 $averageSubjects = [];
                 foreach ($ue1Unique as $key => $value) {
-                    $sqlSem = "SELECT name_note, name_pdf, note_date_c, average, minimum, maximum, note_code, note_coeff, name_teacher, type_note, note_semester, note_total, median, variance, deviation, type_exam FROM global_s$semestre WHERE note_code = '$value' AND type_note != 'Note intermédiaire que pour affichage' ORDER BY note_date_c, id DESC";
+                    $sqlSem = "SELECT name_note, name_pdf, note_date_c, average, minimum, maximum, note_code, note_coeff, name_teacher, type_note, note_semester, note_total, median, variance, deviation, type_exam FROM global_$semestre WHERE note_code = '$value' AND type_note != 'Note intermédiaire que pour affichage' ORDER BY note_date_c, id DESC";
                     $ue1Sql = $bdd->query($sqlSem);
                 ?>
                     <!-- ANCHOR Notes par matière 1 -->
@@ -387,7 +389,7 @@ include "assets/include/moy.php";
                                     };
                                 }
 
-                                while ($i < 5) { // Si pas d'autre note on comble avec un "/" 
+                                while ($i < 5) { // Si pas d'autre note on comble avec un "/"
                                     ?>
                                     <div class="col-sm col-xs-6">
                                         <p> <span class="hidden-sm hidden-md hidden-lg hidden-xl">Note
@@ -488,7 +490,7 @@ include "assets/include/moy.php";
                 <?php
                 $averageSubjects = [];
                 foreach ($ue2Unique as $key => $value) {
-                    $sqlSem = "SELECT name_note, name_pdf, note_date_c, average, minimum, maximum, note_code, note_coeff, name_teacher, type_note, note_semester, note_total, median, variance, deviation, type_exam FROM global_s$semestre WHERE note_code = '$value' AND type_note != 'Note intermédiaire que pour affichage' ORDER BY note_date_c, id DESC";
+                    $sqlSem = "SELECT name_note, name_pdf, note_date_c, average, minimum, maximum, note_code, note_coeff, name_teacher, type_note, note_semester, note_total, median, variance, deviation, type_exam FROM global_$semestre WHERE note_code = '$value' AND type_note != 'Note intermédiaire que pour affichage' ORDER BY note_date_c, id DESC";
                     $ue1Sql = $bdd->query($sqlSem);
                 ?>
                     <article class="row all-note">
@@ -624,7 +626,7 @@ include "assets/include/moy.php";
                                         $i++;
                                     };
                                 }
-                                while ($i < 5) { // Si pas d'autre note on comble avec un "/" 
+                                while ($i < 5) { // Si pas d'autre note on comble avec un "/"
                                     ?>
                                     <div class="col-sm col-xs-6">
                                         <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Note<?php echo $i; ?><br></span> / </p>
@@ -768,8 +770,14 @@ include "assets/include/moy.php";
                 <!-- Sur pc/tablette on affiche pas les span, car les informations sont contenu dans le bandeau, contrairement au téléphone -->
                 <article class="row all-note around-sm sem">
                     <div class="col-sm-1">
-                        <h2 class="hidden-sm hidden-md hidden-lg hidden-xl">Semestre <?php echo $semestre; ?></h2>
-                        <p><span class="hidden-xs">S<?php echo $semestre; ?></span></p>
+                        <?php
+                        if ($_COOKIE['promo'] === 'MMI') {
+                            echo '<h2 class="hidden-sm hidden-md hidden-lg hidden-xl">Semestre ' . $semestre[-1] . '</h2>';
+                        } else {
+                            echo '<h2 class="hidden-sm hidden-md hidden-lg hidden-xl">' . strtoupper($semestre) . '</h2>';
+                        }
+                        ?>
+                        <p><span class="hidden-xs"><?= strtoupper($semestre) ?></span></p>
                     </div>
                     <div class="col-sm-2 center-sm btn-green">
                         <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Moyenne sur 20

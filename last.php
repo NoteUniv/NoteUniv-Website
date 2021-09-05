@@ -4,7 +4,7 @@ session_start();
 include_once("vendor/autoload.php");
 
 // Changement de semestre
-if (!isset($_COOKIE['semestre']) || !is_numeric($_COOKIE['semestre'])) {
+if (!isset($_COOKIE['semestre'])) {
     header('Location: ./');
 } else {
     $semestre = htmlspecialchars($_COOKIE['semestre']);
@@ -12,20 +12,20 @@ if (!isset($_COOKIE['semestre']) || !is_numeric($_COOKIE['semestre'])) {
 
 if (isset($_GET['change'])) {
     // MMI-1 Accès uniquement au S1/S2
-    if ($semestre == 1) {
-        setcookie("semestre", "2", strtotime('+360 days'));
-        $semestre = 2;
-    } elseif ($semestre == 2) {
-        setcookie("semestre", "1", strtotime('+360 days'));
-        $semestre = 1;
+    if ($semestre == 's1') {
+        setcookie("semestre", "s2", strtotime('+360 days'));
+        $semestre = 's2';
+    } elseif ($semestre == 's2') {
+        setcookie("semestre", "s1", strtotime('+360 days'));
+        $semestre = 's1';
     }
     // MMI-2 Accès uniquement au S3/S4
-    if ($semestre == 3) {
-        setcookie("semestre", "4", strtotime('+360 days'));
-        $semestre = 4;
-    } elseif ($semestre == 4) {
-        setcookie("semestre", "3", strtotime('+360 days'));
-        $semestre = 3;
+    if ($semestre == 's3') {
+        setcookie("semestre", "s4", strtotime('+360 days'));
+        $semestre = 's4';
+    } elseif ($semestre == 's4') {
+        setcookie("semestre", "s3", strtotime('+360 days'));
+        $semestre = 's3';
     }
     // Modification de l'URL si paramètre GET
     echo '<script>
@@ -60,7 +60,7 @@ if (!empty($_POST["numEtu"]) && is_numeric($_POST["numEtu"])) {
     header('Location: ./');
 }
 
-// Set cookie ETU 
+// Set cookie ETU
 if (!isset($_COOKIE['idEtuFirst'])) {
     setcookie("idEtuFirst", $id_etu, strtotime('+30 mins'));
 }
@@ -151,14 +151,16 @@ include "assets/include/moy.php";
                     <p>N°<?= $id_etu ?></p>
                     <p class="as-small">Je suis actuellement en :</p>
                     <span class="btn btn-etu">
-                        <span class="tippy-note" data-tippy-content="T'as bien fait, c'est les meilleurs ;)">MMI</span>
+                        <span class="tippy-note" data-tippy-content="T'as bien fait, c'est les meilleurs ;)"><?= $_COOKIE['promo'] ?></span>
                     </span>
                     <br>
-                    <a href="?change=true">
-                        <span class="btn btn-etu">
-                            <span class="tippy-note" data-tippy-content="Changement de semestre">SEMESTRE <?= $semestre ?></span>
-                        </span>
-                    </a>
+                    <?php if ($_COOKIE['promo'] === 'MMI') { ?>
+                        <a href="?change=true">
+                            <span class="btn btn-etu">
+                                <span class="tippy-note" data-tippy-content="Changement de semestre">SEMESTRE <?= $semestre ?></span>
+                            </span>
+                        </a>
+                    <?php } ?>
                     <p class="as-small">Ma moyenne générale est :</p>
                     <?php
                     $moyenne = calcAverage($id_etu);
@@ -193,7 +195,7 @@ include "assets/include/moy.php";
             <section class="note">
                 <?php
                 if ($notExists === true) include "assets/include/soon.php";
-                $nb_notes = $bdd->query("SELECT COUNT(*) FROM global_s$semestre")->fetchColumn();
+                $nb_notes = $bdd->query("SELECT COUNT(*) FROM global_$semestre")->fetchColumn();
                 ?>
                 <!-- Phrase différentes selon le viewport, afin de gagner de la place  -->
                 <h1 class="hidden-xs hidden-sm">Mes dernières notes (<?php echo $nb_notes ?> au total)</h1>
@@ -234,7 +236,7 @@ include "assets/include/moy.php";
 
                 <!-- ANCHOR Notes -->
                 <?php
-                $sql_all_notes = "SELECT name_note, name_pdf, note_date_c, average, minimum, maximum, note_code, note_coeff, type_note, type_exam, note_semester FROM global_s$semestre ORDER BY note_date_c DESC";
+                $sql_all_notes = "SELECT name_note, name_pdf, note_date_c, average, minimum, maximum, note_code, note_coeff, type_note, type_exam, note_semester FROM global_$semestre ORDER BY note_date_c DESC";
                 $list_notes = $bdd->query($sql_all_notes);
                 while ($note = $list_notes->fetch()) { // note = matière + date (nom du PDF)
                     $name = str_replace("_", " ", $note['name_note']);

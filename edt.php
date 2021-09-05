@@ -4,7 +4,7 @@ session_start();
 include_once("vendor/autoload.php");
 
 // Changement de semestre
-if (!isset($_COOKIE['semestre']) || !is_numeric($_COOKIE['semestre'])) {
+if (!isset($_COOKIE['semestre'])) {
     header('Location: ./');
 } else {
     $semestre = htmlspecialchars($_COOKIE['semestre']);
@@ -12,20 +12,20 @@ if (!isset($_COOKIE['semestre']) || !is_numeric($_COOKIE['semestre'])) {
 
 if (isset($_GET['change'])) {
     // MMI-1 Accès uniquement au S1/S2
-    if ($semestre == 1) {
-        setcookie("semestre", "2", strtotime('+360 days'));
-        $semestre = 2;
-    } elseif ($semestre == 2) {
-        setcookie("semestre", "1", strtotime('+360 days'));
-        $semestre = 1;
+    if ($semestre == 's1') {
+        setcookie("semestre", "s2", strtotime('+360 days'));
+        $semestre = 's2';
+    } elseif ($semestre == 's2') {
+        setcookie("semestre", "s1", strtotime('+360 days'));
+        $semestre = 's1';
     }
     // MMI-2 Accès uniquement au S3/S4
-    if ($semestre == 3) {
-        setcookie("semestre", "4", strtotime('+360 days'));
-        $semestre = 4;
-    } elseif ($semestre == 4) {
-        setcookie("semestre", "3", strtotime('+360 days'));
-        $semestre = 3;
+    if ($semestre == 's3') {
+        setcookie("semestre", "s4", strtotime('+360 days'));
+        $semestre = 's4';
+    } elseif ($semestre == 's4') {
+        setcookie("semestre", "s3", strtotime('+360 days'));
+        $semestre = 's3';
     }
     // Modification de l'URL si paramètre GET
     echo '<script>
@@ -86,7 +86,7 @@ try {
     die($e);
 }
 
-// Set cookie ETU 
+// Set cookie ETU
 if (!isset($_COOKIE['idEtuFirst'])) {
     setcookie("idEtuFirst", $id_etu, strtotime('+30 mins'));
 }
@@ -179,17 +179,19 @@ include "assets/include/moy.php";
                         </div>
                     </a>
                     <p class="as-etu">Étudiant</p>
-                    <p>N°<?= $id_etu; ?></p>
+                    <p>N°<?= $id_etu ?></p>
                     <p class="as-small">Je suis actuellement en :</p>
                     <span class="btn btn-etu">
-                        <span class="tippy-note" data-tippy-content="T'as bien fait, c'est les meilleurs ;)">MMI</span>
+                        <span class="tippy-note" data-tippy-content="T'as bien fait, c'est les meilleurs ;)"><?= $_COOKIE['promo'] ?></span>
                     </span>
                     <br>
-                    <a href="?change=true">
-                        <span class="btn btn-etu">
-                            <span class="tippy-note" data-tippy-content="Changement de semestre">SEMESTRE <?= $semestre ?></span>
-                        </span>
-                    </a>
+                    <?php if ($_COOKIE['promo'] === 'MMI') { ?>
+                        <a href="?change=true">
+                            <span class="btn btn-etu">
+                                <span class="tippy-note" data-tippy-content="Changement de semestre">SEMESTRE <?= $semestre ?></span>
+                            </span>
+                        </a>
+                    <?php } ?>
                     <p class="as-small">Ma moyenne générale est :</p>
                     <?php
                     $moyenne = calcAverage($id_etu);

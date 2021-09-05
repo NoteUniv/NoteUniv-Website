@@ -25,7 +25,7 @@ $semestre = isset($_POST['semestre']) ? intval($_POST['semestre']) : 0;
 if ($action === 'updateRanking' && ($semestre > 0 && $semestre < 5)) {
     include '../assets/include/moy.php';
 
-    $sqlCreate = "DROP TABLE IF EXISTS ranking_s$semestre; CREATE TABLE IF NOT EXISTS ranking_s$semestre (id_etu serial, moy_etu float NOT NULL) ENGINE=InnoDB DEFAULT CHARSET=utf8";
+    $sqlCreate = "DROP TABLE IF EXISTS ranking_$semestre; CREATE TABLE IF NOT EXISTS ranking_$semestre (id_etu serial, moy_etu float NOT NULL) ENGINE=InnoDB DEFAULT CHARSET=utf8";
     $bdd->query($sqlCreate);
 
     $sqlAllEtu = 'SELECT id_etu FROM data_etu WHERE promo="MMI' . ceil($semestre / 2) . '"';
@@ -34,7 +34,7 @@ if ($action === 'updateRanking' && ($semestre > 0 && $semestre < 5)) {
 
     foreach ($dataEtu as $idEtu) {
         $moyEtu = calcAverage($idEtu);
-        $sqlInsert = "INSERT INTO ranking_s$semestre (id_etu, moy_etu) VALUES ($idEtu, $moyEtu)";
+        $sqlInsert = "INSERT INTO ranking_$semestre (id_etu, moy_etu) VALUES ($idEtu, $moyEtu)";
         $bdd->query($sqlInsert);
     }
 }
