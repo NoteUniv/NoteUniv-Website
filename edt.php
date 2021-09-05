@@ -65,6 +65,12 @@ $data = $sqlEtu->fetch();
 $tp = $data[0];
 $promo = $data[1];
 
+if ($promo === 'LP_DWEB') {
+    $promo = 'MMI_DWEB'; // Calendar name
+} else {
+    $promo = 'MMI_GRAPH_RAJ'; // Use global GRAPH-RAJ calendar name
+}
+
 $json_edt_url = file_get_contents("assets/js/edt_url.json");
 $edt_url = json_decode($json_edt_url, true);
 $linkIcal = $edt_url[$promo]['TP' . $tp];
