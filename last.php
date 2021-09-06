@@ -157,7 +157,7 @@ include "assets/include/moy.php";
                     <?php if ($_COOKIE['promo'] === 'MMI') { ?>
                         <a href="?change=true">
                             <span class="btn btn-etu">
-                                <span class="tippy-note" data-tippy-content="Changement de semestre">SEMESTRE <?= $semestre ?></span>
+                                <span class="tippy-note" data-tippy-content="Changement de semestre">SEMESTRE <?= $semestre[-1] ?></span>
                             </span>
                         </a>
                     <?php } ?>
