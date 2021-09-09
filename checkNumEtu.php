@@ -33,15 +33,17 @@ if ($data_etu) {
     // If the student allowed NoteUniv to display his marks
     if ($data_etu['enabled']) {
         // Set cookie semester
-        if ($data_etu['promo'] === 'MMI1') {
-            setcookie('semestre', 's' . 1 * 2 - $semester, strtotime('+360 days'));
-            setcookie('promo', 'MMI', strtotime('+360 days'));
-        } else if ($data_etu['promo'] === 'MMI2') {
-            setcookie('semestre', 's' . 2 * 2 - $semester, strtotime('+360 days'));
-            setcookie('promo', 'MMI', strtotime('+360 days'));
-        } else {
-            setcookie('semestre', $data_etu['promo'], strtotime('+360 days'));
-            setcookie('promo', $data_etu['promo'], strtotime('+360 days'));
+        if (!isset($_COOKIE['semestre']) || $_COOKIE['semestre'][0] !== 's') {
+            if ($data_etu['promo'] === 'MMI1') {
+                setcookie('semestre', 's' . 1 * 2 - $semester, strtotime('+360 days'));
+                setcookie('promo', 'MMI', strtotime('+360 days'));
+            } else if ($data_etu['promo'] === 'MMI2') {
+                setcookie('semestre', 's' . 2 * 2 - $semester, strtotime('+360 days'));
+                setcookie('promo', 'MMI', strtotime('+360 days'));
+            } else {
+                setcookie('semestre', $data_etu['promo'], strtotime('+360 days'));
+                setcookie('promo', $data_etu['promo'], strtotime('+360 days'));
+            }
         }
         echo $id_etu_sent . ' authorized';
 
