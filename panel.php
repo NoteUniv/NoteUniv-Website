@@ -189,7 +189,6 @@ include "assets/include/moy.php";
         </aside>
         <!-- ANCHOR LEFT SIDE -->
         <div class="col-lg-9 col-sm-12">
-            <!-- ANCHOR NOTES -->
             <section class="note">
                 <?php
                 if ($notExists === true) include "assets/include/soon.php";

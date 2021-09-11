@@ -191,7 +191,6 @@ include "assets/include/moy.php";
         </aside>
         <!-- ANCHOR LEFT SIDE -->
         <div class="col-lg-9 col-sm-12">
-            <!-- ANCHOR NOTES -->
             <section class="note">
                 <?php
                 if ($notExists === true) include "assets/include/soon.php";
@@ -201,7 +200,6 @@ include "assets/include/moy.php";
                 <h1 class="hidden-xs hidden-sm">Mes dernières notes (<?php echo $nb_notes ?> au total)</h1>
                 <h1 class="hidden-md hidden-lg hidden-xl">Mes dernières notes (<?php echo $nb_notes ?> au total)</h1>
 
-                <!-- ANCHOR Bandeau de l'UE 1 uniquement PC/Tablette -->
                 <div class="row ue-tab hidden-xs">
                     <div class="col-sm-2 ue-nbr">
                         <p>Matière</p>
@@ -234,7 +232,6 @@ include "assets/include/moy.php";
                     </div>
                 </div>
 
-                <!-- ANCHOR Notes -->
                 <?php
                 $sql_all_notes = "SELECT name_note, name_pdf, note_date_c, average, minimum, maximum, note_code, note_coeff, type_note, type_exam, note_semester FROM global_$semestre ORDER BY note_date_c DESC";
                 $list_notes = $bdd->query($sql_all_notes);

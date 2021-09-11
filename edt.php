@@ -228,7 +228,6 @@ include "assets/include/moy.php";
         </aside>
         <!-- ANCHOR LEFT SIDE -->
         <div class="col-lg-9 col-sm-12">
-            <!-- ANCHOR NOTES -->
             <section class="note">
                 <!-- Phrase différentes selon le viewport, afin de gagner de la place  -->
                 <h1 class="hidden-xs hidden-sm">L'emploi du temps (TP<?php echo $tp; ?>)</h1>

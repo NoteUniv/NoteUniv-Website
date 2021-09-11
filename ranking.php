@@ -189,7 +189,6 @@ include "assets/include/moy.php";
         </aside>
         <!-- ANCHOR LEFT SIDE -->
         <div class="col-lg-9 col-sm-12">
-            <!-- ANCHOR NOTES -->
             <section class="note">
                 <?php
                 if ($notExists === true) include "assets/include/soon.php";
@@ -227,7 +226,6 @@ include "assets/include/moy.php";
                     </div>
                 </div>
 
-                <!-- ANCHOR Bandeau de l'UE 1 uniquement PC/Tablette -->
                 <div class="row ue-tab hidden-xs">
                     <div class="col-sm-2 ue-nbr">
                         <p>Rang</p>
@@ -247,7 +245,6 @@ include "assets/include/moy.php";
                     </div>
                 </div>
 
-                <!-- ANCHOR Notes -->
                 <?php
                 // Using table with pre-calculated average for optimization
                 $sqlAllEtu = "SELECT id_etu, moy_etu, ranking FROM ranking_$semestre NATURAL JOIN data_etu";
