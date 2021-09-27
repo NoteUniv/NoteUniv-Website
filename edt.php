@@ -274,15 +274,13 @@ include "assets/include/moy.php";
                                 <?php
                                 $events = $ical->sortEventsWithOrder($ical->events());
                                 foreach ($events as $event) {
-                                    $title = $event->summary;
                                     $dtstart = $ical->iCalDateToDateTime($event->dtstart_array[3]);
                                     $start = $dtstart->format('c');
                                     $dtend = $ical->iCalDateToDateTime($event->dtend_array[3]);
                                     $end = $dtend->format('c');
-                                    $location = str_replace(['salle non définie', ','], ['', ''], $event->location);
-                                    $teacher = explode("\n", $event->description)[1];
-                                    $title = str_replace('_', ' ', $title);
-                                    $location = str_replace('_', ' ', $location);
+                                    $title = addslashes(str_replace('_', ' ',  $event->summary));
+                                    $location = addslashes(str_replace(['salle non définie', ',', '_'], ['', '', ' '], $event->location));
+                                    $teacher = addslashes(explode("\n", $event->description)[1]);
                                     if (preg_match('/^WEB?/', $title)) {
                                         $class = 'web';
                                     } else if (preg_match('/^ANG/', $title)) {
