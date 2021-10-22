@@ -36,10 +36,10 @@ if (isset($_GET['change'])) {
 // Récupération des variables d'environnement
 $dotenv = Dotenv\Dotenv::createImmutable($_SERVER['DOCUMENT_ROOT']);
 $dotenv->load();
-$hostname = getenv('BDD_HOST');
-$dbname = getenv('BDD_NAME');
-$username = getenv('BDD_LOGIN');
-$password = getenv('BDD_PASSWD');
+$hostname = $_ENV['BDD_HOST'];
+$dbname = $_ENV['BDD_NAME'];
+$username = $_ENV['BDD_LOGIN'];
+$password = $_ENV['BDD_PASSWD'];
 
 // Connexion bdd
 try {
@@ -607,7 +607,7 @@ include "assets/include/moy.php";
                                                         </div>
                                                         <div class="col-sm-3 col-xs-6">
                                                             <div class="btn-etu">
-                                                                <p> <span class="b">Variance</span><span><?php echo $variance; ?></p>
+                                                                <p> <span class="b">Variance</span><br><?php echo $variance; ?></p>
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-3 col-xs-6">

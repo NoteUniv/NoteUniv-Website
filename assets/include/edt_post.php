@@ -6,10 +6,10 @@ require_once "../../vendor/autoload.php";
 // Récupération des variables d'environnement
 $dotenv = Dotenv\Dotenv::createImmutable($_SERVER['DOCUMENT_ROOT']);
 $dotenv->load();
-$hostname = getenv('BDD_HOST');
-$dbname = getenv('BDD_NAME');
-$username = getenv('BDD_LOGIN');
-$password = getenv('BDD_PASSWD');
+$hostname = $_ENV['BDD_HOST'];
+$dbname = $_ENV['BDD_NAME'];
+$username = $_ENV['BDD_LOGIN'];
+$password = $_ENV['BDD_PASSWD'];
 
 // Connexion bdd
 try {
