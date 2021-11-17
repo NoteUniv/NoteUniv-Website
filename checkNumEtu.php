@@ -3,7 +3,7 @@ session_start();
 // Dépendances
 require "vendor/autoload.php";
 
-// Recupération des variables d'environnement
+// Récupération des variables d'environnement
 $dotenv = Dotenv\Dotenv::createImmutable($_SERVER['DOCUMENT_ROOT']);
 $dotenv->load();
 $hostname = $_ENV['BDD_HOST'];
@@ -21,6 +21,7 @@ try {
 }
 
 $id_etu_sent = $_GET["num_etu"] ?? 1;
+$id_etu_sent = empty($id_etu_sent) ? exit("Please provide a valid student ID.") : $id_etu_sent;
 $force_login = isset($_GET["login"]) ? $_GET["login"] : false;
 // Force change semester
 $semester = 1; // First half or second half (1 or 0)
