@@ -230,8 +230,8 @@ include "assets/include/moy.php";
         <div class="col-lg-9 col-sm-12">
             <section class="note">
                 <!-- Phrase différentes selon le viewport, afin de gagner de la place  -->
-                <h1 class="hidden-xs hidden-sm">L'emploi du temps (TP<?php echo $tp; ?>)</h1>
-                <h1 class="hidden-md hidden-lg hidden-xl">EDT (TP<?php echo $tp; ?>)</h1>
+                <h1 class="hidden-xs hidden-sm">L'emploi du temps (TP<?= $tp ?>)</h1>
+                <h1 class="hidden-md hidden-lg hidden-xl">EDT (TP<?= $tp ?>)</h1>
                 <form action="assets/include/edt_post.php" method="POST">
                     <select name="tp" class="custom-select" onchange="this.form.submit()">
                         <?php
@@ -317,13 +317,13 @@ include "assets/include/moy.php";
                                         $class = 'none';
                                     }
                                 ?> {
-                                        subject: '<?php echo $title; ?>',
-                                        location: '<?php echo $location; ?>',
-                                        teacher: '<?php echo $teacher; ?>',
-                                        start: '<?php echo $start; ?>',
-                                        end: '<?php echo $end; ?>',
+                                        subject: '<?= $title ?>',
+                                        location: '<?= $location ?>',
+                                        teacher: '<?= $teacher ?>',
+                                        start: '<?= $start ?>',
+                                        end: '<?= $end ?>',
                                         textColor: 'black',
-                                        classNames: '<?php echo $class; ?>',
+                                        classNames: '<?= $class ?>',
                                     },
                                 <?php
                                 }

@@ -20,15 +20,16 @@ try {
 }
 
 $action = $_POST['action'] ?? '';
-$semestre = isset($_POST['semestre']) ? intval($_POST['semestre']) : 0;
+$semestre = $_POST['semestre'] ?? 0;
+$semestreMap = ['s1' => 'MMI1', 's2' => 'MMI1', 's3' => 'MMI2', 's4' => 'MMI2', 'lp_dweb' => 'LP_DWEB', 'lp_graph' => 'LP_GRAPH', 'lp_raj' => 'LP_RAJ'];
 
-if ($action === 'updateRanking' && ($semestre > 0 && $semestre < 5)) {
+if ($action === 'updateRanking' && array_key_exists($semestre, $semestreMap)) {
     include '../assets/include/moy.php';
 
     $sqlCreate = "DROP TABLE IF EXISTS ranking_$semestre; CREATE TABLE IF NOT EXISTS ranking_$semestre (id_etu serial, moy_etu float NOT NULL) ENGINE=InnoDB DEFAULT CHARSET=utf8";
     $bdd->query($sqlCreate);
 
-    $sqlAllEtu = 'SELECT id_etu FROM data_etu WHERE promo="MMI' . ceil($semestre / 2) . '"';
+    $sqlAllEtu = "SELECT id_etu FROM data_etu WHERE promo='$semestreMap[$semestre]'";
     $sqlAllEtu = $bdd->query($sqlAllEtu);
     $dataEtu = $sqlAllEtu->fetchAll(PDO::FETCH_COLUMN);
 

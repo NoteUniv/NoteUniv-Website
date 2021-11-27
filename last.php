@@ -197,8 +197,8 @@ include "assets/include/moy.php";
                 $nb_notes = $bdd->query("SELECT COUNT(*) FROM global_$semestre")->fetchColumn();
                 ?>
                 <!-- Phrase différentes selon le viewport, afin de gagner de la place  -->
-                <h1 class="hidden-xs hidden-sm">Mes dernières notes (<?php echo $nb_notes ?> au total)</h1>
-                <h1 class="hidden-md hidden-lg hidden-xl">Mes dernières notes (<?php echo $nb_notes ?> au total)</h1>
+                <h1 class="hidden-xs hidden-sm">Mes dernières notes (<?= $nb_notes ?> au total)</h1>
+                <h1 class="hidden-md hidden-lg hidden-xl">Mes dernières notes (<?= $nb_notes ?> au total)</h1>
 
                 <div class="row ue-tab hidden-xs">
                     <div class="col-sm-2 ue-nbr">
@@ -265,7 +265,7 @@ include "assets/include/moy.php";
                             <?php
                             if (preg_match("/AV\d?/", $subject)) { // Easter egg
                             ?>
-                                <span class="tippy-note" data-tippy-content="<a href='https://youtu.be/CobknKR0t6k' target='_BLANK' class='green'>Tu veux voir un vrai truc en AV ? Clique !</a>"><?php echo $subject ?></span>
+                                <span class="tippy-note" data-tippy-content="<a href='https://youtu.be/CobknKR0t6k' target='_BLANK' class='green'>Tu veux voir un vrai truc en AV ? Clique !</a>"><?= $subject ?></span>
                             <?php
                             } else if ($type !== "Note unique" && $type !== "Moyenne de notes (+M)") {
                                 echo '<span class="grey">' . $subject . '*</span>';
@@ -281,7 +281,8 @@ include "assets/include/moy.php";
                     <div class="col-sm-6 last-xs initial-order-sm">
                         <div class="row center-sm note-par-matiere">
                             <div class="col-sm col-xs-6">
-                                <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Note<br><br></span>
+                                <p>
+                                    <span class="hidden-sm hidden-md hidden-lg hidden-xl">Note<br><br></span>
                                     <?php
                                     if ($noteEtu[0] == 100) { // 100 = abs
                                         echo '<span class="orange">ABS</span>';
@@ -294,19 +295,26 @@ include "assets/include/moy.php";
                                             echo '<span class="green">' . $noteEtu[0] . '</span>';
                                         }
                                     }
-                                    ?> </p>
+                                    ?>
+                                </p>
                             </div>
                             <div class="col-sm col-xs-6">
-                                <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Moyenne<br><br></span>
-                                    <?php echo $noteMoyenne; ?></p>
+                                <p>
+                                    <span class="hidden-sm hidden-md hidden-lg hidden-xl">Moyenne<br><br></span>
+                                    <?= $noteMoyenne ?>
+                                </p>
                             </div>
                             <div class="col-sm col-xs-6">
-                                <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Note Min<br><br></span>
-                                    <?php echo $minimum; ?></p>
+                                <p>
+                                    <span class="hidden-sm hidden-md hidden-lg hidden-xl">Note Min<br><br></span>
+                                    <?= $minimum ?>
+                                </p>
                             </div>
                             <div class="col-sm col-xs-6">
-                                <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Note Max<br><br></span>
-                                    <?php echo $maximum; ?></p>
+                                <p>
+                                    <span class="hidden-sm hidden-md hidden-lg hidden-xl">Note Max<br><br></span>
+                                    <?= $maximum ?>
+                                </p>
                                 </a>
                             </div>
                         </div>
@@ -314,17 +322,21 @@ include "assets/include/moy.php";
                     <div class="col-sm-4">
                         <div class="row start-xs center-sm">
                             <div class="col-xs-12 col-sm-5 first-sm">
-                                <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Coeff : </span>
-                                    <?php echo $coeff; ?>
+                                <p>
+                                    <span class="hidden-sm hidden-md hidden-lg hidden-xl">Coeff :</span>
+                                    <?= $coeff ?>
                                 </p>
                             </div>
                             <div class="col-xs-12 col-sm-7 first-xs">
-                                <p><span class="hidden-sm hidden-md hidden-lg hidden-xl">Nom du devoir : </span>
-                                    <?php if ($type == "Moyenne de notes (+M)") {
+                                <p>
+                                    <span class="hidden-sm hidden-md hidden-lg hidden-xl">Nom du devoir :</span>
+                                    <?php
+                                    if ($type == "Moyenne de notes (+M)") {
                                         echo "Moyenne des notes intermédiaires " . $exam;
                                     } else {
                                         echo $name;
-                                    } ?></p>
+                                    } ?>
+                                </p>
                             </div>
                         </div>
                     </div>
