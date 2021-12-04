@@ -13,13 +13,13 @@
 
 <p align="center"><img src="https://quentium.fr/+img/github/NoteUniv-Website.png"></p>
 
-Use the student demo ID 1 on the [website](https://noteuniv.fr) to see what's available!
+Use the student demo ID 1 on the [website](https://noteuniv.fr/) to see what's available!
 
 ## 📥 Installation
 
 ### Requirements
 
--   PHP >= 7.3
+-   PHP >= 7.4
 -   Have [Composer](https://getcomposer.org/download/) installed
 -   Git
 
@@ -58,11 +58,12 @@ Please make sure to test your suggestions before committing.
 
 **Anthony A. & Quentin L.**
 
--   Website NoteUniv: [noteuniv.fr](https://noteuniv.fr)
--   Website Erosya: [erosya.fr](https://erosya.fr)
--   Github Ynohtna: [YnohtnaFr](https://github.com/YnohtnaFr)
+-   Website NoteUniv: [noteuniv.fr](https://noteuniv.fr/)
+-   Website Erosya: [erosya.fr](https://erosya.fr/)
+-   Website Oserya: [oserya.fr](https://oserya.fr/)
+-   Github Ynohtna: [Ynohtna](https://github.com/Ynohtna-Fr)
 -   Github Quentium: [QuentiumYT](https://github.com/QuentiumYT)
--   Twitter Erosya: [@YnohtnaErosya](https://twitter.com/YnohtnaErosya)
+-   Twitter Ynohtna: [@YnohtnaErosya](https://twitter.com/YnohtnaErosya)
 -   Twitter Quentium: [@QuentiumYT](https://twitter.com/QuentiumYT)
 
 Please ✰ this repository if this project helped you!
