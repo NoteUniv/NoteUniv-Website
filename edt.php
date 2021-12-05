@@ -347,7 +347,7 @@ include "assets/include/moy.php";
     <footer>
         <div class="row center-xs">
             <div class="col-xs-12">
-                <p class="as-small">Made with ❤️ by <a href="https://oserya.fr/" target="_BLANK">Oserya</a> | <span class="tippy-note" data-tippy-content="Discord: Ynohtna#0001 / QuentiumYT#0207 | contact@anthony-adam.fr / pro@quentium.fr">Nous contacter</span> | <a href="terms.html">Mentions légales</a></p>
+                <p class="as-small">Made with ❤️ by <a href="https://oserya.fr/" target="_BLANK">Oserya</a> | <span class="tippy-note" data-tippy-content="QuentiumYT#0207 | Ynohtna#0001 / pro@quentium.fr | contact@anthony-adam.fr">Nous contacter</span> | <a href="terms.html">Mentions légales</a></p>
             </div>
         </div>
         <!-- SCRIPT EXT -->
