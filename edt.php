@@ -142,7 +142,6 @@ include "assets/include/moy.php";
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid/main.min.css">
     <!-- CSS PERSO-->
     <link rel="stylesheet" href="assets/css/stylePanel.css" type="text/css">
-    <link rel="stylesheet" href="assets/css/edt.css" type="text/css">
     <!-- Cookie  -->
     <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="0df23692-fee1-4280-97ef-7c0506f2621d" data-blockingmode="auto" type="text/javascript"></script>
     <!-- Matomo -->
@@ -281,41 +280,7 @@ include "assets/include/moy.php";
                                     $title = addslashes(str_replace('_', ' ',  $event->summary));
                                     $location = addslashes(str_replace(['salle non définie', ',', '_'], ['', '', ' '], $event->location));
                                     $teacher = addslashes(explode("\n", $event->description)[1]);
-                                    if (preg_match('/^WEB?/', $title)) {
-                                        $class = 'web';
-                                    } else if (preg_match('/^ANG/', $title)) {
-                                        $class = 'ang';
-                                    } else if (preg_match('/^BD/', $title)) {
-                                        $class = 'bd';
-                                    } else if (preg_match('/^ART/', $title)) {
-                                        $class = 'art';
-                                    } else if (preg_match('/^COM/', $title)) {
-                                        $class = 'com';
-                                    } else if (preg_match('/^ECO/', $title)) {
-                                        $class = 'eco';
-                                    } else if (preg_match('/^IC/', $title)) {
-                                        $class = 'ic';
-                                    } else if (preg_match('/^ALL/', $title) || preg_match('/^ESP/', $title)) {
-                                        $class = 'lv';
-                                    } else if (preg_match('/^MEDIA/', $title)) {
-                                        $class = 'media';
-                                    } else if (preg_match('/^PRJ/', $title)) {
-                                        $class = 'prj';
-                                    } else if (preg_match('/^AV/', $title)) {
-                                        $class = 'av';
-                                    } else if (preg_match('/^CREA/', $title)) {
-                                        $class = 'crea';
-                                    } else if (preg_match('/^INFO/', $title)) {
-                                        $class = 'info';
-                                    } else if (preg_match('/^REZS/', $title)) {
-                                        $class = 'rezs';
-                                    } else if (preg_match('/^SCI/', $title)) {
-                                        $class = 'sci';
-                                    } else if (preg_match('/^PTWEB/', $title)) {
-                                        $class = 'ptweb';
-                                    } else {
-                                        $class = 'none';
-                                    }
+                                    $class = 'none';
                                 ?> {
                                         subject: '<?= $title ?>',
                                         location: '<?= $location ?>',

@@ -37,11 +37,11 @@ function submitForm() {
                 document.getElementById("showMessage").style.color = "#FE4C6A";
             }
         })
-        .catch(error => console.error(error))
+        .catch(error => console.error(error));
 }
 
 // If enter on the whole document -> call the submitForm() function
-document.addEventListener("keydown", function (e) {
+document.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
         e.preventDefault();
         submitForm();
@@ -55,7 +55,7 @@ numEtuInput.addEventListener("input", () => {
     document.getElementById("inputAll").style.backgroundColor = "#FFFFFF";
     document.getElementById("showMessage").innerHTML = "";
     document.getElementById("showMessage").style.color = "";
-})
+});
 
 numEtuInput.addEventListener("focus", () => {
     if (window.innerWidth <= 760) {
