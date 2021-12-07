@@ -246,6 +246,24 @@ include "assets/include/moy.php";
                 </form>
                 <script>
                     document.addEventListener('DOMContentLoaded', function() {
+                        function getColor(title) {
+                            if (title.indexOf('TP') !== -1) {
+                                return '#F1FA89'; // Yellow
+                            } else if (title.indexOf('TD') !== -1) {
+                                return '#B5EAEA'; // Blue
+                            } else if (title.indexOf('CI') !== -1) {
+                                return '#C6D57E'; // Green
+                            } else if (title.indexOf('CM') !== -1 || title.indexOf('Confé') !== -1) {
+                                return '#F6AE99'; // Orange
+                            } else if (title.indexOf('PT') !== -1) {
+                                return '#F38BA0'; // Red
+                            } else if (title.indexOf('soutenance') !== -1) {
+                                return '#FF7171'; // Ultrared
+                            } else {
+                                return '#6F4C5B'; // Brown
+                            }
+                        }
+
                         let calendarEl = document.getElementById('calendar');
 
                         let calendar = new FullCalendar.Calendar(calendarEl, {
@@ -280,7 +298,6 @@ include "assets/include/moy.php";
                                     $title = addslashes(str_replace('_', ' ',  $event->summary));
                                     $location = addslashes(str_replace(['salle non définie', ',', '_'], ['', '', ' '], $event->location));
                                     $teacher = addslashes(explode("\n", $event->description)[1]);
-                                    $class = 'none';
                                 ?> {
                                         subject: '<?= $title ?>',
                                         location: '<?= $location ?>',
@@ -288,7 +305,7 @@ include "assets/include/moy.php";
                                         start: '<?= $start ?>',
                                         end: '<?= $end ?>',
                                         textColor: 'black',
-                                        classNames: '<?= $class ?>',
+                                        backgroundColor: getColor('<?= $title ?>'),
                                     },
                                 <?php
                                 }
