@@ -253,7 +253,7 @@ include "assets/include/moy.php";
                     <?php
                     $averageSubjects = [];
                     foreach ($UESubjects[$ue] as $key => $value) {
-                        $sqlSem = "SELECT name_note, name_pdf, note_date_c, average, minimum, maximum, note_code, note_coeff, name_teacher, type_note, note_semester, note_total, median, variance, deviation, type_exam FROM global_$semestre WHERE note_code = '$value' ORDER BY note_date_c, id DESC";
+                        $sqlSem = "SELECT name_note, name_pdf, note_date_c, average, minimum, maximum, note_code, note_coeff, name_teacher, type_note, note_semester, note_total, median, variance, deviation, type_exam FROM global_$semestre WHERE note_code = '$value' AND type_note NOT LIKE '%intermédiaire%' ORDER BY note_date_c, id DESC";
                         $sqlPDF = $bdd->query($sqlSem);
                     ?>
                         <article class="row all-note">

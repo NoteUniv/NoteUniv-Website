@@ -7,7 +7,7 @@ $notExists = $doesExists->fetch()[0] === "0";
 $UESubjects = [];
 
 if (!$notExists) {
-    $sqlAllNotes = "SELECT note_code, note_semester FROM global_$semestre WHERE type_note != 'Note intermédiaire que pour affichage' ORDER BY note_date_c";
+    $sqlAllNotes = "SELECT note_code, note_semester FROM global_$semestre WHERE type_note NOT LIKE '%intermédiaire%' ORDER BY note_date_c";
 
     $listNotes = $bdd->query($sqlAllNotes);
 
