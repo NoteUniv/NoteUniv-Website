@@ -331,6 +331,12 @@ span#me {
     font-size: 13px;
 }
 
+.tippy-box[data-theme~='edt'] {
+    background-color: #110133;
+    color: #fff;
+    border-radius: 0.25rem;
+}
+
 .tippy-box a {
     color: #fff;
 }

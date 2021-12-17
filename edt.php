@@ -252,7 +252,7 @@ include "assets/include/moy.php";
                             } else if (title.indexOf('TD') !== -1) {
                                 return '#B5EAEA'; // Blue
                             } else if (title.indexOf('CI') !== -1) {
-                                return '#C6D57E'; // Green
+                                return '#A6DE93'; // Green
                             } else if (title.indexOf('CM') !== -1 || title.indexOf('Confé') !== -1) {
                                 return '#F6AE99'; // Orange
                             } else if (title.indexOf('PT') !== -1) {
@@ -263,6 +263,8 @@ include "assets/include/moy.php";
                                 return '#6F4C5B'; // Brown
                             }
                         }
+
+                        let tippyNote;
 
                         let calendarEl = document.getElementById('calendar');
 
@@ -282,10 +284,10 @@ include "assets/include/moy.php";
                                 day: 'Jour'
                             },
                             allDaySlot: false,
-                            slotMinTime: "08:30",
-                            slotMaxTime: "18:30",
+                            slotMinTime: '08:30',
+                            slotMaxTime: '18:30',
                             nowIndicator: true,
-                            slotLabelInterval: "00:30",
+                            slotLabelInterval: '00:30',
                             weekends: false,
                             events: [
                                 <?php
@@ -295,15 +297,21 @@ include "assets/include/moy.php";
                                     $start = $dtstart->format('c');
                                     $dtend = $ical->iCalDateToDateTime($event->dtend_array[3]);
                                     $end = $dtend->format('c');
+                                    $dtmodified = $ical->iCalDateToDateTime($event->last_modified);
+                                    $modified = $dtmodified->format('c');
                                     $title = addslashes(str_replace('_', ' ',  $event->summary));
                                     $location = addslashes(str_replace(['salle non définie', ',', '_'], ['', '', ' '], $event->location));
-                                    $teacher = addslashes(explode("\n", $event->description)[1]);
+                                    $description = explode("\n", $event->description);
+                                    $group = addslashes(str_replace('_', ' ', $description[0]));
+                                    $teacher = addslashes($description[1]);
                                 ?> {
                                         subject: '<?= $title ?>',
                                         location: '<?= $location ?>',
                                         teacher: '<?= $teacher ?>',
+                                        group: '<?= $group ?>',
                                         start: '<?= $start ?>',
                                         end: '<?= $end ?>',
+                                        modified: '<?= $modified ?>',
                                         textColor: 'black',
                                         backgroundColor: getColor('<?= $title ?>'),
                                     },
@@ -314,8 +322,37 @@ include "assets/include/moy.php";
                             eventDidMount: function(info) {
                                 var elTitle = info.el.querySelector('.fc-event-title');
                                 elTitle.innerHTML = '<span style="font-size: 16px;">' + info.event.extendedProps.subject + '</span>';
-                                elTitle.innerHTML += '<br/>' + info.event.extendedProps.location;
-                                elTitle.innerHTML += '<br/><i>' + info.event.extendedProps.teacher + '</i>';
+                                elTitle.innerHTML += '<br>' + info.event.extendedProps.location + '<br>';
+                                elTitle.innerHTML += '<i>' + info.event.extendedProps.teacher + '</i>';
+                            },
+                            eventClick: function(info) {
+                                if (tippyNote) {
+                                    tippyNote.destroy();
+                                }
+
+                                tippyNote = tippy(info.el, {
+                                    content: '<div class="tippy-note">' +
+                                        '<h3>' + info.event.extendedProps.subject + '</h3>' +
+                                        '<p>Salle : ' + info.event.extendedProps.location + '</p>' +
+                                        '<p>Prof : ' + info.event.extendedProps.teacher + '</p>' +
+                                        '<p>Groupe : ' + info.event.extendedProps.group + '</p>' +
+                                        '<p>Début : ' + info.event.start.toLocaleString() + '</p>' +
+                                        '<p>Fin : ' + info.event.end.toLocaleString() + '</p>' +
+                                        '<p>Modifié : ' + new Date(info.event.extendedProps.modified).toLocaleString() + '</p>' +
+                                        '</div>',
+                                    allowHTML: true,
+                                    arrow: true,
+                                    placement: 'top',
+                                    trigger: 'click',
+                                    interactive: true,
+                                    theme: 'edt',
+                                    duration: [300, 0],
+                                    appendTo: document.querySelector('body'),
+                                    onHidden: function() {
+                                        tippyNote.destroy();
+                                    }
+                                });
+                                tippyNote.show();
                             }
                         });
 
