@@ -97,7 +97,7 @@ a:active {
     resize: none;
     background-color: transparent;
     font-size: 24px;
-    -webkit-user-select: none;
+    -webkit-user-select: text;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
