@@ -207,15 +207,15 @@ include "assets/include/moy.php";
                         $ranking = $ranking[0];
                         if ($ranking == 1) {
                         ?>
-                            <form action="assets/include/ranking_post.php" method='POST' class="ranking-form">
-                                <label for="rank">Cliquez ici pour vous cacher du classement et et garder votre puissance secrète !</label>
+                            <form action="assets/include/ranking_post.php" method="POST" class="ranking-form">
+                                <label for="rank">Cliquez ici pour vous cacher du classement et garder votre puissance secrète !</label>
                                 <br>
                                 <input type="checkbox" name="rank" id="rank" value="hide"><input type="submit" value="Je valide" class="btn-sub">
                             </form>
                         <?php
                         } else {
                         ?>
-                            <form action="assets/include/ranking_post.php" method='POST' class="ranking-form">
+                            <form action="assets/include/ranking_post.php" method="POST" class="ranking-form">
                                 <label for="rank">Cliquez ici pour vous afficher dans le classement et afficher votre puissance au monde !</label>
                                 <br>
                                 <input type="checkbox" name="rank" id="rank" value="show"><input type="submit" value="Je valide" class="btn-sub">
