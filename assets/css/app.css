@@ -26,13 +26,13 @@ a {
 }
 
 .main {
-    height: 100vh;
+    min-height: 100vh;
     background-image: url("../images/app.svg"), url("../images/meteor.svg");
     background-repeat: no-repeat, repeat;
     background-position: center bottom, left top;
     background-size: 30vw, auto;
     background-attachment: fixed;
-    padding-top: 60px;
+    padding: 60px 0;
 }
 
 .logos img {
@@ -54,7 +54,7 @@ h3 {
 
 .btn {
     display: inline-block;
-    margin: 0 20px;
+    margin: 20px;
     padding: 20px;
     border-radius: 26px;
     font-size: 16px;
