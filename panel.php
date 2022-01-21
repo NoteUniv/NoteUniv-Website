@@ -55,6 +55,7 @@ if (!empty($_SESSION["id_etu"]) && is_numeric($_SESSION["id_etu"])) {
     $id_etu = htmlspecialchars($_SESSION['id_etu']);
 } else {
     header('Location: ./');
+    exit();
 }
 
 // Set cookie ETU

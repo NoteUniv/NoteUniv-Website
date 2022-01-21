@@ -58,6 +58,7 @@ if ((!empty($_POST["numEtu"]) && is_numeric($_POST["numEtu"]))) {
     $id_etu = $_SESSION['id_etu'];
 } else {
     header('Location: ./');
+    exit();
 }
 
 $sqlEtu = $bdd->query("SELECT tp, promo FROM data_etu WHERE id_etu = $id_etu");
