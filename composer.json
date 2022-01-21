@@ -1,12 +1,6 @@
 {
     "require": {
-        "johngrogg/ics-parser": "^2.1",
-        "vlucas/phpdotenv": "^4.1",
-        "nesbot/carbon": "^2.30",
-        "phpoption/phpoption": "^1.7",
-        "symfony/polyfill-ctype": "^1.14",
-        "symfony/polyfill-mbstring": "^1.14",
-        "symfony/translation": "^5.0",
-        "symfony/translation-contracts": "^2.0"
+        "johngrogg/ics-parser": "^3.0",
+        "vlucas/phpdotenv": "^5.4"
     }
 }
