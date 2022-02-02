@@ -483,7 +483,7 @@ include "assets/include/moy.php";
                         <div class="col-sm-2 center-sm btn-green">
                             <p>
                                 <span class="hidden-sm hidden-md hidden-lg hidden-xl">Moyenne sur 20<br></span>
-                                <?= $UEAvg ?>
+                                <?= round($UEAvg, 3) ?>
                             </p>
 
                         </div>
