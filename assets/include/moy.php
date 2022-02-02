@@ -40,7 +40,7 @@ function calcAverage($idEtu, $perUE = false) {
         $UEMoyenne = 0;
         $UECoeff = 0;
         foreach ($subjects as $subject) {
-            $sqlSem = "SELECT name_pdf, note_coeff FROM global_$semestre WHERE note_code = '$subject' ORDER BY note_date_c, id DESC";
+            $sqlSem = "SELECT name_pdf, note_coeff FROM global_$semestre WHERE type_note NOT LIKE '%intermédiaire%' AND note_code = '$subject' ORDER BY note_date_c, id DESC";
             $sqlPDF = $bdd->query($sqlSem);
             $avgSubject = []; // Average of each subject
             while ($infoNote = $sqlPDF->fetch()) {
