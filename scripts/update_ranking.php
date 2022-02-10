@@ -34,7 +34,7 @@ if ($action === 'updateRanking' && array_key_exists($semestre, $semestreMap)) {
     $dataEtu = $sqlAllEtu->fetchAll(PDO::FETCH_COLUMN);
 
     foreach ($dataEtu as $idEtu) {
-        $moyEtu = calcAverage($idEtu);
+        $moyEtu = calcAverage($idEtu, true);
         $sqlInsert = "INSERT INTO ranking_$semestre (id_etu, moy_etu) VALUES ($idEtu, $moyEtu)";
         $bdd->query($sqlInsert);
     }
