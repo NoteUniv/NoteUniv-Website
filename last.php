@@ -264,7 +264,7 @@ include "assets/include/moy.php";
                     <div class="col-sm-2 matiere first-xs">
                         <p class='titre-mobile'>
                             <?php
-                            if (preg_match("/AV\d?/", $subject)) { // Easter egg
+                            if (preg_match("/AV\d?/i", $subject)) { // Easter egg
                             ?>
                                 <span class="tippy-note" data-tippy-content="<a href='https://youtu.be/CobknKR0t6k' target='_BLANK' class='green'>Tu veux voir un vrai truc en AV ? Clique !</a>"><?= $subject ?></span>
                             <?php
