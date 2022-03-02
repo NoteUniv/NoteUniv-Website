@@ -67,8 +67,8 @@ $tp = $data[0];
 $promo = $data[1];
 
 if ($promo === 'LP_DWEB') {
-    $promo = 'MMI_DWEB'; // Calendar name
-} else {
+    $promo = 'MMI_DWEB'; // Use DWEB calendar name
+} elseif ($promo === 'LP_GRAPH' || $promo === 'LP_RAJ') {
     $promo = 'MMI_GRAPH_RAJ'; // Use global GRAPH-RAJ calendar name
 }
 
