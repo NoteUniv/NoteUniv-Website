@@ -20,7 +20,7 @@ try {
 }
 
 $action = $_POST['action'] ?? '';
-$semestre = $_POST['semestre'] ?? 0;
+$semestre = $_POST['semestre'] ?? '';
 $semestreMap = ['s1' => 'MMI1', 's2' => 'MMI1', 's3' => 'MMI2', 's4' => 'MMI2', 'lp_dweb' => 'LP_DWEB', 'lp_graph' => 'LP_GRAPH', 'lp_raj' => 'LP_RAJ'];
 
 if ($action === 'updateRanking' && array_key_exists($semestre, $semestreMap)) {
@@ -34,7 +34,7 @@ if ($action === 'updateRanking' && array_key_exists($semestre, $semestreMap)) {
     $dataEtu = $sqlAllEtu->fetchAll(PDO::FETCH_COLUMN);
 
     foreach ($dataEtu as $idEtu) {
-        $moyEtu = calcAverage($idEtu, true);
+        $moyEtu = calcAverage($idEtu);
         $sqlInsert = "INSERT INTO ranking_$semestre (id_etu, moy_etu) VALUES ($idEtu, $moyEtu)";
         $bdd->query($sqlInsert);
     }
