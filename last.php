@@ -249,8 +249,13 @@ include "assets/include/moy.php";
                     $sqlNote = "SELECT note_etu FROM `$note[name_pdf]` WHERE id_etu = $id_etu";
                     $myNote = $bdd->query($sqlNote);
                     $noteEtu = $myNote->fetch();
-                    if ($id_etu === "1") {
-                        $noteEtu[0] = random_int(10, 20);
+                    if ($noteEtu === false) {
+                        $noteEtu = 0;
+                    } else {
+                        $noteEtu = $noteEtu['note_etu'];
+                    }
+                    if ($id_etu === '1') {
+                        $noteEtu = random_int(10, 20);
                     }
                 ?>
 
@@ -270,7 +275,7 @@ include "assets/include/moy.php";
                             <?php
                             } else if ($type !== "Note unique" && $type !== "Moyenne de notes (+M)") {
                                 echo '<span class="grey">' . $subject . '*</span>';
-                            } else if ($noteEtu[0] == 100) {
+                            } else if ($noteEtu == 100) {
                                 echo '<span class="red">' . $subject . '</span>';
                             } else {
                                 echo $subject;
@@ -285,15 +290,15 @@ include "assets/include/moy.php";
                                 <p>
                                     <span class="hidden-sm hidden-md hidden-lg hidden-xl">Note<br><br></span>
                                     <?php
-                                    if ($noteEtu[0] == 100) { // 100 = abs
+                                    if ($noteEtu == 100) { // 100 = abs
                                         echo '<span class="orange">ABS</span>';
                                     } else {
-                                        if ($noteEtu[0] < 10) {
-                                            echo '<span class="red">' . $noteEtu[0] . '</span>';
-                                        } elseif ($noteEtu[0] < $noteMoyenne) {
-                                            echo '<span class="orange">' . $noteEtu[0] . '</span>';
+                                        if ($noteEtu < 10) {
+                                            echo '<span class="red">' . $noteEtu . '</span>';
+                                        } elseif ($noteEtu < $noteMoyenne) {
+                                            echo '<span class="orange">' . $noteEtu . '</span>';
                                         } else {
-                                            echo '<span class="green">' . $noteEtu[0] . '</span>';
+                                            echo '<span class="green">' . $noteEtu . '</span>';
                                         }
                                     }
                                     ?>
