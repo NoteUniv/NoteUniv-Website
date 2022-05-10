@@ -23,8 +23,8 @@ try {
 $id_etu_sent = $_GET["num_etu"] ?? 1;
 $id_etu_sent = empty($id_etu_sent) ? exit("Please provide a valid student ID.") : $id_etu_sent;
 $force_login = isset($_GET["login"]) ? $_GET["login"] : false;
-// Force change semester
-$semester = 1; // First half or second half (1 or 0)
+// Force next semester if date > february
+$semester = date("m") > 2 ? 0 : 1;
 
 $num_etu = "SELECT promo, enabled FROM data_etu where id_etu = $id_etu_sent";
 $data_etu = $bdd->query($num_etu);
