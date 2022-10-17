@@ -166,6 +166,14 @@ input::placeholder {
     margin-top: 10px;
 }
 
+.preview {
+    margin-left: auto;
+    padding-top: 10px;
+    padding-right: 30px;
+    font-size: 14px;
+    font-style: italic;
+}
+
 @media screen and (max-width: 1536px) {
     .desc {
         font-size: 24px;
@@ -223,9 +231,8 @@ input::placeholder {
 }
 
 /* IE bullshit (negative margin right doesn't work) */
-@media screen and (-ms-high-contrast: active),
-(-ms-high-contrast: none) {
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
     .img-etu {
-        margin-right: 35px;
+        margin-right: 36px;
     }
 }
