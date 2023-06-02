@@ -287,6 +287,7 @@ include "assets/include/moy.php";
                                         $myNote = $bdd->query("SELECT note_etu FROM `$infoNote[name_pdf]` WHERE id_etu = $id_etu");
                                         $noteEtu = $myNote->fetch();
                                         if ($id_etu === "1") {
+                                            $noteEtu = [];
                                             $noteEtu[0] = random_int(10, 20);
                                         }
                                         if ($noteEtu[0] < 21) { // Si pas abs et pas note intermédiaire on le compte
@@ -468,7 +469,12 @@ include "assets/include/moy.php";
                 <h1 class="hidden-sm hidden-md hidden-lg hidden-xl" id="result">Résultats</h1>
 
                 <?php
-                $avgPerUE = calcAverage($id_etu, true);
+                if ($id_etu === "1") {
+                    $avgPerUE = ["UE1" => [random_int(120, 180) / 10, random_int(120, 180) / 10], "UE2" => [random_int(120, 180) / 10, random_int(120, 180) / 10]];
+                } else {
+                    $avgPerUE = calcAverage($id_etu, true);
+                }
+
                 $semestreValid = array_filter($avgPerUE, function ($value) {
                     return $value[0] > 8;
                 });
