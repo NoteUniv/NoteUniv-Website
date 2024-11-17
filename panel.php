@@ -7,7 +7,7 @@ include_once("vendor/autoload.php");
 if (!isset($_COOKIE['semestre'])) {
     header('Location: ./');
 } else {
-    $semestre = htmlspecialchars($_COOKIE['semestre']);
+    $semestre = strtolower(htmlspecialchars($_COOKIE['semestre']));
 }
 
 if (isset($_GET['change'])) {
