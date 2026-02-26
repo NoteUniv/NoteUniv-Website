@@ -64,7 +64,7 @@ Please make sure to test your suggestions before committing.
 -   Github Ynohtna: [Ynohtna](https://github.com/Ynohtna-Fr)
 -   Github Quentium: [QuentiumYT](https://github.com/QuentiumYT)
 -   Twitter Ynohtna: [@YnohtnaErosya](https://twitter.com/YnohtnaErosya)
--   Twitter Quentium: [@QuentiumYT](https://twitter.com/QuentiumYT)
+-   Twitter Quentium: [@Quentium67](https://twitter.com/Quentium67)
 
 Please ✰ this repository if this project helped you!
 
@@ -74,4 +74,4 @@ Please ✰ this repository if this project helped you!
 
 ---
 
-_Made with_ ❤ _by Ynohtna\_ & QuentiumYT_
+_Made with_ ❤ _by Ynohtna & Quentium_
